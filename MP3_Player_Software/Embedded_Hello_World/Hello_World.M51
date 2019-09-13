@@ -1,0 +1,186 @@
+BL51 BANKED LINKER/LOCATER V4.02                                                        08/17/2018  11:19:02  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.02, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE Hello.obj TO Hello_World RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  Hello.obj (HELLO)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  Hello_World (HELLO)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?HELLO
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0020H     UNIT         ?PR?_DELAY_LOOP_WAIT?HELLO
+            CODE    0023H     000FH     UNIT         ?PR?MAIN?HELLO
+            CODE    0032H     000DH     UNIT         ?PR?LED_FLASH_CHANGE_STATE?HELLO
+            CODE    003FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    004BH     0003H     UNIT         ?PR?LED_FLASH_INIT?HELLO
+
+
+
+OVERLAY MAP OF MODULE:   Hello_World (HELLO)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?HELLO
+
+?PR?MAIN?HELLO
+  +--> ?PR?LED_FLASH_INIT?HELLO
+  +--> ?PR?LED_FLASH_CHANGE_STATE?HELLO
+  +--> ?PR?_DELAY_LOOP_WAIT?HELLO
+
+
+
+SYMBOL TABLE OF MODULE:  Hello_World (HELLO)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        HELLO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V4.02                                                      08/17/2018  11:19:02  PAGE 2
+
+
+  B:00A0H.7       PUBLIC        LED_pin
+  D:0090H         PUBLIC        P1
+  B:0020H.0       PUBLIC        LED_state_G
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  C:004BH         PUBLIC        LED_FLASH_Init
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:0023H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  C:0032H         PUBLIC        LED_FLASH_Change_State
+  D:0088H         PUBLIC        TCON
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+BL51 BANKED LINKER/LOCATER V4.02                                                      08/17/2018  11:19:02  PAGE 3
+
+
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  B:00C8H.3       PUBLIC        EXEN2
+  C:0003H         PUBLIC        _DELAY_LOOP_Wait
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0023H         LINE#         39
+  C:0023H         LINE#         40
+  C:0023H         LINE#         41
+  C:0026H         LINE#         43
+  C:0026H         LINE#         44
+  C:0026H         LINE#         46
+  C:0029H         LINE#         49
+  C:0030H         LINE#         50
+  -------         ENDPROC       MAIN
+  -------         PROC          LED_FLASH_INIT
+  C:004BH         LINE#         60
+  C:004BH         LINE#         61
+  C:004BH         LINE#         62
+  C:004DH         LINE#         63
+  -------         ENDPROC       LED_FLASH_INIT
+  -------         PROC          LED_FLASH_CHANGE_STATE
+  C:0032H         LINE#         78
+  C:0032H         LINE#         79
+  C:0032H         LINE#         81
+  C:0035H         LINE#         82
+  C:0035H         LINE#         83
+  C:0037H         LINE#         84
+  C:0039H         LINE#         85
+  C:003AH         LINE#         87
+  C:003AH         LINE#         88
+  C:003CH         LINE#         89
+  C:003EH         LINE#         90
+  C:003EH         LINE#         91
+  -------         ENDPROC       LED_FLASH_CHANGE_STATE
+  -------         PROC          _DELAY_LOOP_WAIT
+  D:0006H         SYMBOL        DELAY
+  -------         DO            DELAY
+  D:0004H         SYMBOL        x
+  D:0002H         SYMBOL        y
+  -------         ENDDO         y
+  C:0003H         LINE#         105
+  C:0003H         LINE#         106
+  C:0003H         LINE#         109
+  C:000DH         LINE#         110
+  C:000DH         LINE#         111
+  C:001BH         LINE#         112
+  C:0022H         LINE#         113
+  -------         ENDPROC       _DELAY_LOOP_WAIT
+  -------         ENDMOD        HELLO
+BL51 BANKED LINKER/LOCATER V4.02                                                      08/17/2018  11:19:02  PAGE 4
+
+
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
