@@ -1,0 +1,2 @@
+Write Serial Init
+Write delay 1ms function
