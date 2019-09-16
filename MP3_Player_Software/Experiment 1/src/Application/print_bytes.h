@@ -1,8 +1,8 @@
 #ifndef _print_bytes_H
 #define _print_bytes_H
 
-#include "main.h"
-#include "UART.h"
+#include "../application/main.h"
+#include "../drivers/UART.h"
 
 
 

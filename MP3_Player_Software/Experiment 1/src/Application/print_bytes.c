@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "main.h"
+#include "../application/main.h"
 #include "print_bytes.h"
-#include "UART.h"
+#include "../drivers/UART.h"
 
 
 

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../application/main.h"
 #include "memory_test.h"
 
 static uint8_t code code_mem[]="Code Memory: String for Roger Younger";
