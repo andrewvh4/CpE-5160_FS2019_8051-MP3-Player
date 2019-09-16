@@ -1,2 +1,19 @@
+(Procedure 1 - 7)
+--David
 Write Serial Init
 Write delay 1ms function
+Write Serial Transmit and Receive Functions
+* Verify Serial Transmit Receive 
+- Echo program
+- Get PrintMemory to work
+- test stdio functions
+
+(Procedure 8 - 15)
+--Jacob
+Write LCD Init
+Write LCD Write_Data
+Write LCD Write_Command
+Write LCD WriteLine
+
+Make everything beautiful and fix Jacob
+--Andrew
