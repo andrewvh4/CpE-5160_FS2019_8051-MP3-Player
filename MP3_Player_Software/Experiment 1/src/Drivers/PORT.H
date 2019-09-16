@@ -16,6 +16,26 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#define SW1 P2_0
+#define SW2 P2_1
+#define SW3 P2_2
+#define SW4 P2_3
+#define REDLED P2_4
+#define GREENLED P2_5
+#define YELLOWLED P2_6
+#define AMBERLED P2_7
+
+#define LCD_D0 P0_0
+#define LCD_D1 P0_1
+#define LCD_D2 P0_2
+#define LCD_D3 P0_3
+#define LCD_D4 P0_4
+#define LCD_D5 P0_5
+#define LCD_D6 P0_6
+#define LCD_D7 P0_7
+
+#define LCD_RS P3_5
+#define LCD_EN P3_7
 
 // Port 0
 sbit P0_0 = P0^0;
@@ -46,15 +66,6 @@ sbit P2_4 = P2^4;
 sbit P2_5 = P2^5;
 sbit P2_6 = P2^6;
 sbit P2_7 = P2^7;
-
-#define SW1 P2_0
-#define SW2 P2_1
-#define SW3 P2_2
-#define SW4 P2_3
-#define REDLED P2_4
-#define GREENLED P2_5
-#define YELLOWLED P2_6
-#define AMBERLED P2_7
 
 // Port 3
 sbit per_TxD = P3^0;

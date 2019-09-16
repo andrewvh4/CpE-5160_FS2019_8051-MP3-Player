@@ -431,6 +431,26 @@
               <FileType>1</FileType>
               <FilePath>.\src\Application\Main.c</FilePath>
             </File>
+            <File>
+              <FileName>Timing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Timing.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Drivers\Timing.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\LCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Modules\LCD.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
