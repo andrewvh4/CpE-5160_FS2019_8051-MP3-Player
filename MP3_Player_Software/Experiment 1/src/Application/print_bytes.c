@@ -29,8 +29,8 @@ void print_16bytes(uint8_t * array_in)
       if (dat<32 || dat>127) dat=46;
       putchar(dat);
    }
-   putchar(CR);
-   putchar(LF);
+   putchar('\r');
+   putchar('\n');
 }
 
 

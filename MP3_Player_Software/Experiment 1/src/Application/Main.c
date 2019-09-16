@@ -19,12 +19,12 @@ void main()
 uint8_t setup()
 {
 	//Serial Init
-	return(1)
+	return(1);
 }
 
 uint8_t loop()
 {
 	
-	return(1)
+	return(1);
 }
 
