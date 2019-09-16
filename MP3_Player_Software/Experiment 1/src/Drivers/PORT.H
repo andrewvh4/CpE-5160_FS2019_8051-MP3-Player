@@ -38,16 +38,23 @@ sbit P1_6 = P1^6;
 sbit P1_7 = P1^7;
 
 // Port 2
-sbit SW1 = P2^0;
-sbit SW2 = P2^1;
-sbit SW3 = P2^2;
-sbit SW4 = P2^3;
-sbit REDLED = P2^4;
-sbit GREENLED = P2^5;
-sbit YELLOWLED = P2^6;
-sbit AMBERLED = P2^7;
+sbit P2_0 = P2^0;
+sbit P2_1 = P2^1;
+sbit P2_2 = P2^2;
+sbit P2_3 = P2^3;
+sbit P2_4 = P2^4;
+sbit P2_5 = P2^5;
+sbit P2_6 = P2^6;
+sbit P2_7 = P2^7;
 
-
+#define SW1 P2_0
+#define SW2 P2_1
+#define SW3 P2_2
+#define SW4 P2_3
+#define REDLED P2_4
+#define GREENLED P2_5
+#define YELLOWLED P2_6
+#define AMBERLED P2_7
 
 // Port 3
 sbit per_TxD = P3^0;
