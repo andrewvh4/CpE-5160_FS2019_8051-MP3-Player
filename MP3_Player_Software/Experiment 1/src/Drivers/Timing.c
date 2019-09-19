@@ -13,5 +13,6 @@ void delay_ms(uint16_t ms)
 
 void delay_1_ms()
 {
-	//Create while loop to delay for 1 ms
+	int y;
+  for (y = 0; y <= 120; y++); //120 selected from example "helloWorld" project for delaying 1ms
 }
