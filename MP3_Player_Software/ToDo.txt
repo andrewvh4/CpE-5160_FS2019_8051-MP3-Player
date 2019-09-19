@@ -1,7 +1,7 @@
 (Procedure 1 - 7)
 --David
 Write Serial Init
-Write delay 1ms function
+done - Write delay 1ms function
 Write Serial Transmit and Receive Functions
 * Verify Serial Transmit Receive 
 - Echo program
