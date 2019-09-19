@@ -22,8 +22,14 @@
 uint8_t writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);
 uint8_t writeBit(uint8_t Bit, uint8_t value);
 
+uint8_t readBus(uint8_t bus);
+uint8_t readBit(uint8_t Bit);
+
 #define HIGH 1
 #define LOW 0
+
+#define INPUT 1
+#define OUTPUT 0
 
 #define LCD_D0 P0_0
 #define LCD_D1 P0_1
