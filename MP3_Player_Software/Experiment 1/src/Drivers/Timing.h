@@ -18,7 +18,7 @@
 
 // ------ Public function prototypes -------------------------------
 
-void delay_ms(uint16_t ms);
+void Timing_delay_ms(uint16_t ms);
 
 
 #endif

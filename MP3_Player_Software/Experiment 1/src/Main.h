@@ -44,6 +44,7 @@
 #define SW2 P2_1
 #define SW3 P2_2
 #define SW4 P2_3
+
 #define REDLED P2_4
 #define GREENLED P2_5
 #define YELLOWLED P2_6
