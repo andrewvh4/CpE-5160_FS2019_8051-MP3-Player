@@ -1,5 +1,5 @@
-#include "main.h"
-#include "../Drivers/PORT.H"
+#include "../main.h"
+#include "../Drivers/Port.h"
 #include <stdio.h>
 #include "../Drivers/UART.h"
 
@@ -24,7 +24,6 @@ uint8_t setup()
 
 uint8_t loop()
 {
-	
 	return(1);
 }
 

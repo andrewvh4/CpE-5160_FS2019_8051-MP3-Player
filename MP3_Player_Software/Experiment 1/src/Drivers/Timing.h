@@ -1,7 +1,7 @@
 #ifndef _Timing_H
 #define _Timing_H
 
-#include "../application/main.h"
+#include "../main.h"
 
 /*------------------------------------------------------------------*-
 

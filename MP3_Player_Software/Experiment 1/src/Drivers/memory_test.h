@@ -1,7 +1,7 @@
 #ifndef _memory_test_H
 #define _memory_test_H
 
-#include "../application/main.h"
+#include "../main.h"
 
 // ------ Public function prototypes -------------------------------
 

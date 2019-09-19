@@ -11,22 +11,19 @@
    Date: 9/8/16
 
    Description: Defines the port pins for the basic 8051 circuit
--*------------------------------------------------------------------*/
+-------------------------------------------------------------------*/
 
 #ifndef _PORT_H
 #define _PORT_H
 
+#include "../Main.h"
+
+
 uint8_t writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);
+uint8_t writeBit(uint8_t Bit, uint8_t value);
 
-
-#define SW1 P2_0
-#define SW2 P2_1
-#define SW3 P2_2
-#define SW4 P2_3
-#define REDLED P2_4
-#define GREENLED P2_5
-#define YELLOWLED P2_6
-#define AMBERLED P2_7
+#define HIGH 1
+#define LOW 0
 
 #define LCD_D0 P0_0
 #define LCD_D1 P0_1
@@ -44,44 +41,44 @@ uint8_t writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);
 #define per_RxD P3_1
 
 // Port 0
-uint8_t P0_0 = 0x00;
-uint8_t P0_1 = 0x01;
-uint8_t P0_2 = 0x02;
-uint8_t P0_3 = 0x03;
-uint8_t P0_4 = 0x04;
-uint8_t P0_5 = 0x05;
-uint8_t P0_6 = 0x06;
-uint8_t P0_7 = 0x07;
+#define P0_0 0x00
+#define P0_1 0x01
+#define P0_2 0x02
+#define P0_3 0x03
+#define P0_4 0x04
+#define P0_5 0x05
+#define P0_6 0x06
+#define P0_7 0x07
 
 // Port 1
-uint8_t P1_0 = 0x10;
-uint8_t P1_1 = 0x11;
-uint8_t P1_2 = 0x12;
-uint8_t P1_3 = 0x13;
-uint8_t P1_4 = 0x14;
-uint8_t P1_5 = 0x15;
-uint8_t P1_6 = 0x16;
-uint8_t P1_7 = 0x17;
+#define P1_0 0x10
+#define P1_1 0x11
+#define P1_2 0x12
+#define P1_3 0x13
+#define P1_4 0x14
+#define P1_5 0x15
+#define P1_6 0x16
+#define P1_7 0x17
 
 // Port 2
-uint8_t P2_0 = 0x20;
-uint8_t P2_1 = 0x21;
-uint8_t P2_2 = 0x22;
-uint8_t P2_3 = 0x23;
-uint8_t P2_4 = 0x24;
-uint8_t P2_5 = 0x25;
-uint8_t P2_6 = 0x26;
-uint8_t P2_7 = 0x27;
+#define P2_0 0x20
+#define P2_1 0x21
+#define P2_2 0x22
+#define P2_3 0x23
+#define P2_4 0x24
+#define P2_5 0x25
+#define P2_6 0x26
+#define P2_7 0x27
 
 // Port 3
-uint8_t P3_0 = 0x30;
-uint8_t P3_1 = 0x31;
-uint8_t P3_2 = 0x32;
-uint8_t P3_3 = 0x33;
-uint8_t P3_4 = 0x34;
-uint8_t P3_5 = 0x35;
-uint8_t P3_6 = 0x36;
-uint8_t P3_7 = 0x37;
+#define P3_0 0x30
+#define P3_1 0x31
+#define P3_2 0x32
+#define P3_3 0x33
+#define P3_4 0x34
+#define P3_5 0x35
+#define P3_6 0x36
+#define P3_7 0x37
 
 #endif
 

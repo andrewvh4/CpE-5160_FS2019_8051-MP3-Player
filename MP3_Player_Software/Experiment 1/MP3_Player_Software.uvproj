@@ -389,7 +389,7 @@
             <File>
               <FileName>Main.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\src\Application\Main.h</FilePath>
+              <FilePath>.\src\Main.h</FilePath>
             </File>
             <File>
               <FileName>print_bytes.h</FileName>
@@ -402,9 +402,9 @@
               <FilePath>.\src\Drivers\memory_test.h</FilePath>
             </File>
             <File>
-              <FileName>PORT.H</FileName>
+              <FileName>Port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\src\Drivers\PORT.H</FilePath>
+              <FilePath>.\src\Drivers\Port.h</FilePath>
             </File>
             <File>
               <FileName>memory_test.c</FileName>
@@ -427,9 +427,9 @@
               <FilePath>.\src\Drivers\UART.h</FilePath>
             </File>
             <File>
-              <FileName>Main.c</FileName>
+              <FileName>AppMain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\Application\Main.c</FilePath>
+              <FilePath>.\src\Application\AppMain.c</FilePath>
             </File>
             <File>
               <FileName>Timing.c</FileName>

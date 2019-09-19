@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../application/main.h"
+#include "../main.h"
 #include "print_bytes.h"
 #include "../drivers/UART.h"
 

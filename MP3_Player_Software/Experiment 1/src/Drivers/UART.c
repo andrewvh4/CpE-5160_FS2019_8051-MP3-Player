@@ -1,4 +1,4 @@
-#include "../application/main.h"
+#include "../main.h"
 #include "UART.h"
 
 //Calculate baud rate generator values for BaudRate 9600
