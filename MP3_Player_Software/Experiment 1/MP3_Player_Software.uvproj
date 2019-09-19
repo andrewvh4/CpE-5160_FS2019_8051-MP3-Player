@@ -384,7 +384,7 @@
             <File>
               <FileName>AT89C51RC2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\AT89C51RC2.h</FilePath>
+              <FilePath>.\src\Drivers\AT89C51RC2.h</FilePath>
             </File>
             <File>
               <FileName>Main.h</FileName>
@@ -450,6 +450,11 @@
               <FileName>LCD.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\Modules\LCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>Port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Port.c</FilePath>
             </File>
           </Files>
         </Group>

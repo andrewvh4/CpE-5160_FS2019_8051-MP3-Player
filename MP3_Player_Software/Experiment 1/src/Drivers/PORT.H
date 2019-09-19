@@ -16,6 +16,9 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+uint8_t writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);
+
+
 #define SW1 P2_0
 #define SW2 P2_1
 #define SW3 P2_2
@@ -37,46 +40,48 @@
 #define LCD_RS P3_5
 #define LCD_EN P3_7
 
+#define per_TxD P3_0
+#define per_RxD P3_1
+
 // Port 0
-sbit P0_0 = P0^0;
-sbit P0_1 = P0^1;
-sbit P0_2 = P0^2;
-sbit P0_3 = P0^3;
-sbit P0_4 = P0^4;
-sbit P0_5 = P0^5;
-sbit P0_6 = P0^6;
-sbit P0_7 = P0^7;
+uint8_t P0_0 = 0x00;
+uint8_t P0_1 = 0x01;
+uint8_t P0_2 = 0x02;
+uint8_t P0_3 = 0x03;
+uint8_t P0_4 = 0x04;
+uint8_t P0_5 = 0x05;
+uint8_t P0_6 = 0x06;
+uint8_t P0_7 = 0x07;
 
 // Port 1
-sbit P1_0 = P1^0;
-sbit P1_1 = P1^1;
-sbit P1_2 = P1^2;
-sbit P1_3 = P1^3;
-sbit P1_4 = P1^4;
-sbit P1_5 = P1^5;
-sbit P1_6 = P1^6;
-sbit P1_7 = P1^7;
+uint8_t P1_0 = 0x10;
+uint8_t P1_1 = 0x11;
+uint8_t P1_2 = 0x12;
+uint8_t P1_3 = 0x13;
+uint8_t P1_4 = 0x14;
+uint8_t P1_5 = 0x15;
+uint8_t P1_6 = 0x16;
+uint8_t P1_7 = 0x17;
 
 // Port 2
-sbit P2_0 = P2^0;
-sbit P2_1 = P2^1;
-sbit P2_2 = P2^2;
-sbit P2_3 = P2^3;
-sbit P2_4 = P2^4;
-sbit P2_5 = P2^5;
-sbit P2_6 = P2^6;
-sbit P2_7 = P2^7;
+uint8_t P2_0 = 0x20;
+uint8_t P2_1 = 0x21;
+uint8_t P2_2 = 0x22;
+uint8_t P2_3 = 0x23;
+uint8_t P2_4 = 0x24;
+uint8_t P2_5 = 0x25;
+uint8_t P2_6 = 0x26;
+uint8_t P2_7 = 0x27;
 
 // Port 3
-sbit per_TxD = P3^0;
-sbit per_RxD = P3^1;
-sbit P3_2 = P3^2;
-sbit P3_3 = P3^3;
-sbit P3_4 = P3^4;
-sbit P3_5 = P3^5;
-sbit P3_6 = P3^6;
-sbit P3_7 = P3^7;
-
+uint8_t P3_0 = 0x30;
+uint8_t P3_1 = 0x31;
+uint8_t P3_2 = 0x32;
+uint8_t P3_3 = 0x33;
+uint8_t P3_4 = 0x34;
+uint8_t P3_5 = 0x35;
+uint8_t P3_6 = 0x36;
+uint8_t P3_7 = 0x37;
 
 #endif
 
