@@ -30,6 +30,8 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value);
 #define COMMAND 0
 #define DATA 1
 #define LOW_POWER_STATE 0xff
+#define LINE_1 0x00
+#define LINE_2 0x40
 
 #endif
 

@@ -2,14 +2,40 @@
 #include "../Drivers/Timing.h"
 #include "../drivers/UART.h"
 
-uint8_t LCD_Write_String(uint8_t* string, uint8_t line, uint8_t starting_char)
+uint8_t LCD_Write_String(uint8_t* string, uint8_t line, uint8_t starting_char) //why the "starting_char" arguement?
 {
-	//Call Write Data
+	uint8_t code Line_Data[7] = string;
+	uint8_t index, value;
+	
+	LCD_Write_Command(line); //Set address to start of the line
+	Timing_delay_1ms(1);
+	index = 0;
+	value = Line_Data[index];
+
+	while(value != 0)
+	{
+		LCD_Write_Data(value);
+		Timing_delay_1ms(1);
+		index ++;
+		value = Line_Data[index];
+	}
+	
 	return(1);
 }
 
 uint8_t LCD_Init()
 {
+	Timing_delay_ms(30); //Delay after power up
+	LCD_Write_Command(0x38);
+	Timing_delay_ms(5); //Delay greater than 4.1ms
+	LCD_Write_Command(0x38); 
+	Timing_delay_ms(1); //Delay greater than 100us 
+	LCD_Write_Command(0x38);
+	Timing_delay_ms(1);
+	LCD_Write_Command(0x38);
+	Timing_delay_ms(1);
+	LCD_Write_Command(0x0C); //Display on, cusor off
+	Timing_delay_ms(1);
 	return(1);
 }
 
