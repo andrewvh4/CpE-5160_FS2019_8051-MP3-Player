@@ -6,7 +6,7 @@ void Timing_delay_ms(uint16_t ms)
 {
 	while(ms > 0)
 	{
-		delay_1_ms();
+		Timing_delay_1_ms();
 		ms--;
 	}
 }

@@ -2,9 +2,9 @@
 #include "../Drivers/Timing.h"
 #include "../drivers/UART.h"
 
-uint8_t LCD_Write_String(uint8_t* string, uint8_t line, uint8_t starting_char) //why the "starting_char" arguement?
+uint8_t LCD_Write_String(uint8_t* string, uint8_t line) //why the "uint8_t starting_char" arguement?
 {
-	uint8_t code Line_Data[7] = string;
+	uint8_t Line_Data[7] = string;
 	uint8_t index, value;
 	
 	LCD_Write_Command(line); //Set address to start of the line
@@ -46,6 +46,7 @@ uint8_t LCD_Write_Data(uint8_t dat)
 	Port_writePort(PORT_0, 0x00, dat);
 	Port_writePin(LCD_EN, LOW);
 	Port_writePort(PORT_0, 0x00, LOW_POWER_STATE);
+	
 	return(1);
 }
 
@@ -73,4 +74,6 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value)
 	Port_writePort(PORT_0, 0x00, value);
 	Port_writePin(LCD_EN, LOW);
 	Port_writePort(PORT_0, 0x00, LOW_POWER_STATE);
+	
+	return(1);
 }
