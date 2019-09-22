@@ -24,7 +24,7 @@ uint8_t UART_Init_9600()
 	BDRCON = 0;
 
 	//2) Set BRL value, reload value
-	BRL = (uint8_t)(256-(((1+(5*SPD))*(1+SMOD1)*OSC_FREQ)/(32*OSC_PER_INST*(uint32_t)BAUD_RATE)))
+	BRL = (uint8_t)(256-(((1+(5*SPD))*(1+SMOD1)*OSC_FREQ)/(32*OSC_PER_INST*(uint32_t)BAUD_RATE)));
 
 	//3)Set BDRCON register
 	BDRCON = 0x1C | (SPD << 1);
@@ -48,6 +48,7 @@ uint8_t UART_Transmit(uint8_t character)
 
 uint8_t UART_Receive()
 {
+	uint8_t temp8;
 	//Wait for RI to be ste
 	while(RI==0);
 
