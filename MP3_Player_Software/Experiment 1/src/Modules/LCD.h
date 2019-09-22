@@ -1,6 +1,3 @@
-#ifndef _LCD_H
-#define _LCD_H
-
 /*------------------------------------------------------------------*-
 
    LCD.h (v1.00)
@@ -15,10 +12,13 @@
 
    Description: Defines functions for LCD operation
 -*------------------------------------------------------------------*/
+// ------ Public function prototypes -------------------------------
 #ifndef _LCD_H
 #define _LCD_H
-// ------ Public function prototypes -------------------------------
-uint8_t LCD_Write_String(uint8_t* string, uint8_t line, uint8_t starting_char);
+
+#include "../Main.h"
+
+uint8_t LCD_Write_String(uint8_t* string, uint8_t line);
 
 uint8_t LCD_Init();
 
@@ -32,6 +32,8 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value);
 #define LOW_POWER_STATE 0xff
 #define LINE_1 0x00
 #define LINE_2 0x40
+
+#define COMMMAND 0x00 //Need to verify this, created compile error
 
 #endif
 

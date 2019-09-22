@@ -1,23 +1,23 @@
 #include "LCD.h"
 #include "../Drivers/Timing.h"
-#include "../drivers/UART.h"
+#include "../Drivers/UART.h"
+#include "../Drivers/Port.h"
 
-uint8_t LCD_Write_String(uint8_t* string, uint8_t line) //why the "uint8_t starting_char" arguement?
+uint8_t LCD_Write_String(uint8_t* string, uint8_t line) 
 {
-	uint8_t Line_Data[7] = string;
 	uint8_t index, value;
 	
 	LCD_Write_Command(line); //Set address to start of the line
-	Timing_delay_1ms(1);
+	Timing_delay_ms(1);
 	index = 0;
-	value = Line_Data[index];
+	value = string[index];
 
-	while(value != 0)
+	while(value != '0')
 	{
 		LCD_Write_Data(value);
-		Timing_delay_1ms(1);
+		Timing_delay_ms(1);
 		index ++;
-		value = Line_Data[index];
+		value = string[index];
 	}
 	
 	return(1);
@@ -43,9 +43,9 @@ uint8_t LCD_Write_Data(uint8_t dat)
 {
 	Port_writePin(LCD_RS, HIGH);
 	Port_writePin(LCD_EN, HIGH);
-	Port_writePort(PORT_0, 0x00, dat);
+	Port_writeBus(PORT_0, 0x00, dat);
 	Port_writePin(LCD_EN, LOW);
-	Port_writePort(PORT_0, 0x00, LOW_POWER_STATE);
+	Port_writeBus(PORT_0, 0x00, LOW_POWER_STATE);
 	
 	return(1);
 }
@@ -54,9 +54,9 @@ uint8_t LCD_Write_Command(uint8_t command)
 {
 	Port_writePin(LCD_RS, LOW);
 	Port_writePin(LCD_EN, HIGH);
-	Port_writePort(PORT_0, 0x00, command);
+	Port_writeBus(PORT_0, 0x00, command);
 	Port_writePin(LCD_EN, LOW);
-	Port_writePort(PORT_0, 0x00, LOW_POWER_STATE);
+	Port_writeBus(PORT_0, 0x00, LOW_POWER_STATE);
 	
 	return(1);
 }
@@ -71,9 +71,9 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value)
 		Port_writePin(LCD_RS, HIGH);
 	}
 	Port_writePin(LCD_EN, HIGH);
-	Port_writePort(PORT_0, 0x00, value);
+	Port_writeBus(PORT_0, 0x00, value);
 	Port_writePin(LCD_EN, LOW);
-	Port_writePort(PORT_0, 0x00, LOW_POWER_STATE);
+	Port_writeBus(PORT_0, 0x00, LOW_POWER_STATE);
 	
 	return(1);
 }
