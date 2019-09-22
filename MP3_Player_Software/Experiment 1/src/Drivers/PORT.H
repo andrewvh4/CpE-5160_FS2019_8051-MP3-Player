@@ -44,6 +44,7 @@ uint8_t Port_readPin(uint8_t pin);
 #define per_RxD P3_1
 
 // Port 0
+#define PORT_0 0
 #define P0_0 0x00
 #define P0_1 0x01
 #define P0_2 0x02
@@ -54,6 +55,7 @@ uint8_t Port_readPin(uint8_t pin);
 #define P0_7 0x07
 
 // Port 1
+#define PORT_1 1
 #define P1_0 0x10
 #define P1_1 0x11
 #define P1_2 0x12
@@ -64,6 +66,7 @@ uint8_t Port_readPin(uint8_t pin);
 #define P1_7 0x17
 
 // Port 2
+#define PORT_2 2
 #define P2_0 0x20
 #define P2_1 0x21
 #define P2_2 0x22
@@ -74,6 +77,7 @@ uint8_t Port_readPin(uint8_t pin);
 #define P2_7 0x27
 
 // Port 3
+#define PORT_3 3
 #define P3_0 0x30
 #define P3_1 0x31
 #define P3_2 0x32

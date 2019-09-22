@@ -23,14 +23,13 @@ uint8_t LCD_Write_String(uint8_t* string, uint8_t line, uint8_t starting_char);
 uint8_t LCD_Init();
 
 uint8_t LCD_Write_Data(uint8_t dat);
-uint8_t LCD_Write_DataRS(uint8_t dat, uint8_t rs_value);
-uint8_t LCD_Write_Data(uint8_t dat);
-uint8_t LCD_Write_DataRS(uint8_t dat, uint8_t rs_value);
-
 uint8_t LCD_Write_Command(uint8_t command);
-uint8_t LCD_Write_Command(uint8_t command, uint8_t rs_value);
+uint8_t LCD_Write(uint8_t value, uint8_t rs_value);
 
-
+//------- Constants ------------------------------------------------
+#define COMMAND 0
+#define DATA 1
+#define LOW_POWER_STATE 0xff
 
 #endif
 
