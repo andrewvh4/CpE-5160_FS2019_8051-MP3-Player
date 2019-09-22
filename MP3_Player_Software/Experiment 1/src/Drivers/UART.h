@@ -14,6 +14,9 @@
 #ifndef _UART_H
 #define _UART_H
 
+#define SMOD1 (0)
+#define SPD   (1)
+
 // ------ Public function prototypes -------------------------------
 
 uint8_t UART_Init_9600();
