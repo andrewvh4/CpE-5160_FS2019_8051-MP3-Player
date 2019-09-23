@@ -38,7 +38,7 @@ uint8_t Port_readPin(uint8_t pin);
 #define LCD_D7 P0_7
 
 #define LCD_RS P3_5
-#define LCD_EN P3_7
+#define LCD_EN P3_6
 
 #define per_TxD P3_0
 #define per_RxD P3_1
