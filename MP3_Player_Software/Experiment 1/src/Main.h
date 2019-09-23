@@ -38,17 +38,17 @@
 //  6 - Various Infineon and Philips devices, etc.
 //  4 - Dallas 320, 520 etc.
 //  1 - Dallas 420, etc.
-#define OSC_PER_INST (6)
+#define OSC_PER_INST (12)
 
 #define SW1 P2_0
 #define SW2 P2_1
 #define SW3 P2_2
 #define SW4 P2_3
 
-#define REDLED P2_4
-#define YELLOWLED P2_5
-#define AMBERLED P2_6
-#define GREENLED P2_7
+#define RED_LED P2_4
+#define YELLOW_LED P2_5
+#define AMBER_LED P2_6
+#define GREEN_LED P2_7
 
 //------------------------------------------------------------------
 // SHOULD NOT NEED TO EDIT THE SECTIONS BELOW
