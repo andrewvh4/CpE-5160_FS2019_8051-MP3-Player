@@ -45,25 +45,33 @@ uint8_t Port_readPin(uint8_t pin)
 
 uint8_t Port_writePort0(uint8_t bits, uint8_t bitMask)
 {
-	P0 = (P0&bitMask)|bits;
+	static uint8_t portBits = 0x00;
+	portBits = (portBits&bitMask)|bits;
+	P0 = portBits;
 	return(1);
 }
 
 uint8_t Port_writePort1(uint8_t bits, uint8_t bitMask)
 {
-	P1 = (P1&bitMask)|bits;
+	static uint8_t portBits = 0x00;
+	portBits = (portBits&bitMask)|bits;
+	P1 = portBits;
 	return(1);
 }
 
 uint8_t Port_writePort2(uint8_t bits, uint8_t bitMask)
 {
-	P2 = (P2&bitMask)|bits;
+	static uint8_t portBits = 0x00;
+	portBits = (portBits&bitMask)|bits;
+	P2 = portBits;
 	return(1);
 }
 
 uint8_t Port_writePort3(uint8_t bits, uint8_t bitMask)
 {
-	P3 = (P3&bitMask)|bits;
+	static uint8_t portBits = 0x00;
+	portBits = (portBits&bitMask)|bits;
+	P3 = portBits;
 	return(1);
 }
 

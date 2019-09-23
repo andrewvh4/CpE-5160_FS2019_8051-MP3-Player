@@ -46,9 +46,9 @@
 #define SW4 P2_3
 
 #define REDLED P2_4
-#define GREENLED P2_5
-#define YELLOWLED P2_6
-#define AMBERLED P2_7
+#define YELLOWLED P2_5
+#define AMBERLED P2_6
+#define GREENLED P2_7
 
 //------------------------------------------------------------------
 // SHOULD NOT NEED TO EDIT THE SECTIONS BELOW
