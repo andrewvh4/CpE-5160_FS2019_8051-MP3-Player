@@ -29,7 +29,7 @@ uint8_t UART_Init_9600()
 	//3)Set BDRCON register
 	BDRCON = 0x1C | (SPD << 1);
 	
-	return 1;
+	return(0);
 }
 
 uint8_t UART_Transmit(uint8_t character)
@@ -43,7 +43,7 @@ uint8_t UART_Transmit(uint8_t character)
 	//Clear the TI bit to indicate that SBUF is full
 	TI = 0;
 
-	return character;
+	return(character);
 }
 
 uint8_t UART_Receive()
@@ -58,5 +58,5 @@ uint8_t UART_Receive()
 	//Clear the RI flag to indicate the value was read from SBUF
 	RI = 0;
 
-	return temp8;
+	return(temp8);
 }

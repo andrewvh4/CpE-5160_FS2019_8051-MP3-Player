@@ -12,7 +12,7 @@ CAUTION:
 ************************************************************************/
 uint8_t * code_memory_init(void)
 {
-   return code_mem;
+   return(code_mem);
 }
 
 
@@ -39,5 +39,5 @@ uint8_t * xdata_memory_init(void)
    xdata_mem[3]='t';
    xdata_mem[4]='a'; 
 
-   return xdata_mem;
+   return(xdata_mem);
 }
