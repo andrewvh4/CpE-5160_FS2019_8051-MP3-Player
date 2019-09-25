@@ -16,6 +16,7 @@ uint8_t Port_readPort3();
 
 uint8_t Port_writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask)
 {
+	//send write to specified port
 	if(bus == PORT_0) Port_writePort0(bits, bitMask);
 	if(bus == PORT_1) Port_writePort1(bits, bitMask);
 	if(bus == PORT_2) Port_writePort2(bits, bitMask);
@@ -28,14 +29,15 @@ uint8_t Port_writePin(uint8_t pin, uint8_t value)
 {
 	uint8_t port;
 	uint8_t setBit;
-	port = pin >> 4; //high nibble determines port number
-	setBit = (0x01 << (pin&0x0f));
+	port = pin >> 4; 								//high nibble determines port number
+	setBit = (0x01 << (pin&0x0f));	//Bitshift to set pin
 	Port_writeBus(port, value == HIGH? setBit : 0x00, ~setBit); //bitmask is ~setBit, buts to set is setBits or 0x00 
 	return(0);
 }
 
 uint8_t Port_readBus(uint8_t bus)
 {
+	//Read specified bus
 	if(bus == PORT_0) return(Port_readPort0());
 	if(bus == PORT_1) return(Port_readPort1());
 	if(bus == PORT_2) return(Port_readPort2());
@@ -44,9 +46,11 @@ uint8_t Port_readBus(uint8_t bus)
 }                              
 uint8_t Port_readPin(uint8_t pin)
 {
+	//Read bus (High Nibble) and preform bitmask (Low Nibble)
 	return(Port_readBus(pin>>4)&(0x01<<(pin&0x0F)));
 }
 
+//writePort for specific ports
 uint8_t Port_writePort0(uint8_t bits, uint8_t bitMask)
 {
 	static uint8_t port0Bits = 0xFF;
@@ -79,6 +83,7 @@ uint8_t Port_writePort3(uint8_t bits, uint8_t bitMask)
 	return(0);
 }
 
+//readPort for specific ports
 uint8_t Port_readPort0()
 {
 	return(P0);

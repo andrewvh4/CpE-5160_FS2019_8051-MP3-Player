@@ -11,14 +11,14 @@ uint8_t LCD_Write_String(uint8_t* string, uint8_t line)
 	LCD_Write_Command(line); //Set address to start of the line
 	Timing_delay_ms(1);
 	index = 0;
-	value = string[index];
+	value = string[index];	//Load Initial Value
 
-	while(value != '\0')
+	while(value != '\0')	//Loop until null termination
 	{
-		LCD_Write_Data(value);
+		LCD_Write_Data(value);	//Write character
 		Timing_delay_ms(1);
 		index ++;
-		value = string[index];
+		value = string[index];	//Get next value
 	}
 	
 	return(1);
@@ -37,35 +37,25 @@ uint8_t LCD_Init()
 	Timing_delay_ms(10);
 	LCD_Write_Command(0x0C); //Display on, cusor off
 	Timing_delay_ms(10);
-	LCD_Write_Command(0x01); 
+	LCD_Write_Command(0x01); //Display Clear
 	Timing_delay_ms(10);
-	LCD_Write_Command(0x06); 
+	LCD_Write_Command(0x06); //Entry mode set, increment
 	Timing_delay_ms(10);
 	return(1);
 }
 
 uint8_t LCD_Write_Data(uint8_t dat)
 {
-	Port_writePin(LCD_RS, HIGH);
-	Port_writePin(LCD_EN, HIGH);
-	Port_writeBus(PORT_0, dat, 0x00);
-	Port_writePin(LCD_EN, LOW);
-	Port_writeBus(PORT_0, LOW_POWER_STATE, 0x00);
-	
+	LCD_Write(dat, DATA); //Write as Data
 	return(1);
 }
 
 uint8_t LCD_Write_Command(uint8_t command)
 {
-	Port_writePin(LCD_RS, LOW);
-	Port_writePin(LCD_EN, HIGH);
-	Port_writeBus(PORT_0, command, 0x00);
-	Port_writePin(LCD_EN, LOW);
-	Port_writeBus(PORT_0, LOW_POWER_STATE, 0x00);
-	
+	LCD_Write(command, COMMAND); //Write as Command
 	return(1);
 }
-uint8_t LCD_Write(uint8_t value, uint8_t rs_value)
+uint8_t LCD_Write(uint8_t value, uint8_t rs_value) //Generic LCD Write command
 {
 	if(rs_value == COMMAND)
 	{
@@ -75,9 +65,9 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value)
 	{
 		Port_writePin(LCD_RS, HIGH);
 	}
-	Port_writePin(LCD_EN, HIGH);
-	Port_writeBus(PORT_0, value, 0x00);
-	Port_writePin(LCD_EN, LOW);
+	Port_writePin(LCD_EN, HIGH);					
+	Port_writeBus(PORT_0, value, 0x00);		//Send data
+	Port_writePin(LCD_EN, LOW);						//Latch Data
 	Port_writeBus(PORT_0, LOW_POWER_STATE, 0x00);
 	
 	return(1);

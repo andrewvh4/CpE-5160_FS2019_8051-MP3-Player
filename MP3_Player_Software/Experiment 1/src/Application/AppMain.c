@@ -31,19 +31,23 @@ uint8_t setup()
 	//LCD Init
 	LCD_Init();
 	Timing_delay_ms(1000);
-	Port_writePin(GREEN_LED, HIGH);
+	Port_writePin(GREEN_LED, HIGH);	//Indicates successful init
 	return(1);
 }
 
 uint8_t loop()
 {
+	//Laod string
 	uint8_t* LCD_String = "Test String";
 	
+	//Write String to LCD
 	LCD_Write_String(LCD_String, LINE_1);
 	LCD_Write_String(LCD_String, LINE_2);
 	
+	//Write String to Serial
 	printf(LCD_String);
 	
+	//Delay
 	Timing_delay_ms(1000);
 
 	return(1);
