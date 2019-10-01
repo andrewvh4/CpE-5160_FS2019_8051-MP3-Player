@@ -466,6 +466,26 @@
               <FileType>5</FileType>
               <FilePath>.\src\Drivers\Memory.h</FilePath>
             </File>
+            <File>
+              <FileName>SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\SPI.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Drivers\SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>SDCard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\SDCard.c</FilePath>
+            </File>
+            <File>
+              <FileName>SDCard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Modules\SDCard.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
