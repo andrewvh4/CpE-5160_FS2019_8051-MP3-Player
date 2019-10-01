@@ -21,7 +21,7 @@ uint8_t LCD_Write_String(uint8_t* string, uint8_t line)
 		value = string[index];	//Get next value
 	}
 	
-	return(1);
+	return(0);
 }
 
 uint8_t LCD_Init()
@@ -41,19 +41,19 @@ uint8_t LCD_Init()
 	Timing_delay_ms(10);
 	LCD_Write_Command(0x06); //Entry mode set, increment
 	Timing_delay_ms(10);
-	return(1);
+	return(0);
 }
 
 uint8_t LCD_Write_Data(uint8_t dat)
 {
 	LCD_Write(dat, DATA); //Write as Data
-	return(1);
+	return(0);
 }
 
 uint8_t LCD_Write_Command(uint8_t command)
 {
 	LCD_Write(command, COMMAND); //Write as Command
-	return(1);
+	return(0);
 }
 uint8_t LCD_Write(uint8_t value, uint8_t rs_value) //Generic LCD Write command
 {
@@ -70,5 +70,5 @@ uint8_t LCD_Write(uint8_t value, uint8_t rs_value) //Generic LCD Write command
 	Port_writePin(LCD_EN, LOW);						//Latch Data
 	Port_writeBus(PORT_0, LOW_POWER_STATE, 0x00);
 	
-	return(1);
+	return(0);
 }

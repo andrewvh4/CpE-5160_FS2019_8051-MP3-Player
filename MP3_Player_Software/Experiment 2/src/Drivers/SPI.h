@@ -4,26 +4,24 @@
 
   ------------------------------------------------------------------
 
-   Memory Header - Exp#2
+   SPI Header - Exp#
    
    Programmer(s): Anderw Van Horn, Jacob Lipina, David Hinton
    
    Date: 10/1/19
 
-   Description: Manages memory storage on 8051
+   Description: Manages SPI Transfers
 -------------------------------------------------------------------*/
 
-#ifndef _MEMORY_H
-#define _MEMORY_H
+#ifndef _SPI_H
+#define _SPI_H
 
 #include "../Main.h"
-#include "Port.h"
 
-void setXRAM(uint16_t XRAMSize);
+uint8_t SPI_Init(uint32_t clock_rate);
 
-#define XRAM_SIZE_256  (256)
-#define XRAM_SIZE_512  (512)
-#define XRAM_SIZE_768  (768)
-#define XRAM_SIZE_1024 (1024)
+uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value);
+
+#include "../Main.h"
 
 #endif
