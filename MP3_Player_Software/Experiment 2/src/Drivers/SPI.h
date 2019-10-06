@@ -19,9 +19,9 @@
 #include "../Main.h"
 
 uint8_t SPI_Init(uint32_t clock_rate);
-
 uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value);
 
-#include "../Main.h"
+#define CPOL 0
+#define CPHA 0
 
 #endif

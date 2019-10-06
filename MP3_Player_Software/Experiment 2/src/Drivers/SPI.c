@@ -1,3 +1,4 @@
+#include "../main.h"
 #include "SPI.h"
 
 uint8_t SPI_Init(uint32_t clock_rate)
@@ -23,7 +24,6 @@ uint8_t SPI_Init(uint32_t clock_rate)
 
 uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
 {
-	SPDAT = send_value;
 	uint16_t timeout = 0; 
 	uint8_t status = 0;
 	uint8_t error_flag = 0;
@@ -31,6 +31,7 @@ uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
 	uint8_t timeout_error = 1;
 	uint8_t SPI_error = 2;
 
+  SPDAT = send_value;
 	
 	do 
 	{ 
