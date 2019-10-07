@@ -29,6 +29,7 @@
 
 // Must include the appropriate microcontroller header file here
 #include "AT89C51RC2.h"
+#include <stdio.h>
 
 // Oscillator / resonator frequency (in Hz) e.g. (11059200UL)
 #define OSC_FREQ (18432000UL)
@@ -66,6 +67,8 @@ typedef long int32_t;
 #define Timer_0_Overflow 1
 #define Timer_1_Overflow 3
 #define Timer_2_Overflow 5
+
+#define SPI_CLOCKRATE 400000
 
 #endif
 

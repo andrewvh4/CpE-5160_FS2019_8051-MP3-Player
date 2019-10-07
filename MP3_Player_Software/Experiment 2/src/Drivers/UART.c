@@ -5,10 +5,6 @@
 
 uint8_t UART_Init_9600()
 {
-	return(UART_Init(9600));
-}
-uint8_t UART_Init_(uint8_t baudRate)
-{
 	//Initialize hardware registers (PCON, SCON, BDRCON)
 	PCON &= 0x3F;
 	PCON |= (SMOD1 << 7);
@@ -28,13 +24,14 @@ uint8_t UART_Init_(uint8_t baudRate)
 	BDRCON = 0;
 
 	//2) Set BRL value, reload value
-	BRL = (uint8_t)(256-(((1+(5*SPD))*(1+SMOD1)*OSC_FREQ)/(32*OSC_PER_INST*(uint32_t)baudRate)));
+	BRL = (uint8_t)(256-(((1+(5*SPD))*(1+SMOD1)*OSC_FREQ)/(32*OSC_PER_INST*(uint32_t)BAUD_RATE)));
 
 	//3)Set BDRCON register
 	BDRCON = 0x1C | (SPD << 1);
 	
 	return(0);
 }
+
 
 uint8_t UART_Transmit(uint8_t character)
 {

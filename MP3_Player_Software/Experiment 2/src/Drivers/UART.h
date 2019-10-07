@@ -26,6 +26,8 @@ uint8_t UART_Transmit(uint8_t character);
 
 uint8_t UART_Receive();
 
+#define BAUD_RATE (9600)
+
 #endif
 
 /*------------------------------------------------------------------*-

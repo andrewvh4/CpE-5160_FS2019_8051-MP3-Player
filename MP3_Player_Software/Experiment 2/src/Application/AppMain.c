@@ -7,6 +7,8 @@
 #include "../Drivers/memory_test.h"
 #include "print_bytes.h"
 #include "../Modules/LCD.h"
+#include "../Drivers/Memory.h"
+#include "../Drivers/SPI.h"
 
 uint8_t setup();
 uint8_t loop();
@@ -23,12 +25,26 @@ void main()
 
 uint8_t setup()
 {
-	//Set XRAM Size 1024
-	//Setup UART
-	//Setup SPI with clockrate 400k
-	//Setup SD
-	//Posibly set up PSI with clockrate of 25M
+	Port_writePin(GREEN_LED, LOW);
+	Port_writePin(YELLOW_LED, LOW);
 	
+	Port_writeBus(PORT_1, 0xFF, 0xFF);
+	
+	setXRAM(XRAM_SIZE_1024);
+	UART_Init_9600();
+	//printf("U\n");
+	if(SPI_ERROR_CLOCKRATE == SPI_Init(400000)) //Setup SPI with clockrate 400k
+	{
+		printf("SPIIE\n");
+	}
+	else
+	{
+		printf("I\n");
+	}
+	//Setup SD
+	//Posibly set up SPI with clockrate of 25M
+	Timing_delay_ms(100);
+	Port_writePin(GREEN_LED, HIGH);
 	return(0);
 }
 
@@ -37,7 +53,23 @@ uint8_t loop()
 	//Prompt user to enter a block number to be read
 	//Read a block
 	//Print memory
-
+	uint8_t return_value;
+	uint8_t error_code;
+	
+	Timing_delay_ms(1000);
+	
+	//SPI_setCSState(LOW);
+	
+	printf("L\n");
+	
+	error_code = SPI_Transfer(0xAC, &return_value);
+	
+	if(error_code == SPI_NO_ERROR)
+	{
+		printf("T\n");
+	}
+	
+	//SPI_setCSState(HIGH);
 	return(0);
 }
 
