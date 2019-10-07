@@ -7,16 +7,17 @@ uint8_t SD_Init()
 {
 	uint8_t error_status = NO_ERRORS;
 	uint8_t error_flag = NO_ERRORS;
+	uint8_t rec_array[1];
 	
 	if(error_status == NO_ERRORS)
 	{
-		Clear_SPI_bit(SD_select);
+		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD0, 0x00);
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(num_bytes, rec_array);
+			error_flag = SD_receiveResponse(1, rec_array);
 		}
-		Set_SPI_bit(SD_select);
+		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -29,13 +30,13 @@ uint8_t SD_Init()
 	
 	if(error_status == NO_ERRORS)
 	{
-		Clear_SPI_bit(SD_select);
+		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD8, 0x000001AA);
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(num_bytes, rec_array);
+			error_flag = SD_receiveResponse(1, rec_array);
 		}
-		Set_SPI_bit(SD_select);
+		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -77,38 +78,53 @@ uint8_t SD_Init()
 	return error_status; //Return error status
 }
 
-uint8_t SD_readBlock(uint16_t num_bytes, uint8_t * array_out)
+uint8_t SD_readBlock(uint16_t block_number, uint16_t num_bytes, uint8_t * array_out)
 {
 	uint8_t error_flag = NO_ERRORS;
 	uint8_t SPI_value = 0;
 	uint8_t index = 0;
+	uint8_t error_status = 0;
 	
-	Clear_SPI_pin(SD_select);
+	SPI_setCSState(LOW);
 	error_flag = SD_sendCommand(CMD17, block_number);
 	
 	do
 	{
-		SPI_Transfer(0xFF, &SPI_value);
-	}while(SPI_value == 0xFF);
+		error_status = SPI_Transfer(0xFF, &SPI_value);
+	}while((SPI_value == 0xFF) & (error_status== SPI_NO_ERROR));
 	
-	if(SPI_value == 0x00) //Verify R1 response
+	if(error_status==SPI_NO_ERROR)
 	{
-		do
+		if(SPI_value == 0x00) //Verify R1 response
 		{
-			SPI_Transfer(0xFF, &SPI_value);
-		}while(SPI_value == 0xFF);
-		
-		if(SPI_value == 0xFE) //Verify Data Start Token
-		{
-			for(index = 0; index < num_bytes; index++) //Read data into array
+			do
 			{
-				SPI_Transfer(0xFF, &SPI_value);
-				data_array[index] = SPI_value;
-			}
+				error_status = SPI_Transfer(0xFF, &SPI_value);
+			}while((SPI_value == 0xFF) & (error_status==SPI_NO_ERROR));
 			
-			SPI_Transfer(0xFF, &SPI_value);
-			SPI_Transfer(0xFF, &SPI_value);
-			SPI_Transfer(0xFF, &SPI_value); //Send final 0xFF
+			if(error_status==SPI_NO_ERROR)
+			{
+				if(SPI_value == 0xFE) //Verify Data Start Token
+				{
+					for(index = 0; index < num_bytes; index++) //Read data into array
+					{
+						SPI_Transfer(0xFF, &SPI_value);
+						array_out[index] = SPI_value;
+					}
+					
+					SPI_Transfer(0xFF, &SPI_value);
+					SPI_Transfer(0xFF, &SPI_value);
+					error_status = SPI_Transfer(0xFF, &SPI_value); //Send final 0xFF
+				}
+				else
+				{
+					error_status = SD_ERROR_INVALID_DATA_START_TOKEN;
+				}
+			}
+		}
+		else
+		{
+			error_status = SD_ERROR_BAD_RESPONSE;
 		}
 	}
 	
@@ -189,9 +205,9 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 		timeout++;
 	}while((SPI_value == 0xFF) && (timeout != 0) && (error_flag == NO_ERRORS));
 	
-	if(error_flag != NO_ERRORS)
+	if(error_flag != SPI_NO_ERROR)
 	{
-		return_value = SPI_ERROR;
+		return_value = error_flag;
 	}
 	else if(timeout == 0)
 	{
