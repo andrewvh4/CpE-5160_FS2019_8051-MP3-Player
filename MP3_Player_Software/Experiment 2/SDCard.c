@@ -11,13 +11,13 @@ uint8_t SD_Init()
 	
 	if(error_status == NO_ERRORS)
 	{
-		SPI_setCSState(LOW);
+		SPI_setCSState(0);
 		error_flag = SD_sendCommand(CMD0, 0x00);
 		if(error_flag == NO_ERRORS)
 		{
 			error_flag = SD_receiveResponse(1, rec_array);
 		}
-		SPI_setCSState(HIGH);
+		SPI_setCSState(1);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -30,13 +30,13 @@ uint8_t SD_Init()
 	
 	if(error_status == NO_ERRORS)
 	{
-		SPI_setCSState(LOW);
+		SPI_setCSState(0);
 		error_flag = SD_sendCommand(CMD8, 0x000001AA);
 		if(error_flag == NO_ERRORS)
 		{
 			error_flag = SD_receiveResponse(1, rec_array);
 		}
-		SPI_setCSState(HIGH);
+		SPI_setCSState(1);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -85,7 +85,7 @@ uint8_t SD_readBlock(uint16_t block_number, uint16_t num_bytes, uint8_t * array_
 	uint8_t index = 0;
 	uint8_t error_status = 0;
 	
-	SPI_setCSState(LOW);
+	SPI_setCSState(0);
 	error_flag = SD_sendCommand(CMD17, block_number);
 	
 	do

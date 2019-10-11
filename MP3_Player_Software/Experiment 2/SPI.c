@@ -72,6 +72,6 @@ uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
 
 uint8_t SPI_setCSState(uint8_t state)
 {
-	Port_writePin(CS, state);
+	CS = state;
 	return(0);
 }
