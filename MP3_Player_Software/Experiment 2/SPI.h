@@ -19,7 +19,7 @@
 #include "Main.h"
 #include "Port.h"
 
-uint8_t SPI_Init(uint32_t clock_rate);
+uint8_t SPI_Init(uint32_t clock_freq);
 uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value);
 uint8_t SPI_setCSState(uint8_t state);
 
