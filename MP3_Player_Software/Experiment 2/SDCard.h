@@ -16,18 +16,17 @@
 
 // ------ Public function prototypes -------------------------------
 uint8_t SD_Init();
-uint8_t SD_readBlock(uint16_t block_number, uint16_t num_bytes, uint8_t * array_out);
+uint8_t SD_readBlock(uint16_t num_bytes, uint8_t * array_out);
 uint8_t SD_sendCommand(uint8_t CMD_value, uint32_t argument);
-uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
+uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * response_out);
 
 //------- Constants ------------------------------------------------
-#define NO_ERRORS 0
-#define ILLEGAL_COMMAND 1
-#define SD_TIMEOUT_ERROR 3
-#define COMM_ERROR 4
-#define RESPONSE_ERROR 5
+#define SD_NO_ERROR 0
+#define SD_ERROR_ILLEGAL_COMMAND 1
+#define SD_ERROR_TIMEOUT 3
+#define SD_ERROR_COMM_ERROR 4
+#define SD_ERROR_RESPONSE 5
 #define SD_ERROR_INVALID_DATA_START_TOKEN 6 
-#define SD_ERROR_BAD_RESPONSE 7
 
 
 #define CMD0 0
