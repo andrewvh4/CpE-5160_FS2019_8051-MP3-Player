@@ -173,27 +173,24 @@ uint8_t SD_readBlock(uint16_t num_bytes, uint8_t * array_out)
 uint8_t SD_Init()
 {
 	uint8_t error_status = SD_NO_ERROR;
-	uint8_t spi_error_flag = SD_NO_ERROR;
+	uint8_t spi_error_flag = SPI_NO_ERROR;
 	uint8_t rec_array[1];
 	
-	if(error_status == SD_NO_ERROR)
+	SPI_setCSState(0);
+	spi_error_flag = SD_sendCommand(CMD0, 0x00);
+	if(spi_error_flag == SD_NO_ERROR)
 	{
-		SPI_setCSState(0);
-		spi_error_flag = SD_sendCommand(CMD0, 0x00);
-		if(spi_error_flag == SD_NO_ERROR)
-		{
-			spi_error_flag = SD_receiveResponse(1, rec_array);
-		}
-		SPI_setCSState(1);
-		if(spi_error_flag != SD_NO_ERROR)
-		{
-			error_status = spi_error_flag;
-		}
-		else if(rec_array[0] != 0x01)
-		{
-			error_status = SD_ERROR_RESPONSE;
-		}	
+		spi_error_flag = SD_receiveResponse(1, rec_array);
 	}
+	SPI_setCSState(1);
+	if(spi_error_flag != SD_NO_ERROR)
+	{
+		error_status = spi_error_flag;
+	}
+	else if(rec_array[0] != 0x01)
+	{
+		error_status = SD_ERROR_RESPONSE;
+	}	
 	
 	if(error_status == SD_NO_ERROR)
 	{
