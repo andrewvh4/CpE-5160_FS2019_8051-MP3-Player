@@ -16,7 +16,7 @@
 #ifndef _SPI_H
 #define _SPI_H
 
-#include "../Main.h"
+#include "Main.h"
 #include "Port.h"
 
 uint8_t SPI_Init(uint32_t clock_rate);

@@ -1,6 +1,6 @@
 #include "SDCard.h"
-#include "../Drivers/Port.h"
-#include "../Drivers/SPI.h"
+#include "Port.h"
+#include "SPI.h"
 
 
 uint8_t SD_Init()

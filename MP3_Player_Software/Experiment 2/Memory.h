@@ -16,7 +16,7 @@
 #ifndef _MEMORY_H
 #define _MEMORY_H
 
-#include "../Main.h"
+#include "Main.h"
 #include "Port.h"
 
 void setXRAM(uint16_t XRAMSize);

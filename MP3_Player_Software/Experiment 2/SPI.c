@@ -1,6 +1,7 @@
-#include "../main.h"
+#include "main.h"
 #include "SPI.h"
 #include "Uart.h"
+#include <stdio.h>
 
 uint8_t SPI_Init(uint32_t clock_rate)
 {

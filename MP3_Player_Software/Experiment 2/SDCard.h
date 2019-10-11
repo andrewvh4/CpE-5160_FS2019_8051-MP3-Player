@@ -10,7 +10,7 @@
 
    Description: Defines functions SD Card operation
 -*------------------------------------------------------------------*/
-#include "../Main.h"
+#include "Main.h"
 #ifndef _SDCard_H
 #define _SDCard_H
 
