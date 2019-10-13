@@ -18,6 +18,7 @@
 
 #include "../Main.h"
 #include "Port.h"
+#include "AT89C51RC2.h"
 
 uint8_t SPI_Init(uint32_t clock_rate);
 uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value);
@@ -25,7 +26,6 @@ uint8_t SPI_setCSState(uint8_t state);
 
 #define CPOL 0
 #define CPHA 0
-#define CS P1_4
 
 #define SPI_NO_ERROR 0 
 #define SPI_ERROR 1
@@ -33,5 +33,6 @@ uint8_t SPI_setCSState(uint8_t state);
 
 #define SPI_ERROR_CLOCKRATE 3
 
+sbit CS = P1^4;
 
 #endif

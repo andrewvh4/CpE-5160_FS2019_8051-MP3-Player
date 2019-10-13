@@ -28,7 +28,7 @@
     <TargetOption>
       <CLK51>40000000</CLK51>
       <OPTTT>
-        <gFlags>0</gFlags>
+        <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>1</RunSim>
         <RunTarget>0</RunTarget>
@@ -77,7 +77,29 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>0</CpuCode>
+      <CpuCode>255</CpuCode>
+      <Books>
+        <Book>
+          <Number>0</Number>
+          <Title>Architectural Overview</Title>
+          <Path>DATASHTS\ATMEL\C51_AO.PDF</Path>
+        </Book>
+        <Book>
+          <Number>1</Number>
+          <Title>Data Sheet</Title>
+          <Path>DATASHTS\ATMEL\AT89C51RB2_RC2_UM.PDF</Path>
+        </Book>
+        <Book>
+          <Number>2</Number>
+          <Title>Hardware Description</Title>
+          <Path>DATASHTS\ATMEL\C51_HD.PDF</Path>
+        </Book>
+        <Book>
+          <Number>3</Number>
+          <Title>Programmer's Guide</Title>
+          <Path>DATASHTS\ATMEL\C51_PG.PDF</Path>
+        </Book>
+      </Books>
       <DebugOpt>
         <uSim>1</uSim>
         <uTrg>0</uTrg>
@@ -122,7 +144,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -171,24 +193,24 @@
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
-      <FileType>1</FileType>
+      <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\exp_2_fall2019.c</PathWithFileName>
-      <FilenameWithoutPath>exp_2_fall2019.c</FilenameWithoutPath>
+      <PathWithFileName>.\STARTUP.A51</PathWithFileName>
+      <FilenameWithoutPath>STARTUP.A51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>2</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LCD_hardware_functions.c</PathWithFileName>
-      <FilenameWithoutPath>LCD_hardware_functions.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\AT89C51RC2.h</PathWithFileName>
+      <FilenameWithoutPath>AT89C51RC2.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -199,20 +221,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LCD_hardware_functions.h</PathWithFileName>
-      <FilenameWithoutPath>LCD_hardware_functions.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Main.h</PathWithFileName>
+      <FilenameWithoutPath>Main.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>4</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LCD_routines.c</PathWithFileName>
-      <FilenameWithoutPath>LCD_routines.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Application\print_bytes.h</PathWithFileName>
+      <FilenameWithoutPath>print_bytes.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -223,32 +245,32 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LCD_Routines.h</PathWithFileName>
-      <FilenameWithoutPath>LCD_Routines.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\memory_test.h</PathWithFileName>
+      <FilenameWithoutPath>memory_test.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>6</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LED_Outputs.c</PathWithFileName>
-      <FilenameWithoutPath>LED_Outputs.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Port.h</PathWithFileName>
+      <FilenameWithoutPath>Port.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>7</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
+      <FileType>1</FileType>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LED_Outputs.h</PathWithFileName>
-      <FilenameWithoutPath>LED_Outputs.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\memory_test.c</PathWithFileName>
+      <FilenameWithoutPath>memory_test.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -259,56 +281,56 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Long_Serial_In.c</PathWithFileName>
-      <FilenameWithoutPath>Long_Serial_In.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Application\print_bytes.c</PathWithFileName>
+      <FilenameWithoutPath>print_bytes.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>9</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Long_Serial_In.h</PathWithFileName>
-      <FilenameWithoutPath>Long_Serial_In.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\UART.c</PathWithFileName>
+      <FilenameWithoutPath>UART.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>10</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Timer0_hardware_delay_1ms.c</PathWithFileName>
-      <FilenameWithoutPath>Timer0_hardware_delay_1ms.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\UART.h</PathWithFileName>
+      <FilenameWithoutPath>UART.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>11</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Timer0_hardware_delay_1ms.h</PathWithFileName>
-      <FilenameWithoutPath>Timer0_hardware_delay_1ms.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Application\AppMain.c</PathWithFileName>
+      <FilenameWithoutPath>AppMain.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>12</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\AT89C51RC2.h</PathWithFileName>
-      <FilenameWithoutPath>AT89C51RC2.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Timing.c</PathWithFileName>
+      <FilenameWithoutPath>Timing.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -319,8 +341,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Main.h</PathWithFileName>
-      <FilenameWithoutPath>Main.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Timing.h</PathWithFileName>
+      <FilenameWithoutPath>Timing.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -331,8 +353,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Memory.c</PathWithFileName>
-      <FilenameWithoutPath>Memory.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Modules\LCD.c</PathWithFileName>
+      <FilenameWithoutPath>LCD.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -343,20 +365,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Memory.h</PathWithFileName>
-      <FilenameWithoutPath>Memory.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Modules\LCD.h</PathWithFileName>
+      <FilenameWithoutPath>LCD.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>16</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
+      <FileType>1</FileType>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\PORT.H</PathWithFileName>
-      <FilenameWithoutPath>PORT.H</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Port.c</PathWithFileName>
+      <FilenameWithoutPath>Port.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -367,8 +389,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\print_bytes.c</PathWithFileName>
-      <FilenameWithoutPath>print_bytes.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Memory.c</PathWithFileName>
+      <FilenameWithoutPath>Memory.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -379,8 +401,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\print_bytes.h</PathWithFileName>
-      <FilenameWithoutPath>print_bytes.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\Memory.h</PathWithFileName>
+      <FilenameWithoutPath>Memory.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -391,8 +413,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\SDCard.c</PathWithFileName>
-      <FilenameWithoutPath>SDCard.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\SPI.c</PathWithFileName>
+      <FilenameWithoutPath>SPI.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -403,8 +425,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\SDCard.h</PathWithFileName>
-      <FilenameWithoutPath>SDCard.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Drivers\SPI.h</PathWithFileName>
+      <FilenameWithoutPath>SPI.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -415,8 +437,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\SPI.c</PathWithFileName>
-      <FilenameWithoutPath>SPI.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\Modules\SDCard.c</PathWithFileName>
+      <FilenameWithoutPath>SDCard.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -427,32 +449,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\SPI.h</PathWithFileName>
-      <FilenameWithoutPath>SPI.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>23</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\UART.c</PathWithFileName>
-      <FilenameWithoutPath>UART.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>24</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\UART.h</PathWithFileName>
-      <FilenameWithoutPath>UART.h</FilenameWithoutPath>
+      <PathWithFileName>.\src\Modules\SDCard.h</PathWithFileName>
+      <FilenameWithoutPath>SDCard.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

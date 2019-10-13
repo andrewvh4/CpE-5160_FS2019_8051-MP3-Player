@@ -1,36 +1,32 @@
-#include "main.h"
+#include "../main.h"
 #include "SPI.h"
 #include "Uart.h"
-#include <stdio.h>
 
-uint8_t SPI_Init(uint32_t clock_freq)
+uint8_t SPI_Init(uint32_t clock_rate)
 {
 	uint16_t divider; 
 	uint8_t return_value = 0;
 	
-	divider = (OSC_FREQ * 6) / (OSC_PER_INST * clock_freq); //For some reason this equation returns 46.08 when hand-calculated
+	divider = (OSC_FREQ * 12) / (OSC_PER_INST * clock_rate); //For some reason this equation returns 46.08 when hand-calculated
 	
-	UART_Transmit(divider);
-
-	divider = 3; //Fix this bug when not tired
-	
-	if(divider<=2)
-  {
-     SPCON=0x70;
-  }
-  else if((divider>2)&&(divider<=4))
-  {
-     SPCON=0x71;
-  }
-  else if((divider>4)&&(divider<=8))
-  {
-     SPCON=0x72;
-  }
-  else if((divider>8)&&(divider<=16))
-  {
-     SPCON=0x73;
-  } 
-  else if((divider>16)&&(divider<=32))
+	//Not enough memory to run this????!!!
+	//if(divider<=2)
+  //{
+  //   SPCON=0x70;
+  //}
+  //else if((divider>2)&&(divider<=4))
+  //{
+  //   SPCON=0x71;
+  //}
+  //else if((divider>4)&&(divider<=8))
+  //{
+  //   SPCON=0x72;
+  //}
+  //else if((divider>8)&&(divider<=16))
+  //{
+  //   SPCON=0x73;
+  //} 
+  if((divider>16)&&(divider<=32))
   {
      SPCON=0xF0;
   }
@@ -47,14 +43,15 @@ uint8_t SPI_Init(uint32_t clock_freq)
     return_value = SPI_ERROR_CLOCKRATE; 
   }
 	
-	SPCON = SPCON | (CPOL << 3) | (CPHA << 2);
+	SPCON = SPCON | (CPOL << 3) | (CPHA << 2);	
+	SPSTA = SPSTA | 0x80;
 	
 	return return_value;
 }
 
 uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
 {
-	uint8_t timeout = 0; 
+	uint16_t timeout = 0; 
 	uint8_t status = 0;
 	uint8_t error_flag = 0;
 	
@@ -87,6 +84,6 @@ uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
 
 uint8_t SPI_setCSState(uint8_t state)
 {
-	CS = state;
+	CS = (state==HIGH)?1:0;
 	return(0);
 }

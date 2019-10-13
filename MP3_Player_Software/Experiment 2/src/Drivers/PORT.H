@@ -17,6 +17,7 @@
 #define _PORT_H
 
 #include "../Main.h"
+#include "AT89C51RC2.h"
 
 
 uint8_t Port_writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);

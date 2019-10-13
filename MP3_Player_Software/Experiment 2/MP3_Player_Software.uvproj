@@ -377,124 +377,114 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>exp_2_fall2019.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\exp_2_fall2019.c</FilePath>
-            </File>
-            <File>
-              <FileName>LCD_hardware_functions.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LCD_hardware_functions.c</FilePath>
-            </File>
-            <File>
-              <FileName>LCD_hardware_functions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LCD_hardware_functions.h</FilePath>
-            </File>
-            <File>
-              <FileName>LCD_routines.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LCD_routines.c</FilePath>
-            </File>
-            <File>
-              <FileName>LCD_Routines.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LCD_Routines.h</FilePath>
-            </File>
-            <File>
-              <FileName>LED_Outputs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LED_Outputs.c</FilePath>
-            </File>
-            <File>
-              <FileName>LED_Outputs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LED_Outputs.h</FilePath>
-            </File>
-            <File>
-              <FileName>Long_Serial_In.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Long_Serial_In.c</FilePath>
-            </File>
-            <File>
-              <FileName>Long_Serial_In.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Long_Serial_In.h</FilePath>
-            </File>
-            <File>
-              <FileName>Timer0_hardware_delay_1ms.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Timer0_hardware_delay_1ms.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer0_hardware_delay_1ms.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Timer0_hardware_delay_1ms.h</FilePath>
+              <FileName>STARTUP.A51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\STARTUP.A51</FilePath>
             </File>
             <File>
               <FileName>AT89C51RC2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\AT89C51RC2.h</FilePath>
+              <FilePath>.\src\Drivers\AT89C51RC2.h</FilePath>
             </File>
             <File>
               <FileName>Main.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Main.h</FilePath>
-            </File>
-            <File>
-              <FileName>Memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>Memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>PORT.H</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\PORT.H</FilePath>
-            </File>
-            <File>
-              <FileName>print_bytes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\print_bytes.c</FilePath>
+              <FilePath>.\src\Main.h</FilePath>
             </File>
             <File>
               <FileName>print_bytes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\print_bytes.h</FilePath>
+              <FilePath>.\src\Application\print_bytes.h</FilePath>
             </File>
             <File>
-              <FileName>SDCard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SDCard.c</FilePath>
-            </File>
-            <File>
-              <FileName>SDCard.h</FileName>
+              <FileName>memory_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\SDCard.h</FilePath>
+              <FilePath>.\src\Drivers\memory_test.h</FilePath>
             </File>
             <File>
-              <FileName>SPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SPI.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPI.h</FileName>
+              <FileName>Port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\SPI.h</FilePath>
+              <FilePath>.\src\Drivers\Port.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\memory_test.c</FilePath>
+            </File>
+            <File>
+              <FileName>print_bytes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Application\print_bytes.c</FilePath>
             </File>
             <File>
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\UART.c</FilePath>
+              <FilePath>.\src\Drivers\UART.c</FilePath>
             </File>
             <File>
               <FileName>UART.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\UART.h</FilePath>
+              <FilePath>.\src\Drivers\UART.h</FilePath>
+            </File>
+            <File>
+              <FileName>AppMain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Application\AppMain.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Timing.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Drivers\Timing.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\LCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Modules\LCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>Port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Port.c</FilePath>
+            </File>
+            <File>
+              <FileName>Memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>Memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Drivers\Memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\SPI.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Drivers\SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>SDCard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\SDCard.c</FilePath>
+            </File>
+            <File>
+              <FileName>SDCard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\Modules\SDCard.h</FilePath>
             </File>
           </Files>
         </Group>

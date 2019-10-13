@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../Main.h"
 #include "../Drivers/Port.h"
 #include <stdio.h>
 #include "../Drivers/UART.h"
@@ -35,11 +35,11 @@ uint8_t setup()
 	//printf("U\n");
 	if(SPI_ERROR_CLOCKRATE == SPI_Init(400000)) //Setup SPI with clockrate 400k
 	{
-		printf("SPIIE\n");
+		//printf("SPIIE\n");
 	}
 	else
 	{
-		printf("I\n");
+		//printf("I\n");
 	}
 	//Setup SD
 	//Posibly set up SPI with clockrate of 25M
@@ -58,18 +58,18 @@ uint8_t loop()
 	
 	Timing_delay_ms(1000);
 	
-	//SPI_setCSState(LOW);
+	SPI_setCSState(LOW);
 	
-	printf("L\n");
+	//printf("L\n");
 	
 	error_code = SPI_Transfer(0xAC, &return_value);
 	
 	if(error_code == SPI_NO_ERROR)
 	{
-		printf("T\n");
+		//printf("T\n");
 	}
 	
-	//SPI_setCSState(HIGH);
+	SPI_setCSState(HIGH);
 	return(0);
 }
 
