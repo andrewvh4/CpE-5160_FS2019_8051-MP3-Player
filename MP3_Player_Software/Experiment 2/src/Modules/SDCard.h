@@ -35,5 +35,6 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
 #define CMD8 8
 #define CMD17 17
 #define CMD58 58
+#define CMD55 55
 
 #endif
