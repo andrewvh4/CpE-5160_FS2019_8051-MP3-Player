@@ -55,14 +55,17 @@ uint8_t loop()
 	//Print memory
 	uint8_t return_value;
 	uint8_t error_code;
+	static uint8_t counter = 30;
 	
+	
+	printf("\nLoop:%d", counter);
+
 	Timing_delay_ms(1000);
-	
+
 	SPI_setCSState(LOW);
 	
-	//printf("L\n");
-	
-	error_code = SPI_Transfer(0xAC, &return_value);
+	error_code = SPI_Transfer(counter, &return_value);
+	counter = counter +1;
 	
 	if(error_code == SPI_NO_ERROR)
 	{

@@ -10,23 +10,23 @@ uint8_t SPI_Init(uint32_t clock_rate)
 	divider = (OSC_FREQ * 12) / (OSC_PER_INST * clock_rate); //For some reason this equation returns 46.08 when hand-calculated
 	
 	//Not enough memory to run this????!!!
-	//if(divider<=2)
-  //{
-  //   SPCON=0x70;
-  //}
-  //else if((divider>2)&&(divider<=4))
-  //{
-  //   SPCON=0x71;
-  //}
-  //else if((divider>4)&&(divider<=8))
-  //{
-  //   SPCON=0x72;
-  //}
-  //else if((divider>8)&&(divider<=16))
-  //{
-  //   SPCON=0x73;
-  //} 
-  if((divider>16)&&(divider<=32))
+  if(divider<=2)
+  {
+     SPCON=0x70;
+  }
+  else if((divider>2)&&(divider<=4))
+  {
+     SPCON=0x71;
+  }
+  else if((divider>4)&&(divider<=8))
+  {
+     SPCON=0x72;
+  }
+  else if((divider>8)&&(divider<=16))
+  {
+     SPCON=0x73;
+  } 
+  else if((divider>16)&&(divider<=32))
   {
      SPCON=0xF0;
   }
