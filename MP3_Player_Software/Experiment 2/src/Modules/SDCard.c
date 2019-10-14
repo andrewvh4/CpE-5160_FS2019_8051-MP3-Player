@@ -1,7 +1,8 @@
 #include "SDCard.h"
 #include "../Drivers/Port.h"
 #include "../Drivers/SPI.h"
-
+#include "../Drivers/Timing.h"
+#include "../Main.h"
 
 uint8_t SD_Init()
 {
@@ -16,7 +17,7 @@ uint8_t SD_Init()
 	for(index = 0; index < SCK_INIT_BYTES; index++) //Apply at least 74 clock pulses to SCK pin; 
 	{
 		SPI_Transfer(0xFF, 0x00); //80 pulses are applied when 10 bytes are sent through the SPI port.
-		delay(10);
+		Timing_delay_ms(10);
 	}
 	
 	if(error_status == NO_ERRORS)
@@ -116,7 +117,7 @@ uint8_t SD_Init()
 			}	
 		}
 		timeout++;
-	while(something ||(timeout==0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
+	}while(something ||(timeout==0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
 	
 	//Set nCS
 	//Send 74 clock cycles on SCK
