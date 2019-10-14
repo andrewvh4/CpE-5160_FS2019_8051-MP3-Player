@@ -27,7 +27,6 @@ uint8_t SD_Init()
 		{
 			error_flag = SD_receiveResponse(1, rec_array);
 		}
-		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -35,7 +34,8 @@ uint8_t SD_Init()
 		else if(rec_array[0] != 0x01)
 		{
 			error_status = RESPONSE_ERROR;
-		}	
+		}
+		SPI_setCSState(HIGH);
 	}
 	
 	if(error_status == NO_ERRORS)
@@ -46,7 +46,6 @@ uint8_t SD_Init()
 		{
 			error_flag = SD_receiveResponse(1, rec_array); //Recieve R7 response
 		}
-		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -54,7 +53,8 @@ uint8_t SD_Init()
 		else if(rec_array[0] != 0x01)
 		{
 			error_status = RESPONSE_ERROR;
-		}	
+		}
+		SPI_setCSState(HIGH);
 	}
 	
 	if(error_status == NO_ERRORS)
@@ -65,7 +65,6 @@ uint8_t SD_Init()
 		{
 			error_flag = SD_receiveResponse(1, rec_array); //Recieve R3 response
 		}
-		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
@@ -73,7 +72,8 @@ uint8_t SD_Init()
 		else if(rec_array[0] != 0x01)
 		{
 			error_status = RESPONSE_ERROR;
-		}	
+		}
+		SPI_setCSState(HIGH);
 	}
 	
 	do
@@ -100,7 +100,7 @@ uint8_t SD_Init()
 		if(error_status == NO_ERRORS)
 		{
 			//nCS is already low
-			error_flag = SD_sendCommand(CMD55, 0x00); //Now send ACMD41 with arg bit 30 set to '1'
+			error_flag = SD_sendCommand(ACMD41, 0x00); //Now send ACMD41 with arg bit 30 set to '1'
 			if(error_flag == NO_ERRORS)
 			{
 				error_flag = SD_receiveResponse(1, rec_array); //Recieve R1 response
