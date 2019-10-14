@@ -41,6 +41,9 @@ uint8_t setup()
 	{
 		//printf("I\n");
 	}
+
+	printf("SD Init:%h",SD_Init());
+
 	//Setup SD
 	//Posibly set up SPI with clockrate of 25M
 	Timing_delay_ms(100);

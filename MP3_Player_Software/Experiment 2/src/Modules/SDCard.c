@@ -117,8 +117,9 @@ uint8_t SD_Init()
 			}	
 		}
 		timeout++;
-	}while(1);//something ||(timeout==0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
+	}while((rec_array!=R1)&&(timeout!=0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
 	
+	if(timeout == 0) error_status == SD_TIMEOUT_ERROR;
 	//Set nCS
 	//Send 74 clock cycles on SCK
 	
