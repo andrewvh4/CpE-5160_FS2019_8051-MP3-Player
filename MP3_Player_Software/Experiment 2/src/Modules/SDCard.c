@@ -4,148 +4,172 @@
 #include "../Drivers/Timing.h"
 #include "../Main.h"
 
+uint8_t SD_Card_Type
+
 uint8_t SD_Init()
 {
 	uint8_t error_status = NO_ERRORS;
 	uint8_t error_flag = NO_ERRORS;
-	uint8_t rec_array[1];
 	uint8_t index = 0;
 	uint16_t timeout = 1;
+	uint8_t SPI_Return;
+	uint8_t response[8];
+	uint32_t argument;
 	
+	SD_Card_Type=CARD_TYPE_UNKNOWN;
+	
+	printf("SD Initialization...\n");
 	//set SPI to clock rate of 400KHz or less; This should already be done with SPI_Init
 	SPI_setCSState(HIGH); //nCS pin high
 	for(index = 0; index < SCK_INIT_BYTES; index++) //Apply at least 74 clock pulses to SCK pin; 
 	{
-		SPI_Transfer(0xFF, 0x00); //80 pulses are applied when 10 bytes are sent through the SPI port.
-		Timing_delay_ms(10);
+		error_flag = SPI_Transfer(0xFF, &SPI_Return); //80 pulses are applied when 10 bytes are sent through the SPI port.
 	}
 	
+	printf("SD: 80 Pulses\n")
+	
+	SPI_setCSState(LOW); //nCS pin low
+	
+	//Send and Check CMD 0
 	if(error_status == NO_ERRORS)
 	{
-		SPI_setCSState(LOW); //nCS pin low
+		printf("SD: Sending CMD0\n");
+		
 		error_flag = SD_sendCommand(CMD0, 0x00); //send CMD0 with argument 0x00
+		
+		
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(1, rec_array);
+			error_flag = SD_receiveResponse(1, response);
+			printf("Response = %2.2bX\n", response[0]);
 		}
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
 		}
-		else if(rec_array[0] != 0x01)
-		{
-			error_status = RESPONSE_ERROR;
-		}
 		SPI_setCSState(HIGH);
 	}
 	
+	//Send and Check CMD 8
 	if(error_status == NO_ERRORS)
 	{
+		printf("SD: Sending CMD8\n");
 		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD8, 0x000001AA); //send CMD8 with argument 0x000001AA
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(1, rec_array); //Recieve R7 response
-		}
-		if(error_flag != NO_ERRORS)
-		{
-			error_status = error_flag;
-		}
-		else if(rec_array[0] != 0x01)
-		{
-			error_status = RESPONSE_ERROR;
-		}
-		SPI_setCSState(HIGH);
+			error_flag = SD_receiveResponse(5, &response); //Recieve R7 response
+			if(error_flag != NO_ERRORS)
+			{
+				printf("Error Response = %2.2bX\n", response[0]);
+				if((error_flag==response_error)&&(response[0]==0x05))
+				{
+					error_status=no_errors;
+					SD_Card_Type=CARD_TYPE_STANDARD_CAPACITY;
+					printf("Version 1 SD Card detected.\n");
+					printf("Standard Capacity Card detected.\n");
+				 }
+				 else
+				 {
+					error_status=error_flag;
+				 }
+			}
+			else
+			{
+				printf("Response = ");
+				for(index=0;index<5;index++)
+				{   
+					printf("%2.2bX ",response[index]);
+				}
+				printf("\n")
+				if(response[4]!=0xAA)
+				{
+					error_flag=SD_ERROR_RESPONSE;
+					printf("Response Error\n");
+				}
+				SD_Card_Type=CARD_TYPE_VERSION_2;
+				printf("Version 2 SD Card detected.\n");
+			}
+		}	
+		SPI_setCSState(HIGH);		
 	}
 	
+	//Send and Check CMD58
 	if(error_status == NO_ERRORS)
 	{
+		printf("SD: Sending CMD 58\n");
 		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD58, 0x00); //send CMD58 with argument 0x00
+		
+		
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(1, rec_array); //Recieve R3 response
+			error_flag = SD_receiveResponse(5, &response); //Recieve R3 response
+			printf("Response = ");
+			for(index=0;index<5;index++)
+			{   
+				 printf("%2.2bX ",response[index]);
+			}
+			printf("\n");
+			if((response[2]&0xFC)!=0xFC)
+			{
+			   error_flag=SD_ERROR_VOLTAGE;
+			   printf("Voltage Error\n");
+			}
 		}
 		if(error_flag != NO_ERRORS)
 		{
 			error_status = error_flag;
 		}
-		else if(rec_array[0] != 0x01)
-		{
-			error_status = RESPONSE_ERROR;
-		}
 		SPI_setCSState(HIGH);
 	}
 	
-	do
-	{
-		if(error_status == NO_ERRORS)
+	if(error_status==no_errors)
+    {
+		if(SD_Card_Type==Ver2)
+		{
+			argument=0x40000000;
+		}
+		else
+		{
+			argument=0;
+		}
+	 
+		timeout = 0;
+		printf("SD: Sending ACMD41\n");
+		do
 		{
 			SPI_setCSState(LOW);
 			error_flag = SD_sendCommand(CMD55, 0x00); //send ACMD41 which must be preceeded by CMD55 with arg 0x00
 			if(error_flag == NO_ERRORS)
 			{
-				error_flag = SD_receiveResponse(1, rec_array); //Recieve R1 response
+				error_flag = SD_receiveResponse(1, &response); //Recieve R1 response
 			}
-			//nCS remains low for both CMD55 and ACMD41 and the responses
-			if(error_flag != NO_ERRORS)
+			if((response[0]==0x01)||(response[0]==0x00))
 			{
-				error_status = error_flag;
+				error_flag=SEND_COMMAND(ACMD41,argument);
 			}
-			else if(rec_array[0] != 0x01)
+			if(error_flag==no_errors) 
 			{
-				error_status = RESPONSE_ERROR;
-			}	
+				SD_receiveResponse(1,response);
+			}
+			SPI_setCSState(HIGH); 
+			timeout++;
+			if(timeout==0) error_flag=SD_ERROR_TIMEOUT;
+		}while(((response[0]&0x01)==0x01)&&(error_flag==NO_ERRORS));
+		
+		printf("Response = %2.2bX\n",response[0]);
+		printf("Timeout = %2.2bX\n",timeout);
+		
+		if(error_flag!=no_errors)
+		{		
+			error_status=error_flag;
 		}
 		
-		if(error_status == NO_ERRORS)
-		{
-			//nCS is already low
-			error_flag = SD_sendCommand(ACMD41, 0x00); //Now send ACMD41 with arg bit 30 set to '1'
-			if(error_flag == NO_ERRORS)
-			{
-				error_flag = SD_receiveResponse(1, rec_array); //Recieve R1 response
-			}
-			SPI_setCSState(HIGH);
-			if(error_flag != NO_ERRORS)
-			{
-				error_status = error_flag;
-			}
-			else if(rec_array[0] != 0x01)
-			{
-				error_status = RESPONSE_ERROR;
-			}	
-		}
-		timeout++;
-	}while((rec_array!=R1)&&(timeout!=0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
+	}
 	
-	if(timeout == 0) error_status == SD_TIMEOUT_ERROR;
-	//Set nCS
-	//Send 74 clock cycles on SCK
-	
-	//Clear nCS
-	//Send CMD0
-	//Verify R1 response
-	//Set nCS
-	//Handle response errors
-	
-	//Set nCS
-	//Clear nCS
-	//Send CMD 8
-	//Verify R7 response
-	//Set nCS
-	//Handle response errors
-	
-	//Clear nCS
-	//Send CMD 58
-	//Verify R3 response
-	//Set nCS
-	//Handle response errors
-	
-	//Clear nCS
-	//Send ACMD41
-	//Do ACMD41 logic
-	
+	printf("Error Status:%2.2bX\n", error_status);
+ 
 	return error_status; //Return error status
 }
 

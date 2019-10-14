@@ -22,22 +22,27 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
 
 //------- Constants ------------------------------------------------
 #define NO_ERRORS 0
-#define ILLEGAL_COMMAND 1
-#define SD_TIMEOUT_ERROR 3
-#define COMM_ERROR 4
-#define RESPONSE_ERROR 5
+#define SD_ERROR_ILLEGAL_COMMAND 1
+#define SD_ERROR_TIMEOUT 3
+#define SD_ERROR_COMM 4
+#define SD_ERROR_RESPONSE 5
 #define SD_ERROR_INVALID_DATA_START_TOKEN 6 
 #define SD_ERROR_BAD_RESPONSE 7
+#define SD_ERROR_VOLTAGE 8
+
 #define SCK_INIT_BYTES 10
 
 
 #define CMD0 0
 #define CMD8 8
 #define CMD17 17
-#define ACMD41 41
 #define CMD55 55
 #define CMD58 58
+#define ACMD41 41
 
-#define R1 0x00
+#define CARD_TYPE_UNKNOWN (0xFF)
+#define CARD_TYPE_STANDARD_CAPACITY (9)
+#define CARD_TYPE VERSION_2 (0x02)
+#define CARD_TYPE_HIGH_CAPACITY (0) 
 
 #endif
