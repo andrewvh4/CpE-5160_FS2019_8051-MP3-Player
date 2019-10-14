@@ -28,10 +28,12 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
 #define RESPONSE_ERROR 5
 #define SD_ERROR_INVALID_DATA_START_TOKEN 6 
 #define SD_ERROR_BAD_RESPONSE 7
+#define SCK_INIT_BYTES 10
 
 
 #define CMD0 0
 #define CMD8 8
 #define CMD17 17
+#define CMD58 58
 
 #endif

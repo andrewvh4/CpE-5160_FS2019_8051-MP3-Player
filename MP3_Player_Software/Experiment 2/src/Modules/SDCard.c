@@ -8,11 +8,21 @@ uint8_t SD_Init()
 	uint8_t error_status = NO_ERRORS;
 	uint8_t error_flag = NO_ERRORS;
 	uint8_t rec_array[1];
+	uint8_t index = 0;
+	uint16_t timeout = 1;
+	
+	//set SPI to clock rate of 400KHz or less; This should already be done with SPI_Init
+	SPI_setCSState(HIGH); //nCS pin high
+	for(index = 0; index < SCK_INIT_BYTES; index++) //Apply at least 74 clock pulses to SCK pin; 
+	{
+		SPI_Transfer(0xFF, 0x00); //80 pulses are applied when 10 bytes are sent through the SPI port.
+		delay(10);
+	}
 	
 	if(error_status == NO_ERRORS)
 	{
-		SPI_setCSState(LOW);
-		error_flag = SD_sendCommand(CMD0, 0x00);
+		SPI_setCSState(LOW); //nCS pin low
+		error_flag = SD_sendCommand(CMD0, 0x00); //send CMD0 with argument 0x00
 		if(error_flag == NO_ERRORS)
 		{
 			error_flag = SD_receiveResponse(1, rec_array);
@@ -31,10 +41,10 @@ uint8_t SD_Init()
 	if(error_status == NO_ERRORS)
 	{
 		SPI_setCSState(LOW);
-		error_flag = SD_sendCommand(CMD8, 0x000001AA);
+		error_flag = SD_sendCommand(CMD8, 0x000001AA); //send CMD8 with argument 0x000001AA
 		if(error_flag == NO_ERRORS)
 		{
-			error_flag = SD_receiveResponse(1, rec_array);
+			error_flag = SD_receiveResponse(1, rec_array); //Recieve R7 response
 		}
 		SPI_setCSState(HIGH);
 		if(error_flag != NO_ERRORS)
@@ -46,6 +56,67 @@ uint8_t SD_Init()
 			error_status = RESPONSE_ERROR;
 		}	
 	}
+	
+	if(error_status == NO_ERRORS)
+	{
+		SPI_setCSState(LOW);
+		error_flag = SD_sendCommand(CMD58, 0x00); //send CMD58 with argument 0x00
+		if(error_flag == NO_ERRORS)
+		{
+			error_flag = SD_receiveResponse(1, rec_array); //Recieve R3 response
+		}
+		SPI_setCSState(HIGH);
+		if(error_flag != NO_ERRORS)
+		{
+			error_status = error_flag;
+		}
+		else if(rec_array[0] != 0x01)
+		{
+			error_status = RESPONSE_ERROR;
+		}	
+	}
+	
+	do
+	{
+		if(error_status == NO_ERRORS)
+		{
+			SPI_setCSState(LOW);
+			error_flag = SD_sendCommand(CMD55, 0x00); //send ACMD41 which must be preceeded by CMD55 with arg 0x00
+			if(error_flag == NO_ERRORS)
+			{
+				error_flag = SD_receiveResponse(1, rec_array); //Recieve R1 response
+			}
+			//nCS remains low for both CMD55 and ACMD41 and the responses
+			if(error_flag != NO_ERRORS)
+			{
+				error_status = error_flag;
+			}
+			else if(rec_array[0] != 0x01)
+			{
+				error_status = RESPONSE_ERROR;
+			}	
+		}
+		
+		if(error_status == NO_ERRORS)
+		{
+			//nCS is already low
+			error_flag = SD_sendCommand(CMD55, 0x00); //Now send ACMD41 with arg bit 30 set to '1'
+			if(error_flag == NO_ERRORS)
+			{
+				error_flag = SD_receiveResponse(1, rec_array); //Recieve R1 response
+			}
+			SPI_setCSState(HIGH);
+			if(error_flag != NO_ERRORS)
+			{
+				error_status = error_flag;
+			}
+			else if(rec_array[0] != 0x01)
+			{
+				error_status = RESPONSE_ERROR;
+			}	
+		}
+		timeout++;
+	while(something ||(timeout==0));//Repeatedly send CMD55 and ACMD41 until R1 Response unit SD card is active or a timeout occurs.
 	
 	//Set nCS
 	//Send 74 clock cycles on SCK
@@ -72,8 +143,6 @@ uint8_t SD_Init()
 	//Clear nCS
 	//Send ACMD41
 	//Do ACMD41 logic
-	
-	
 	
 	return error_status; //Return error status
 }
