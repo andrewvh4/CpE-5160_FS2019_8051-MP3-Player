@@ -42,7 +42,7 @@ uint8_t setup()
 		//printf("I\n");
 	}
 
-	printf("SD Init:%h",SD_Init());
+	printf("SD Init:%2.2bX\n",SD_Init());
 
 	//Setup SD
 	//Posibly set up SPI with clockrate of 25M
@@ -61,7 +61,7 @@ uint8_t loop()
 	static uint8_t counter = 30;
 	
 	
-	printf("\nLoop:%d", counter);
+	printf("\nLoop:%2.2bX\n", counter);
 
 	Timing_delay_ms(1000);
 

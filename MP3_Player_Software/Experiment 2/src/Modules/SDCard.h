@@ -42,7 +42,7 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
 
 #define CARD_TYPE_UNKNOWN (0xFF)
 #define CARD_TYPE_STANDARD_CAPACITY (9)
-#define CARD_TYPE VERSION_2 (0x02)
+#define CARD_TYPE_VERSION_2 (0x02)
 #define CARD_TYPE_HIGH_CAPACITY (0) 
 
 #endif

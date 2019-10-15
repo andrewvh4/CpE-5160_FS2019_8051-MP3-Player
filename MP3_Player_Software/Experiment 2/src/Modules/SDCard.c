@@ -4,7 +4,7 @@
 #include "../Drivers/Timing.h"
 #include "../Main.h"
 
-uint8_t SD_Card_Type
+uint8_t SD_Card_Type;
 
 uint8_t SD_Init()
 {
@@ -26,7 +26,7 @@ uint8_t SD_Init()
 		error_flag = SPI_Transfer(0xFF, &SPI_Return); //80 pulses are applied when 10 bytes are sent through the SPI port.
 	}
 	
-	printf("SD: 80 Pulses\n")
+	printf("SD: 80 Pulses\n");
 	
 	SPI_setCSState(LOW); //nCS pin low
 	
@@ -62,9 +62,9 @@ uint8_t SD_Init()
 			if(error_flag != NO_ERRORS)
 			{
 				printf("Error Response = %2.2bX\n", response[0]);
-				if((error_flag==response_error)&&(response[0]==0x05))
+				if((error_flag==SD_ERROR_RESPONSE)&&(response[0]==0x05))
 				{
-					error_status=no_errors;
+					error_status=NO_ERRORS;
 					SD_Card_Type=CARD_TYPE_STANDARD_CAPACITY;
 					printf("Version 1 SD Card detected.\n");
 					printf("Standard Capacity Card detected.\n");
@@ -81,7 +81,7 @@ uint8_t SD_Init()
 				{   
 					printf("%2.2bX ",response[index]);
 				}
-				printf("\n")
+				printf("\n");
 				if(response[4]!=0xAA)
 				{
 					error_flag=SD_ERROR_RESPONSE;
@@ -124,9 +124,9 @@ uint8_t SD_Init()
 		SPI_setCSState(HIGH);
 	}
 	
-	if(error_status==no_errors)
+	if(error_status==NO_ERRORS)
     {
-		if(SD_Card_Type==Ver2)
+		if(SD_Card_Type==CARD_TYPE_VERSION_2)
 		{
 			argument=0x40000000;
 		}
@@ -147,9 +147,9 @@ uint8_t SD_Init()
 			}
 			if((response[0]==0x01)||(response[0]==0x00))
 			{
-				error_flag=SEND_COMMAND(ACMD41,argument);
+				error_flag=SD_sendCommand(ACMD41,argument);
 			}
-			if(error_flag==no_errors) 
+			if(error_flag==NO_ERRORS) 
 			{
 				SD_receiveResponse(1,response);
 			}
@@ -161,7 +161,7 @@ uint8_t SD_Init()
 		printf("Response = %2.2bX\n",response[0]);
 		printf("Timeout = %2.2bX\n",timeout);
 		
-		if(error_flag!=no_errors)
+		if(error_flag!=SPI_NO_ERROR)
 		{		
 			error_status=error_flag;
 		}
@@ -236,51 +236,67 @@ uint8_t SD_sendCommand(uint8_t CMD_value, uint32_t argument)
 	
 	if(CMD_value < 64) //verify command is 63 or less (less than 6 bits)
 	{
-		return_value = NO_ERRORS;
 		send_value = 0x40 | CMD_value;
 		error_flag = SPI_Transfer(send_value, &rec_value);
-		if(error_flag != NO_ERRORS)
-		{
-			return_value = SPI_ERROR;
+		if((error_flag)==NO_ERRORS)
+	    {
+	        send_value=argument>>24;   // MSB
+	        error_flag=SPI_Transfer(send_value,&rec_value);
+	    }
+	    else
+	    {
+		    return_value=SPI_ERROR;
 		}
-		for(index = 0; index < 4; index++)
+		if((return_value==NO_ERRORS)&&(error_flag==NO_ERRORS))
 		{
-			if(return_value == NO_ERRORS)
-			{
-				send_value = (uint8_t) (argument >> (24-(index*8)));
-				error_flag = SPI_Transfer(send_value, &rec_value);
-				if(error_flag != NO_ERRORS)
-				{
-					return_value = SPI_ERROR;
-				}
-			}
-		}
-		if(CMD_value == CMD0)
-		{
-			send_value = 0x95;
-		}
-		else if(CMD_value == CMD8)
-		{
-			send_value = 0x87;
+		    argument=argument & 0x00ffffff;
+		    send_value=argument>>16;  // BYTE2
+		    error_flag=SPI_Transfer(send_value,&rec_value);
 		}
 		else
 		{
-			send_value = 0x01; //end bit only, CRC7=0
+		    return_value=SPI_ERROR;
 		}
-		if(return_value == NO_ERRORS)
+		if((return_value==NO_ERRORS)&&(error_flag==NO_ERRORS))
 		{
-			error_flag = SPI_Transfer(send_value, &rec_value);
-			if(error_flag != NO_ERRORS)
-			{
-				return_value = SPI_ERROR;
-			}
+		    argument=argument & 0x0000ffff;
+		    send_value=argument>>8;   // BYTE1
+		    error_flag=SPI_Transfer(send_value,&rec_value);
 		}
+		else
+		{
+		    return_value=SPI_ERROR;
+		}     
+		if((return_value==NO_ERRORS)&&(error_flag==NO_ERRORS))
+		{
+		    send_value=argument & 0x000000ff;  // LSB
+		    error_flag=SPI_Transfer(send_value,&rec_value);
+		}
+		else
+		{
+		   return_value=SPI_ERROR;
+		}
+		if((return_value==NO_ERRORS)&&(error_flag==NO_ERRORS))
+		{         
+		     if (CMD_value == 0)
+		     {
+		         send_value=0x95;  // CRC7 and end bit for CMD0
+		     }
+		     else if (CMD_value == 8)
+		     {
+		         send_value=0x87;   // CRC7 and end bit for CMD8
+		     }
+		     else
+		     {
+		         send_value=0x01;  // end bit only for other commands
+		     }
+		     error_flag=SPI_Transfer(send_value,&rec_value);
+		}
+		else
+	    {
+	        return_value=SD_ERROR_ILLEGAL_COMMAND;
+	    }
 	}
-	else  //if illegal command throw error and exit
-	{
-		return_value = ILLEGAL_COMMAND;
-	}
-	
 	return return_value; //return eror status	
 }
 
@@ -298,7 +314,7 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 	{
 		error_flag = SPI_Transfer(0xFF, &SPI_value);
 		timeout++;
-	}while((SPI_value == 0xFF) && (timeout != 0) && (error_flag == NO_ERRORS));
+	}while(((SPI_value&0x80)==0x80)&&(timeout!=0)&&(error_flag==SPI_NO_ERROR));
 	
 	if(error_flag != SPI_NO_ERROR)
 	{
@@ -306,22 +322,25 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 	}
 	else if(timeout == 0)
 	{
-		return_value = SD_TIMEOUT_ERROR;
+		return_value = SD_ERROR_TIMEOUT;
 	}
 	else if((SPI_value & 0xFE) != 0x00) //0x00 and 0x01 are good values
 	{
 		*rec_array = SPI_value; //return the value to see the error
-		return_value = COMM_ERROR;
+		return_value = SD_ERROR_COMM;
 	}
 	else //recieve the rest of the bytes if there are more to receive
 	{
 		*rec_array = SPI_value; //first received value (R1 response)
-		if(num_bytes > 1)
-		{
-			for(index = 1; index < num_bytes; index++)
+		if((SPI_value==0x00)||(SPI_value==0x01))
+     	{
+			if(num_bytes > 1)
 			{
-				error_flag = SPI_Transfer(0xFF, &SPI_value);
-				*(rec_array + index) = SPI_value;
+				for(index = 1; index < num_bytes; index++)
+				{
+					error_flag = SPI_Transfer(0xFF, &SPI_value);
+					*(rec_array + index) = SPI_value;
+				}
 			}
 		}
 	}
