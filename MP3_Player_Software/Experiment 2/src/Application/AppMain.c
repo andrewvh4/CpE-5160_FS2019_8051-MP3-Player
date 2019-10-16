@@ -9,9 +9,13 @@
 #include "../Modules/LCD.h"
 #include "../Drivers/Memory.h"
 #include "../Drivers/SPI.h"
+#include "../Modules/SDCard.h"
+
+uint8_t xdata array_out[512];
 
 uint8_t setup();
 uint8_t loop();
+
 
 
 void main()
@@ -56,26 +60,37 @@ uint8_t loop()
 	//Prompt user to enter a block number to be read
 	//Read a block
 	//Print memory
-	uint8_t return_value;
-	uint8_t error_code;
-	static uint8_t counter = 30;
+	uint8_t rec_array[5];
+	uint8_t uart_rec = 0;
+ 	uint8_t index = 0;
+	uint8_t i;
+	uint16_t block_num = 0;
+	uint8_t multiplier = 1;
 	
-	
-	printf("\nLoop:%2.2bX\n", counter);
-
-	Timing_delay_ms(1000);
-
-	SPI_setCSState(LOW);
-	
-	error_code = SPI_Transfer(counter, &return_value);
-	counter = counter +1;
-	
-	if(error_code == SPI_NO_ERROR)
+	printf("Enter Number for Block to Read: ");
+	do
 	{
-		//printf("T\n");
-	}
+		uart_rec = UART_Receive();
+		if((uart_rec >= '0')&&(uart_rec <= '9'))
+		{
+			rec_array[index] = uart_rec-'0';
+			index ++;
+		}	
+	}while(((uart_rec != '\n')||(uart_rec != '\r')) && index<5);
 	
-	SPI_setCSState(HIGH);
+	for(i = index; i>0; i--) 
+	{
+		block_num = rec_array[i] * multiplier;
+		multiplier*=10;
+	}
+	printf("\nBlock Number: %2.2bX\n", block_num);
+	
+	SD_readBlock(block_num, 512, array_out);
+
+	print_memory(array_out, 512);
+	
+	Timing_delay_ms(1000);
+	
 	return(0);
 }
 
