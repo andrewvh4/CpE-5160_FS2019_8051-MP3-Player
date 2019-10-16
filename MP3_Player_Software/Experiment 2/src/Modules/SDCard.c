@@ -318,7 +318,7 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 	
 	if(error_flag != SPI_NO_ERROR)
 	{
-		return_value = error_flag;
+		return_value = SPI_ERROR;
 	}
 	else if(timeout == 0)
 	{

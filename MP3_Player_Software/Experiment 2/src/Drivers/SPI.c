@@ -4,10 +4,10 @@
 
 uint8_t SPI_Init(uint32_t clock_rate)
 {
-	uint16_t divider; 
+	uint8_t divider; 
 	uint8_t return_value = 0;
 	
-	divider = (OSC_FREQ * 12) / (OSC_PER_INST * clock_rate); //For some reason this equation returns 46.08 when hand-calculated
+	divider = (uint8_t)((OSC_FREQ * 6) / (OSC_PER_INST * clock_rate)); //For some reason this equation returns 46.08 when hand-calculated
 	
 	//Not enough memory to run this????!!!
   if(divider<=2)
@@ -43,8 +43,8 @@ uint8_t SPI_Init(uint32_t clock_rate)
     return_value = SPI_ERROR_CLOCKRATE; 
   }
 	
-	SPCON = SPCON | (CPOL << 3) | (CPHA << 2);	
-	SPSTA = SPSTA | 0x80;
+	//SPCON = SPCON | (CPOL << 3) | (CPHA << 2);	
+	//SPSTA = SPSTA | 0x80;
 	
 	return return_value;
 }
