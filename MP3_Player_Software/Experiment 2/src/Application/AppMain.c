@@ -75,12 +75,15 @@ uint8_t loop()
 		{
 			rec_array[index] = uart_rec-'0';
 			index ++;
+			printf("%2.2bX", uart_rec-'0');
 		}	
-	}while(((uart_rec != '\n')||(uart_rec != '\r')) && index<5);
+	}while((uart_rec != 0x0D) && index<5);
 	
+	printf("\nIndex = %2.2bX", index);
 	for(i = index; i>0; i--) 
 	{
-		block_num = rec_array[i] * multiplier;
+		printf("\nValue: %2.2bX", rec_array[i] * multiplier);
+		block_num += rec_array[i] * multiplier;
 		multiplier*=10;
 	}
 	printf("\nBlock Number: %2.2bX\n", block_num);

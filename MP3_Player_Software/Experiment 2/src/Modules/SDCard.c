@@ -177,11 +177,11 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 {
 	uint8_t error_flag = NO_ERRORS;
 	uint8_t SPI_value = 0;
-	uint8_t index = 0;
+	uint32_t index = 0;
 	uint8_t error_status = 0;
 	
 	printf("Reading Block %2.2bX\n", block_number);
-	printf("Sending CMD 7\n");
+	printf("Sending CMD 17\n");
 	SPI_setCSState(LOW);
 	error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
 	
@@ -190,6 +190,7 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
       error_flag=SPI_Transfer(0xFF,&SPI_value);
       index++;
    }while(((SPI_value&0x80)==0x80)&&(index!=0)&&(error_flag==NO_ERRORS));
+	printf("Transfer: %2.2bX\n", SPI_value);
    if(error_flag!=NO_ERRORS)
    {
       error_status=SPI_ERROR;
@@ -203,6 +204,7 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
          if (SPI_value==0x00)
 		{
 			index=0;
+			printf("Checking data Token\n");
 			do
 			{ 
 				error_flag=SPI_Transfer(0xFF,&SPI_value); 
@@ -218,11 +220,14 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 			}
 			else if(SPI_value==0xfe)
 			{
+				printf("Transfering Block...\n");
 				for(index=0;index<num_bytes;index++)
 				{
+				printf("%2.2bX\n", index);
 				error_flag=SPI_Transfer(0xFF,&SPI_value);
 				*(array_out + index)=SPI_value;
 				}
+				printf("Block Transfer Complete\n");
 				error_flag=SPI_Transfer(0xFF,&SPI_value); // discard byte 1 of CRC16	
 				error_flag=SPI_Transfer(0xFF,&SPI_value); // discard byte 2 of CRC16
 			}
