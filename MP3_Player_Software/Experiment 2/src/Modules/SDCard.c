@@ -19,7 +19,7 @@ uint8_t SD_Init()
 	SD_Card_Type=CARD_TYPE_UNKNOWN;
 	
 	printf("SD Initialization...\n");
-	//set SPI to clock rate of 400KHz or less; This should already be done with SPI_Init
+	
 	SPI_setCSState(HIGH); //nCS pin high
 	for(index = 0; index < SCK_INIT_BYTES; index++) //Apply at least 74 clock pulses to SCK pin; 
 	{
@@ -186,21 +186,21 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 	error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
 	
 	do
-   {
-      error_flag=SPI_Transfer(0xFF,&SPI_value);
-      index++;
-   }while(((SPI_value&0x80)==0x80)&&(index!=0)&&(error_flag==NO_ERRORS));
+    {
+        error_flag=SPI_Transfer(0xFF,&SPI_value);
+        index++;
+    }while(((SPI_value&0x80)==0x80)&&(index!=0)&&(error_flag==NO_ERRORS));
 	printf("Transfer: %2.2bX\n", SPI_value);
-   if(error_flag!=NO_ERRORS)
-   {
+    if(error_flag!=NO_ERRORS)
+    {
       error_status=SPI_ERROR;
-   }
-   else if(index==0)
-   {
+    }
+    else if(index==0)
+    {
       error_status=SPI_ERROR_TIMEOUT;
-   }
-   else
-   {
+    }
+    else
+    {
          if (SPI_value==0x00)
 		{
 			index=0;
@@ -321,14 +321,13 @@ uint8_t SD_sendCommand(uint8_t CMD_value, uint32_t argument)
 
 uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 {
-	//repeatedly send 0xFF and read received value until you have all the data
-	
 	uint8_t return_value = NO_ERRORS;
 	uint8_t timeout = 0;
 	uint8_t SPI_value = 0;
 	uint8_t error_flag = 0;
 	uint8_t index = 0;
 	
+	//repeatedly send 0xFF and read received value until you have all the data
 	do
 	{
 		error_flag = SPI_Transfer(0xFF, &SPI_value);
