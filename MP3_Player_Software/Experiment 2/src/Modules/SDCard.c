@@ -180,7 +180,7 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 	uint32_t index = 0;
 	uint8_t error_status = 0;
 	
-	printf("Reading Block %2.2bX\n", block_number);
+	printf("Reading Block %8.8lX\n", block_number);
 	printf("Sending CMD 17\n");
 	SPI_setCSState(LOW);
 	error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
@@ -223,9 +223,8 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 				printf("Transfering Block...\n");
 				for(index=0;index<num_bytes;index++)
 				{
-				printf("%2.2bX\n", index);
-				error_flag=SPI_Transfer(0xFF,&SPI_value);
-				*(array_out + index)=SPI_value;
+					error_flag=SPI_Transfer(0xFF,&SPI_value);
+					*(array_out + index)=SPI_value;
 				}
 				printf("Block Transfer Complete\n");
 				error_flag=SPI_Transfer(0xFF,&SPI_value); // discard byte 1 of CRC16	

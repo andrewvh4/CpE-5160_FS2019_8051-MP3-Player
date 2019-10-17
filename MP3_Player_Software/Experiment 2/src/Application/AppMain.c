@@ -10,6 +10,7 @@
 #include "../Drivers/Memory.h"
 #include "../Drivers/SPI.h"
 #include "../Modules/SDCard.h"
+#include "Long_Serial_In.h"
 
 uint8_t xdata array_out[512];
 
@@ -60,39 +61,16 @@ uint8_t loop()
 	//Prompt user to enter a block number to be read
 	//Read a block
 	//Print memory
-	uint8_t rec_array[5];
-	uint8_t uart_rec = 0;
- 	uint8_t index = 0;
-	uint8_t i;
-	uint16_t block_num = 0;
-	uint8_t multiplier = 1;
+	uint32_t block_num = 0;
 	
-	printf("Enter Number for Block to Read: ");
-	do
-	{
-		uart_rec = UART_Receive();
-		if((uart_rec >= '0')&&(uart_rec <= '9'))
-		{
-			rec_array[index] = uart_rec-'0';
-			index ++;
-			printf("%2.2bX", uart_rec-'0');
-		}	
-	}while((uart_rec != 0x0D) && index<5);
-	
-	printf("\nIndex = %2.2bX", index);
-	for(i = index; i>0; i--) 
-	{
-		printf("\nValue: %2.2bX", rec_array[i] * multiplier);
-		block_num += rec_array[i] * multiplier;
-		multiplier*=10;
-	}
-	printf("\nBlock Number: %2.2bX\n", block_num);
+	printf("Enter a Block number: 0x");
+	block_num = long_serial_input();
+
+	printf("Block Number: %8.8lX\n", block_num);
 	
 	SD_readBlock(block_num, 512, array_out);
 
 	print_memory(array_out, 512);
-	
-	Timing_delay_ms(1000);
 	
 	return(0);
 }
