@@ -61,4 +61,5 @@ dkms.conf
 *.lnp
 *.Bak
 *.M51
-MP3_Player_Software
+
+*.__i
