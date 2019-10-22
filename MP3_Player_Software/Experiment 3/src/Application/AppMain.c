@@ -12,6 +12,7 @@
 
 uint8_t setup();
 uint8_t loop();
+uint8_t loop_debug();
 
 
 void main()
@@ -19,7 +20,7 @@ void main()
 	setup();
 	while(1)
 	{
-		loop();
+		loop_debug();
 	}
 }
 
@@ -33,15 +34,10 @@ uint8_t setup()
 	setXRAM(XRAM_SIZE_1024);
 	UART_Init_9600();
 	//printf("U\n");
-	if(SPI_ERROR_CLOCKRATE == SPI_Init(400000)) //Setup SPI with clockrate 400k
-	{
-		//printf("SPIIE\n");
-	}
-	else
-	{
-		//printf("I\n");
-	}
-
+	SPI_ERROR_CLOCKRATE == SPI_Init(400000)
+	
+	//Init STA013
+	
 	printf("SD Init:%2.2bX\n",SD_Init());
 
 	//Setup SD
@@ -51,31 +47,14 @@ uint8_t setup()
 	return(0);
 }
 
-uint8_t loop()
+uint8_t loop_debug()
 {
-	//Prompt user to enter a block number to be read
-	//Read a block
-	//Print memory
-	uint8_t return_value;
-	uint8_t error_code;
-	static uint8_t counter = 30;
+	//Verify Functionality of I2C by reading first three STA013 addresses on startup
 	
-	
-	printf("\nLoop:%2.2bX\n", counter);
-
-	Timing_delay_ms(1000);
-
-	SPI_setCSState(LOW);
-	
-	error_code = SPI_Transfer(counter, &return_value);
-	counter = counter +1;
-	
-	if(error_code == SPI_NO_ERROR)
-	{
-		//printf("T\n");
-	}
-	
-	SPI_setCSState(HIGH);
 	return(0);
 }
 
+uint8_t loop()
+{
+	
+}

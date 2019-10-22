@@ -13,14 +13,14 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>AT89C51RC2</Device>
-          <Vendor>Microchip</Vendor>
-          <Cpu>IRAM(0-0xFF) IROM(0-0x7FFF)  XRAM (0-0x3FF) CLOCK(40000000) MODP2</Cpu>
-          <FlashUtilSpec>"batchisp" (-device $D -hardware RS232 -port COM1 -baudrate 19200 -operation MEMORY FLASH LOADBUFFER %H PROGRAM)</FlashUtilSpec>
-          <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
+          <Device>89C51</Device>
+          <Vendor>Atmel</Vendor>
+          <Cpu>IRAM(0 - 0x7F) IROM(0 - 0xFFF) CLOCK(24000000)</Cpu>
+          <FlashUtilSpec></FlashUtilSpec>
+          <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>3681</DeviceId>
-          <RegisterFile>at89c51RC2.h</RegisterFile>
+          <DeviceId></DeviceId>
+          <RegisterFile>AT89X51.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -45,14 +45,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputDirectory>.\</OutputDirectory>
           <OutputName>MP3_Player_Software</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Listings\</ListingPath>
+          <BrowseInformation>0</BrowseInformation>
+          <ListingPath>.\</ListingPath>
           <HexFormatSelection>0</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -110,11 +110,11 @@
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DP51.DLL</SimDlgDll>
-          <SimDlgDllArguments>-p51RC2</SimDlgDllArguments>
+          <SimDlgDllArguments>-p51</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TP51.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-p51RC2</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-p51</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -134,22 +134,22 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
+            <RestoreSysVw>0</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
+            <LoadApplicationAtStartup>0</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
+            <RestoreBreakpoints>0</RestoreBreakpoints>
+            <RestoreWatchpoints>0</RestoreWatchpoints>
+            <RestoreMemoryDisplay>0</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
+            <RestoreToolbox>0</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>0</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>0</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -168,8 +168,8 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>0</UseTargetDll>
-            <UseExternalTool>1</UseExternalTool>
+            <UseTargetDll>1</UseTargetDll>
+            <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>0</Capability>
@@ -177,7 +177,7 @@
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3>"batchisp" (-device $D -hardware RS232 -port COM1 -baudrate 19200 -operation MEMORY FLASH LOADBUFFER %H PROGRAM)</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -196,11 +196,11 @@
             <UseMultipleDPTR>0</UseMultipleDPTR>
             <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
-            <HadXRAM>1</HadXRAM>
+            <HadXRAM>0</HadXRAM>
             <HadIROM>1</HadIROM>
             <Moda2>0</Moda2>
             <Moddp2>0</Moddp2>
-            <Modp2>1</Modp2>
+            <Modp2>0</Modp2>
             <Mod517dp>0</Mod517dp>
             <Mod517au>0</Mod517au>
             <Mode2>0</Mode2>
@@ -233,7 +233,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0xffff</Size>
+                <Size>0x10000</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -273,17 +273,17 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x8000</Size>
+                <Size>0x1000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x100</Size>
+                <Size>0x80</Size>
               </IRA>
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x400</Size>
+                <Size>0x0</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -377,39 +377,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>STARTUP.A51</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\STARTUP.A51</FilePath>
-            </File>
-            <File>
-              <FileName>AT89C51RC2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\AT89C51RC2.h</FilePath>
-            </File>
-            <File>
-              <FileName>Main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Main.h</FilePath>
-            </File>
-            <File>
-              <FileName>print_bytes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Application\print_bytes.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\memory_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>Port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\Port.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory_test.c</FileName>
+              <FileName>AppMain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\Drivers\memory_test.c</FilePath>
+              <FilePath>.\src\Application\AppMain.c</FilePath>
             </File>
             <File>
               <FileName>print_bytes.c</FileName>
@@ -417,39 +387,14 @@
               <FilePath>.\src\Application\print_bytes.c</FilePath>
             </File>
             <File>
-              <FileName>UART.c</FileName>
+              <FileName>Memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\Drivers\UART.c</FilePath>
+              <FilePath>.\src\Drivers\Memory.c</FilePath>
             </File>
             <File>
-              <FileName>UART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\UART.h</FilePath>
-            </File>
-            <File>
-              <FileName>AppMain.c</FileName>
+              <FileName>memory_test.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\Application\AppMain.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timing.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\Drivers\Timing.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timing.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\Timing.h</FilePath>
-            </File>
-            <File>
-              <FileName>LCD.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\Modules\LCD.c</FilePath>
-            </File>
-            <File>
-              <FileName>LCD.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Modules\LCD.h</FilePath>
+              <FilePath>.\src\Drivers\memory_test.c</FilePath>
             </File>
             <File>
               <FileName>Port.c</FileName>
@@ -457,24 +402,24 @@
               <FilePath>.\src\Drivers\Port.c</FilePath>
             </File>
             <File>
-              <FileName>Memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\Drivers\Memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>Memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\Memory.h</FilePath>
-            </File>
-            <File>
               <FileName>SPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\Drivers\SPI.c</FilePath>
             </File>
             <File>
-              <FileName>SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Drivers\SPI.h</FilePath>
+              <FileName>Timing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Timing.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\UART.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\LCD.c</FilePath>
             </File>
             <File>
               <FileName>SDCard.c</FileName>
@@ -482,9 +427,14 @@
               <FilePath>.\src\Modules\SDCard.c</FilePath>
             </File>
             <File>
-              <FileName>SDCard.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Modules\SDCard.h</FilePath>
+              <FileName>I2C.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\I2C.c</FilePath>
+            </File>
+            <File>
+              <FileName>STA013.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Modules\STA013.c</FilePath>
             </File>
           </Files>
         </Group>
