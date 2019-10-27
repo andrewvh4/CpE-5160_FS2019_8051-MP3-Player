@@ -6,18 +6,17 @@
 #define I2C_RELOAD ((65536 - ((OSC_FREQ) / (OSC_PER_INST * I2C_FREQUENCY * 2UL))))
 #define I2C_RELOAD_H (I2C_RELOAD / 256)
 #define I2C_RELOAD_L (I2C_RELOAD % 256)
-
- #define CONTINUE (1)
- #define STOP (2)
+#define CONTINUE (1)
+#define STOP (2)
 
 uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size, uint8_t num_bytes,uint8_t * ret_array)
 {
-	uint8_t SDA, SCL; // These dont belong here. I put them here to prevent compiler errors.
 	uint8_t return_value = I2C_NO_ERROR;
 	uint8_t send_value, receive_value;
 	uint8_t index, num_bits, send_bit, sent_bit;
 
 	//Write start address
+	
 	if (int_address_size)
 	{
 		return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);

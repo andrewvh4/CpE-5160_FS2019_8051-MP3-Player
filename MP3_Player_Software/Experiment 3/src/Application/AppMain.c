@@ -34,7 +34,7 @@ uint8_t setup()
 	setXRAM(XRAM_SIZE_1024);
 	UART_Init_9600();
 	//printf("U\n");
-	SPI_ERROR_CLOCKRATE == SPI_Init(400000)
+	SPI_ERROR_CLOCKRATE == SPI_Init(400000);
 	
 	//Init STA013
 	
