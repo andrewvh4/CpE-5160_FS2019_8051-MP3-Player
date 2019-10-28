@@ -18,7 +18,7 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 	//Write start address
 	if (int_address_size)
 	{
-		return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);
+		//return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);
 	}
 
 	if (return_value == I2C_NO_ERROR)
@@ -29,9 +29,10 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 		{
 			// Create start condition
 			I2C_Clock_Start();
+			printf("Address:%2.2bX\n", address);
 			send_value = address << 1;
 			send_value |= 0x01; // Set the LSB (R/W bit) to Read
-
+			printf("send_value:%2.2bX\n", send_value);
 			// Send START condition
 			SDA = 0;
 			index = 0; // For placement of elements into an array
@@ -42,7 +43,7 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 			{
 				I2C_Clock_Delay(CONTINUE);
 				SCL = 0;
-				SDA = 1; // Set as Input
+				//SDA = 1; // Set as Input
 				num_bits--;
 
 				// Shift value to make room for next received bit
@@ -54,7 +55,7 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 				while(SCL != 1);
 				sent_bit = SDA;
 
-				if(send_bit != 0)
+				if(sent_bit != send_bit)
 				{
 					return_value = I2C_BUS_BUSY_ERROR;
 				}
@@ -73,6 +74,7 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 
 				if(sent_bit != 0)
 				{
+					printf("1\n");
 					return_value = I2C_ACK_ERROR;
 				}
 			}

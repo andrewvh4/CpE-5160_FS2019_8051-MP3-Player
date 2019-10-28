@@ -30,7 +30,7 @@ uint8_t I2C_Write(uint8_t address, uint32_t int_address, uint8_t int_address_siz
 void I2C_Clock_Start();
 void I2C_Clock_Delay(uint8_t control);
 
-sbit SDA = P1^5;
-sbit SCL = P1^6;
+sbit SDA = P1^0;
+sbit SCL = P1^1;
 
 #endif
