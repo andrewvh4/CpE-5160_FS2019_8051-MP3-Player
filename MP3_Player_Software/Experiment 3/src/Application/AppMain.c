@@ -30,18 +30,12 @@ uint8_t setup()
 	Port_writePin(YELLOW_LED, LOW);
 	
 	Port_writeBus(PORT_1, 0xFF, 0xFF);
+	UART_Init_9600();
 	
 	setXRAM(XRAM_SIZE_1024);
-	UART_Init_9600();
-	//printf("U\n");
-	SPI_ERROR_CLOCKRATE == SPI_Init(400000);
 	
-	//Init STA013
-	
+	printf("SPI Init:%2.2bX\n",SPI_Init(400000));
 	printf("SD Init:%2.2bX\n",SD_Init());
-
-	//Setup SD
-	//Posibly set up SPI with clockrate of 25M
 	Timing_delay_ms(100);
 	Port_writePin(GREEN_LED, HIGH);
 	return(0);
@@ -50,7 +44,7 @@ uint8_t setup()
 uint8_t loop_debug()
 {
 	//Verify Functionality of I2C by reading first three STA013 addresses on startup
-	
+	STA013_Init();
 	return(0);
 }
 

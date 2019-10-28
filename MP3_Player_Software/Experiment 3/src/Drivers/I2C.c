@@ -16,7 +16,6 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 	uint8_t index, num_bits, send_bit, sent_bit;
 
 	//Write start address
-	
 	if (int_address_size)
 	{
 		return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);
@@ -131,13 +130,11 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 				I2C_Clock_Delay(STOP);
 				SDA = 1;
 			}
-			
 		}
 		else
 		{
 			return_value = I2C_BUS_BUSY_ERROR;
 		}
-		
 	}
 	
 	return return_value;	
