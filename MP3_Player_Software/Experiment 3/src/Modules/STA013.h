@@ -20,6 +20,9 @@
 
 uint8_t STA013_Init();
 
+#define STA_NO_ERROR 0x00
+#define STA_ERROR_INACTIVE 0x01
+
 #endif
 
 /*------------------------------------------------------------------*-
