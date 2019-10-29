@@ -7,6 +7,7 @@ uint8_t SPI_Init(uint32_t clock_rate)
 	uint8_t divider; 
 	uint8_t return_value = 0;
 	
+	printf("---SPI Init\n");
 	divider = (uint8_t)((OSC_FREQ * 6) / (OSC_PER_INST * clock_rate)); //For some reason this equation returns 46.08 when hand-calculated
 	
 	//Not enough memory to run this????!!!
@@ -45,7 +46,7 @@ uint8_t SPI_Init(uint32_t clock_rate)
 	
 	//SPCON = SPCON | (CPOL << 3) | (CPHA << 2);	
 	//SPSTA = SPSTA | 0x80;
-	
+	printf("SPI Error:%2.2bX\n",return_value);
 	return return_value;
 }
 

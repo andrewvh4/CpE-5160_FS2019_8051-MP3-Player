@@ -26,6 +26,7 @@ uint8_t LCD_Write_String(uint8_t* string, uint8_t line)
 
 uint8_t LCD_Init()
 {
+	printf("---LCD Init\n");
 	Timing_delay_ms(50); //Delay after power up
 	LCD_Write_Command(0x38);
 	Timing_delay_ms(10); //Delay greater than 4.1ms

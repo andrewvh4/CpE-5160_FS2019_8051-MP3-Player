@@ -18,7 +18,7 @@ uint8_t SD_Init()
 	
 	SD_Card_Type=CARD_TYPE_UNKNOWN;
 	
-	printf("SD Initialization...\n");
+	printf("---SD Init\n");
 	//set SPI to clock rate of 400KHz or less; This should already be done with SPI_Init
 	SPI_setCSState(HIGH); //nCS pin high
 	for(index = 0; index < SCK_INIT_BYTES; index++) //Apply at least 74 clock pulses to SCK pin; 
@@ -167,9 +167,8 @@ uint8_t SD_Init()
 		}
 		
 	}
-	
-	printf("Error Status:%2.2bX\n", error_status);
  
+	printf("SD Error:%2.2bX\n",error_status);
 	return error_status; //Return error status
 }
 

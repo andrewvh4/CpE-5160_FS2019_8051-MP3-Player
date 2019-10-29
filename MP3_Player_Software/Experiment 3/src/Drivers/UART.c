@@ -29,6 +29,7 @@ uint8_t UART_Init_9600()
 	//3)Set BDRCON register
 	BDRCON = 0x1C | (SPD << 1);
 	
+	printf("\n\n---UART Init\n");
 	return(0);
 }
 
