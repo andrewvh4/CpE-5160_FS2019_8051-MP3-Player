@@ -1,5 +1,6 @@
 #include "../main.h"
 #include "I2C.h"
+#include "../drivers/Timing.h"
 #include <stdio.h>
 
 #define I2C_FREQUENCY 25000
@@ -18,7 +19,7 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 	//Write start address
 	if (int_address_size)
 	{
-		//return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);
+		return_value = I2C_Write(address, int_address, int_address_size, 0, ret_array);
 	}
 
 	if (return_value == I2C_NO_ERROR)
@@ -29,10 +30,8 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 		{
 			// Create start condition
 			I2C_Clock_Start();
-			printf("Address:%2.2bX\n", address);
 			send_value = address << 1;
 			send_value |= 0x01; // Set the LSB (R/W bit) to Read
-			printf("send_value:%2.2bX\n", send_value);
 			// Send START condition
 			SDA = 0;
 			index = 0; // For placement of elements into an array
@@ -74,7 +73,6 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 
 				if(sent_bit != 0)
 				{
-					printf("1\n");
 					return_value = I2C_ACK_ERROR;
 				}
 			}
@@ -144,16 +142,16 @@ uint8_t I2C_Read(uint8_t address, uint32_t int_address, uint8_t int_address_size
 
 uint8_t I2C_Write(uint8_t address, uint32_t int_address, uint8_t int_address_size, uint8_t num_bytes,uint8_t * write_array)
 {
-	uint8_t SDA, SCL; // These dont belong here. I put them here to prevent compiler errors.
 	uint8_t send_value, return_value;
 	uint8_t num_bits, send_bit, sent_bit;
 
-	SCL = 1;
-	SDA = 1;
 	return_value = I2C_NO_ERROR;
 
 	int_address_size = int_address_size * 8; // Byte -> Bit Conversion
 	num_bytes++; // Add device address byte
+
+	SCL = 1;
+	SDA = 1;
 
 	if ((SCL == 1) && (SDA == 1))
 	{
@@ -171,7 +169,8 @@ uint8_t I2C_Write(uint8_t address, uint32_t int_address, uint8_t int_address_siz
 			{
 				I2C_Clock_Delay(CONTINUE);
 				SCL = 0;
-				num_bits = ((send_value >> num_bits) & 0x01);
+				num_bits--;
+				send_bit = ((send_value >> num_bits) & 0x01);
 				SDA = send_bit;
 
 				I2C_Clock_Delay(CONTINUE);
@@ -211,7 +210,7 @@ uint8_t I2C_Write(uint8_t address, uint32_t int_address, uint8_t int_address_siz
 					return_value = I2C_ACK_ERROR;
 				}
 			}
-		}while((num_bits != 0) && (return_value == I2C_NO_ERROR));
+		}while((num_bytes != 0) && (return_value == I2C_NO_ERROR));
 
 		// Send STOP Condition
 		if(return_value != I2C_BUS_BUSY_ERROR)
