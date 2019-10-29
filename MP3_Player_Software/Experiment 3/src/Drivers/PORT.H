@@ -44,6 +44,9 @@ uint8_t Port_readPin(uint8_t pin);
 #define per_TxD P3_0
 #define per_RxD P3_1
 
+#define STA013_RESET P3_3
+#define TRIGGER P3_4
+
 // Port 0
 #define PORT_0 0
 #define P0_0 0x00

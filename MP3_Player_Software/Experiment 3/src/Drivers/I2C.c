@@ -3,7 +3,7 @@
 #include "../drivers/Timing.h"
 #include <stdio.h>
 
-#define I2C_FREQUENCY 25000
+#define I2C_FREQUENCY 80000 //must be less than 100k
 #define I2C_RELOAD ((65536 - ((OSC_FREQ) / (OSC_PER_INST * I2C_FREQUENCY * 2UL))))
 #define I2C_RELOAD_H (I2C_RELOAD / 256)
 #define I2C_RELOAD_L (I2C_RELOAD % 256)
