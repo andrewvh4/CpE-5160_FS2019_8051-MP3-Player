@@ -1,0 +1,1 @@
+"src\Modules\config.asm" SET (SMALL) DEBUG PRINT(.\config.lst) OBJECT(config.obj) EP
