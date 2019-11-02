@@ -20,7 +20,7 @@ uint8_t FAT_read16(uint16_t offset, uint8_t * array_name)
 	
 }
 
-uint8_t FAT_read8(uint16_t offset, uint8_t * array_name)
+uint8_t FAT_read32(uint16_t offset, uint8_t * array_name)
 {
 	
 }

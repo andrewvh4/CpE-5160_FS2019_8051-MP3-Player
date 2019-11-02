@@ -19,7 +19,7 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t * arra
 
 uint8_t FAT_read8(uint16_t offset, uint8_t * array_name);
 uint8_t FAT_read16(uint16_t offset, uint8_t * array_name);
-uint8_t FAT_read8(uint16_t offset, uint8_t * array_name);
+uint8_t FAT_read32(uint16_t offset, uint8_t * array_name);
 
 uint8_t FAT_mountDrive(void);
 uint32_t FAT_getFirstSector(uint32_t cluser_number);
