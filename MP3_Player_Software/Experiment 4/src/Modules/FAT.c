@@ -5,6 +5,7 @@
 #include "../Drivers/Timing.h"
 #include "../Main.h"
 #include "../Drivers/UtPorts.h"
+#include "../Drivers/Directory_Functions_globals.h"
 
 uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data)
 {
@@ -126,8 +127,8 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
 
     if(FATSize == 0)
     {
-        FATSize = read32(BPB_FAT_SIZE_32, input_array);
-        RootCluster = read32(BPB_ROOT_CLUSTER, input_array);
+        FATSize = FAT_read32(BPB_FAT_SIZE_32, input_array);
+        RootCluster = FAT_read32(BPB_ROOT_CLUSTER, input_array);
     }
 
     gRootDirectorySectors = ((RootEntryCount * 32) + (gBytesPerCluster - 1)) / gBytesPerSector;

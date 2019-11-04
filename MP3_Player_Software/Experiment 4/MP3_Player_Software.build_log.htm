@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.27.1.0
 Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Andrew Van Horn, Missouri S&T, LIC=----
+License Information: Jacob Lipina, Mars Rover Design Team, LIC=----
  
 Tool Versions:
 Toolchain:       PK51 Prof. Develpers Kit  Version: 9.60.0.0
@@ -18,41 +18,17 @@ Hex Converter:   OH51.exe V2.7.0.0
 CPU DLL:         S8051.DLL V3.122.0.0
 Dialog DLL:      DP51.DLL V2.67.0.0 
 <h2>Project:</h2>
-C:\Users\andre\OneDrive\Documents\MST\CpE5160\CpE-5160_FS2019_8051-MP3-Player\MP3_Player_Software\Experiment 4\MP3_Player_Software.uvproj
-Project File Date:  11/02/2019
+C:\Users\Jacob Lipina\Documents\4.) Embedded Sys Design\CpE-5160_FS2019_8051-MP3-Player\MP3_Player_Software\Experiment 4\MP3_Player_Software.uvproj
+Project File Date:  11/04/2019
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling AppMain.c...
-src\Application\AppMain.c(36): warning C206: 'SD_Init': missing function-prototype
-src\Application\AppMain.c(38): warning C206: 'STA013_Init': missing function-prototype
-src\Application\AppMain.c(49): warning C173: missing return-expression
-src\Application\AppMain.c(49): warning C290: missing return value
-compiling Memory.c...
-src\Drivers\Memory.c(7): warning C276: constant in condition expression
-compiling Port.c...
-compiling SPI.c...
-compiling UART.c...
-compiling LCD.c...
-compiling SDCard.c...
-compiling I2C.c...
-compiling STA013.c...
-src\Modules\STA013.c(131): warning C291: not every exit path returns a value
 compiling FAT.c...
-src\Modules\FAT.c(11): warning C173: missing return-expression
-src\Modules\FAT.c(8): warning C280: 'sector_number': unreferenced local variable
-src\Modules\FAT.c(8): warning C280: 'sector_size': unreferenced local variable
-src\Modules\FAT.c(8): warning C280: 'array_for_data': unreferenced local variable
-src\Modules\FAT.c(16): warning C173: missing return-expression
-src\Modules\FAT.c(13): warning C280: 'offset': unreferenced local variable
-src\Modules\FAT.c(13): warning C280: 'array_name': unreferenced local variable
-src\Modules\FAT.c(21): warning C173: missing return-expression
-src\Modules\FAT.c(18): warning C280: 'offset': unreferenced local variable
-src\Modules\FAT.c(18): warning C280: 'array_name': unreferenced local variable
-src\Modules\FAT.c(26): warning C173: missing return-expression
-src\Modules\FAT.c(26): error C237: '_FAT_read8': function already has a body
+compiling Directory_Functions_globals.c...
+src\Drivers\Directory_Functions_globals.c(44): warning C206: 'Read_Sector': missing function-prototype
+src\Drivers\Directory_Functions_globals.c(44): error C267: 'Read_Sector': requires ANSI-style prototype
 Target not created.
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

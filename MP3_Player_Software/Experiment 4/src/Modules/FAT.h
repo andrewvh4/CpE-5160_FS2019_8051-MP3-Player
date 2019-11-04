@@ -63,7 +63,7 @@ uint8_t FAT_read8(uint16_t offset, uint8_t* array_name);
 uint8_t FAT_read16(uint16_t offset, uint8_t* array_name);
 uint8_t FAT_read32(uint16_t offset, uint8_t* array_name);
 
-uint8_t FAT_mountDrive(void);
+uint8_t FAT_mountDrive(uint8_t* array_in);
 uint32_t FAT_getFirstSector(uint32_t cluster_number);
 uint32_t FAT_getNextCluster(uint32_t cluster_number, uint8_t* array);
 

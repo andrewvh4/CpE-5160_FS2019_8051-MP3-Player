@@ -451,6 +451,16 @@
               <FileType>5</FileType>
               <FilePath>.\src\Modules\FAT.h</FilePath>
             </File>
+            <File>
+              <FileName>Directory_Functions_globals.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\Directory_Functions_globals.c</FilePath>
+            </File>
+            <File>
+              <FileName>UtPorts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\Drivers\UtPorts.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

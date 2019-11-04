@@ -7,8 +7,12 @@
 #include "../Drivers/memory_test.h"
 #include "print_bytes.h"
 #include "../Modules/LCD.h"
+#include "../Modules/FAT.h"
+#include "../Modules/SDCard.h"
+#include "../Modules/STA013.h"
 #include "../Drivers/Memory.h"
 #include "../Drivers/SPI.h"
+#include "../Drivers/Directory_Functions_globals.h"
 
 uint8_t setup();
 uint8_t loop();
@@ -46,4 +50,5 @@ uint8_t setup()
 uint8_t loop()
 {
 	
+	return(0);
 }

@@ -1,7 +1,7 @@
 #include "UtPorts.h"
 
-#include "main.h"
-#include "PORT.H"
+#include "../Main.h"
+#include "../Drivers/Port.h"
 
 // Port Output Functions
 
