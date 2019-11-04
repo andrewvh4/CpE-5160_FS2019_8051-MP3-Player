@@ -19,6 +19,7 @@ uint8_t SD_Init();
 uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_out);
 uint8_t SD_sendCommand(uint8_t CMD_value, uint32_t argument);
 uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array);
+uint8_t SD_getType(void);
 
 //------- Constants ------------------------------------------------
 #define NO_ERRORS 0

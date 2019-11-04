@@ -29,6 +29,8 @@ uint8_t Port_readPin(uint8_t pin);
 #define HIGH 1
 #define LOW 0
 
+#define nCS0 1<<4
+
 #define LCD_D0 P0_0
 #define LCD_D1 P0_1
 #define LCD_D2 P0_2
@@ -46,6 +48,8 @@ uint8_t Port_readPin(uint8_t pin);
 
 #define STA013_RESET P3_3
 #define TRIGGER P3_4
+
+#define BYTE 8
 
 // Port 0
 #define PORT_0 0

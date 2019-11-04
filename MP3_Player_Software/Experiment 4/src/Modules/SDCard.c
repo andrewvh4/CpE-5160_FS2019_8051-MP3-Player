@@ -363,3 +363,8 @@ uint8_t SD_receiveResponse(uint8_t num_bytes, uint8_t * rec_array)
 	
 	return return_value;
 }
+
+uint8_t SD_getType(void)
+{
+	return SD_Card_Type;
+}
