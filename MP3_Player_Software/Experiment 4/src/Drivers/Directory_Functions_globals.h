@@ -17,6 +17,8 @@
 
 // ------ Public function prototypes -------------------------------
 
+sbit YELLOWLED = P2^5;
+
 uint16_t Print_Directory(uint32_t Sector_num, uint8_t xdata * array_in);
 
 uint32_t Read_Dir_Entry(uint32_t Sector_num, uint16_t Entry, uint8_t xdata * array_in);

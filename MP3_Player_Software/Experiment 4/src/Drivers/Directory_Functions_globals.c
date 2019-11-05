@@ -3,16 +3,12 @@
 #include "../Drivers/Port.h"
 #include "../Drivers/UART.h"
 #include "../Drivers/SPI.h"
+#include "../Modules/FAT.h"
 #include "../Modules/SDCard.h"
 #include "Directory_Functions_globals.h"
 #include "../Application/print_bytes.h"
 //#include "File_System.h"
 //#include "Read_Sector.h"
-
-uint32_t idata FirstDataSec_g, StartofFAT_g, FirstRootDirSec_g, RootDirSecs_g;
-uint16_t idata BytesPerSec_g;
-uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
-
 
 /***********************************************************************
 DESC: Prints all short file name entries for a given directory 
@@ -21,6 +17,10 @@ block of memory in xdata that can be used to read blocks from the SD card
 RETURNS: uint16_t number of entries found in the directory
 CAUTION: Supports FAT16, SD_shift must be set before using this function
 ************************************************************************/
+
+uint32_t idata FirstDataSec_g, StartofFAT_g, FirstRootDirSec_g, RootDirSecs_g;
+uint16_t idata BytesPerSec_g;
+uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
 
 uint16_t  Print_Directory(uint32_t Sector_num, uint8_t xdata * array_in)
 { 
@@ -47,25 +47,25 @@ uint16_t  Print_Directory(uint32_t Sector_num, uint8_t xdata * array_in)
      do
      {
  
-	    temp8=read8(0+i,values);  // read first byte to see if empty
+	    temp8=FAT_read8(0+i,values);  // read first byte to see if empty
         if((temp8!=0xE5)&&(temp8!=0x00))
 	    {  
-	       attr=read8(0x0b+i,values);
-		   	YELLOWLED=1;
+	       attr=FAT_read8(0x0b+i,values);
+		   YELLOWLED=1;
 		   if((attr&0x0E)==0)   // if hidden, system or Vol_ID bit is set do not print
 		   {
 		      entries++;
 			  printf("%5d. ",entries);  // print entry number with a fixed width specifier
 		      for(j=0;j<8;j++)
 			  {
-			     out_val=read8(i+j,values);   // print the 8 byte name
+			     out_val=FAT_read8(i+j,values);   // print the 8 byte name
 			     putchar(out_val);
 			  }
               if((attr&0x10)==0x10)  // indicates directory
 			  {
 			     for(j=8;j<11;j++)
 			     {
-			        out_val=read8(i+j,values);
+			        out_val=FAT_read8(i+j,values);
 			        putchar(out_val);
 			     }
 			     printf("[DIR]\n");
@@ -75,7 +75,7 @@ uint16_t  Print_Directory(uint32_t Sector_num, uint8_t xdata * array_in)
 			     putchar(0x2E);       
 			     for(j=8;j<11;j++)
 			     {
-			        out_val=read8(i+j,values);
+			        out_val=FAT_read8(i+j,values);
 			        putchar(out_val);
 			     }
 			     putchar(0x0d);
@@ -151,10 +151,10 @@ uint32_t Read_Dir_Entry(uint32_t Sector_num, uint16_t Entry, uint8_t xdata * arr
    {
      do
      {
-        temp8=read8(0+i,values);  // read first byte to see if empty
+        temp8=FAT_read8(0+i,values);  // read first byte to see if empty
         if((temp8!=0xE5)&&(temp8!=0x00))
 	    {  
-	       attr=read8(0x0b+i,values);
+	       attr=FAT_read8(0x0b+i,values);
 		   if((attr&0x0E)==0)    // if hidden do not print
 		   {
 		      entries++;
@@ -162,16 +162,16 @@ uint32_t Read_Dir_Entry(uint32_t Sector_num, uint16_t Entry, uint8_t xdata * arr
               {
 			    if(FATtype_g==FAT32)
                 {
-                   return_clus=read8(21+i,values);
+                   return_clus=FAT_read8(21+i,values);
 				   return_clus&=0x0F;            // makes sure upper four bits are clear
 				   return_clus=return_clus<<8;
-                   return_clus|=read8(20+i,values);
+                   return_clus|=FAT_read8(20+i,values);
                    return_clus=return_clus<<8;
                 }
-                return_clus|=read8(27+i,values);
+                return_clus|=FAT_read8(27+i,values);
 			    return_clus=return_clus<<8;
-                return_clus|=read8(26+i,values);
-			    attr=read8(0x0b+i,values);
+                return_clus|=FAT_read8(26+i,values);
+			    attr=FAT_read8(0x0b+i,values);
 			    if(attr&0x10) return_clus|=directory_bit;
                 temp8=0;    // forces a function exit
               }

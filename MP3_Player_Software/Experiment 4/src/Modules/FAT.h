@@ -11,9 +11,11 @@
    Description: Defines functions SD Card operation
 --------------------------------------------------------------------*/
 
-#include "../Main.h"
 #ifndef _FAT_H
 #define _FAT_H
+
+#include "../Main.h"
+#include "../Drivers/Directory_Functions_globals.h"
 
 //------- Public Constants  -----------------------------------------
 
@@ -40,21 +42,6 @@
 #define BPB_TOTAL_SECTORS_32 (0x20)
 #define BPB_FAT_SIZE_32 (0x24)
 #define BPB_ROOT_CLUSTER (0x2C)
-
-// ------ Global Variables -----------------------------------------
-
-uint32_t gRootDirectorySectors;
-uint32_t gStartFAT;
-uint32_t gFirstDataSector;
-uint32_t gFirstRootDirectorySector;
-
-uint16_t gBytesPerSector;
-uint16_t gBytesPerCluster;
-
-uint8_t gBytesPerSectorShift;
-uint8_t gSectorsPerCluster;
-uint8_t gFATType;
-uint8_t gFATShift;
 
 // ------ Public function prototypes -------------------------------
 uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data);

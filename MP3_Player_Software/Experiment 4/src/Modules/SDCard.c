@@ -26,14 +26,14 @@ uint8_t SD_Init()
 		error_flag = SPI_Transfer(0xFF, &SPI_Return); //80 pulses are applied when 10 bytes are sent through the SPI port.
 	}
 	
-	printf("SD: 80 Pulses\n");
+	//printf("SD: 80 Pulses\n");
 	
 	SPI_setCSState(LOW); //nCS pin low
 	
 	//Send and Check CMD 0
 	if(error_status == NO_ERRORS)
 	{
-		printf("SD: Sending CMD0\n");
+		//printf("SD: Sending CMD0\n");
 		
 		error_flag = SD_sendCommand(CMD0, 0x00); //send CMD0 with argument 0x00
 		
@@ -41,7 +41,7 @@ uint8_t SD_Init()
 		if(error_flag == NO_ERRORS)
 		{
 			error_flag = SD_receiveResponse(1, response);
-			printf("Response = %2.2bX\n", response[0]);
+		//	printf("Response = %2.2bX\n", response[0]);
 		}
 		if(error_flag != NO_ERRORS)
 		{
@@ -53,7 +53,7 @@ uint8_t SD_Init()
 	//Send and Check CMD 8
 	if(error_status == NO_ERRORS)
 	{
-		printf("SD: Sending CMD8\n");
+	//	printf("SD: Sending CMD8\n");
 		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD8, 0x000001AA); //send CMD8 with argument 0x000001AA
 		if(error_flag == NO_ERRORS)
@@ -61,13 +61,13 @@ uint8_t SD_Init()
 			error_flag = SD_receiveResponse(5, &response); //Recieve R7 response
 			if(error_flag != NO_ERRORS)
 			{
-				printf("Error Response = %2.2bX\n", response[0]);
+				//printf("Error Response = %2.2bX\n", response[0]);
 				if((error_flag==SD_ERROR_RESPONSE)&&(response[0]==0x05))
 				{
 					error_status=NO_ERRORS;
 					SD_Card_Type=CARD_TYPE_STANDARD_CAPACITY;
-					printf("Version 1 SD Card detected.\n");
-					printf("Standard Capacity Card detected.\n");
+					//printf("Version 1 SD Card detected.\n");
+					//printf("Standard Capacity Card detected.\n");
 				 }
 				 else
 				 {
@@ -76,19 +76,19 @@ uint8_t SD_Init()
 			}
 			else
 			{
-				printf("Response = ");
+				//printf("Response = ");
 				for(index=0;index<5;index++)
 				{   
-					printf("%2.2bX ",response[index]);
+					//printf("%2.2bX ",response[index]);
 				}
 				printf("\n");
 				if(response[4]!=0xAA)
 				{
 					error_flag=SD_ERROR_RESPONSE;
-					printf("Response Error\n");
+					//printf("Response Error\n");
 				}
 				SD_Card_Type=CARD_TYPE_VERSION_2;
-				printf("Version 2 SD Card detected.\n");
+				//printf("Version 2 SD Card detected.\n");
 			}
 		}	
 		SPI_setCSState(HIGH);		
@@ -97,7 +97,7 @@ uint8_t SD_Init()
 	//Send and Check CMD58
 	if(error_status == NO_ERRORS)
 	{
-		printf("SD: Sending CMD 58\n");
+	//printf("SD: Sending CMD 58\n");
 		SPI_setCSState(LOW);
 		error_flag = SD_sendCommand(CMD58, 0x00); //send CMD58 with argument 0x00
 		
@@ -105,16 +105,16 @@ uint8_t SD_Init()
 		if(error_flag == NO_ERRORS)
 		{
 			error_flag = SD_receiveResponse(5, &response); //Recieve R3 response
-			printf("Response = ");
+		//	printf("Response = ");
 			for(index=0;index<5;index++)
 			{   
-				 printf("%2.2bX ",response[index]);
+				// printf("%2.2bX ",response[index]);
 			}
 			printf("\n");
 			if((response[2]&0xFC)!=0xFC)
 			{
 			   error_flag=SD_ERROR_VOLTAGE;
-			   printf("Voltage Error\n");
+			 //  printf("Voltage Error\n");
 			}
 		}
 		if(error_flag != NO_ERRORS)
@@ -136,7 +136,7 @@ uint8_t SD_Init()
 		}
 	 
 		timeout = 0;
-		printf("SD: Sending ACMD41\n");
+		//printf("SD: Sending ACMD41\n");
 		do
 		{
 			SPI_setCSState(LOW);
@@ -158,8 +158,8 @@ uint8_t SD_Init()
 			if(timeout==0) error_flag=SD_ERROR_TIMEOUT;
 		}while(((response[0]&0x01)==0x01)&&(error_flag==NO_ERRORS));
 		
-		printf("Response = %2.2bX\n",response[0]);
-		printf("Timeout = %2.2bX\n",timeout);
+		//printf("Response = %2.2bX\n",response[0]);
+		//printf("Timeout = %2.2bX\n",timeout);
 		
 		if(error_flag!=SPI_NO_ERROR)
 		{		
@@ -168,7 +168,7 @@ uint8_t SD_Init()
 		
 	}
  
-	printf("SD Error:%2.2bX\n",error_status);
+	//printf("SD Error:%2.2bX\n",error_status);
 	return error_status; //Return error status
 }
 

@@ -7,6 +7,10 @@
 #include "../Drivers/UtPorts.h"
 #include "../Drivers/Directory_Functions_globals.h"
 
+extern uint32_t idata FirstDataSec_g, StartofFAT_g, FirstRootDirSec_g, RootDirSecs_g;
+extern uint16_t idata BytesPerSec_g;
+extern uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
+
 uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data)
 {
 	uint8_t SDtype;
@@ -102,17 +106,17 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
         return FAT_READ_SECTOR_ERROR;
     }
 
-    gBytesPerSector = FAT_read16(BPB_BYTES_PER_SECTOR, input_array);
-    gBytesPerSectorShift = 0;
-    temp16 = gBytesPerSector;
+    BytesPerSec_g = FAT_read16(BPB_BYTES_PER_SECTOR, input_array);
+    BytesPerSecShift_g = 0;
+    temp16 = BytesPerSec_g;
 
     while(temp16 != 0x01)
     {
-        gBytesPerSectorShift++;
+        BytesPerSecShift_g++;
         temp16 = temp16 >> 1;
     }
 
-    gSectorsPerCluster = FAT_read8(BPB_SECTORS_PER_CLUSTER, input_array);
+    SecPerClus_g = FAT_read8(BPB_SECTORS_PER_CLUSTER, input_array);
     RSVDSectorCount = FAT_read16(BPB_RSVD_SECTOR_COUNT, input_array);
     NumFAT = FAT_read8(BPB_NUM_FATS, input_array);
     RootEntryCount = FAT_read16(BPB_ROOT_ENTRY_COUNT, input_array);
@@ -131,26 +135,26 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
         RootCluster = FAT_read32(BPB_ROOT_CLUSTER, input_array);
     }
 
-    gRootDirectorySectors = ((RootEntryCount * 32) + (gBytesPerCluster - 1)) / gBytesPerSector;
-    DataSectors = TotalSectors - (RSVDSectorCount + (NumFAT * FATSize) + gRootDirectorySectors);
-    NumClusters = DataSectors / gSectorsPerCluster;
-    gStartFAT = RSVDSectorCount + MBR_RelativeSectors;
-    gFirstDataSector = gStartFAT + (NumFAT * FATSize) + gRootDirectorySectors;
+    RootDirSecs_g = ((RootEntryCount * 32) + (BytesPerSec_g - 1)) / BytesPerSec_g;
+    DataSectors = TotalSectors - (RSVDSectorCount + (NumFAT * FATSize) + RootDirSecs_g);
+    NumClusters = DataSectors / SecPerClus_g;
+    StartofFAT_g = RSVDSectorCount + MBR_RelativeSectors;
+    FirstDataSec_g = StartofFAT_g + (NumFAT * FATSize) + RootDirSecs_g;
 
     if(NumClusters < 65525)
     {
-        gFATType = FAT16;
-        gFATShift = FAT16_SHIFT;
+        FATtype_g = FAT16;
+        FATshift_g = FAT16_SHIFT;
         printf("FAT16 Detected...\n\r");
-        gFirstRootDirectorySector = gStartFAT + (NumFAT * FATSize);
+        FirstRootDirSec_g = StartofFAT_g + (NumFAT * FATSize);
 
     }
     else
     {
-        gFATType = FAT32;
-        gFATShift = FAT32_SHIFT;
+        FATtype_g = FAT32;
+        FATshift_g = FAT32_SHIFT;
         printf("FAT32 Detected...\n\r");
-        gFirstRootDirectorySector = ((RootCluster - 2) * gSectorsPerCluster) + gFirstDataSector;
+        FirstRootDirSec_g = ((RootCluster - 2) * SecPerClus_g) + FirstDataSec_g;
     }
     
     return FAT_NO_ERROR;
@@ -162,11 +166,11 @@ uint32_t FAT_getFirstSector(uint32_t cluster_number)
 
     if(cluster_number == 0) 
     {
-        sector_number = gFirstRootDirectorySector;
+        sector_number = FirstRootDirSec_g;
     }
     else
     {
-        sector_number = ((cluster_number - 2) * gSectorsPerCluster) + gFirstDataSector;
+        sector_number = ((cluster_number - 2) * SecPerClus_g) + FirstDataSec_g;
     }
 
     return sector_number;
@@ -180,15 +184,15 @@ uint32_t FAT_getNextCluster(uint32_t cluster_number, uint8_t* array)
 
     input_array = array;
 
-    sector = (cluster_number >> (gBytesPerSectorShift - gFATShift)) + gStartFAT;
-    Read_Sector(sector, gBytesPerSector, input_array);
-    FATOffset = (uint16_t)((cluster_number << gFATShift) & (gBytesPerSector - 1));
+    sector = (cluster_number >> (BytesPerSecShift_g - FATshift_g)) + StartofFAT_g;
+    Read_Sector(sector, BytesPerSec_g, input_array);
+    FATOffset = (uint16_t)((cluster_number << FATshift_g) & (BytesPerSec_g - 1));
 
-    if (gFATType == FAT32) // For FAT32
+    if (FATtype_g == FAT32) // For FAT32
     {
         return_cluster = (FAT_read32(FATOffset, input_array) & 0x0FFFFFFF);
     }
-    else if (gFATType == FAT16) // For FAT16
+    else if (FATtype_g == FAT16) // For FAT16
     {
         return_cluster = (uint32_t)(FAT_read16(FATOffset, input_array));
         if (return_cluster == 0x0000FFFF) 

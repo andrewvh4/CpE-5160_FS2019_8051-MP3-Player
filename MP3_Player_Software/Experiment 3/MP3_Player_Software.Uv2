@@ -37,7 +37,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvReg (ÿAtmel\)
  OrgReg (ÿAtmel\)
  TgStat=0
- OutDir (.\)
+ OutDir (..\)
  OutName (MP3_Player_Software)
  GenApp=1
  GenLib=0

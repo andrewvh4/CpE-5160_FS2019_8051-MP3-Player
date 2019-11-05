@@ -45,5 +45,10 @@ uint8_t setup()
 
 uint8_t loop()
 {
-	
+	for(int i = 0; i <= 1000; i++)
+	{
+		Timing_delay_ms(100);
+		printf("Test For Loop: " + i);
+	}
+	return 0x00;
 }
