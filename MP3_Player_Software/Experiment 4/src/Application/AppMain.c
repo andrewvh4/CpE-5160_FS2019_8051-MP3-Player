@@ -39,13 +39,11 @@ uint8_t setup()
 	
 	Port_writeBus(PORT_1, 0xFF, 0xFF);
 	initError |= UART_Init_9600();
-	
+
 	setXRAM(XRAM_SIZE_1024);
 	
 	initError |= SPI_Init(400000);
 	initError |= SD_Init();
-
-	initError |= STA013_Init();
 	
 	for (index = 0; index < 512; index++)
 	{
@@ -53,15 +51,17 @@ uint8_t setup()
 	}
 
 	initError |= FAT_mountDrive(buffer_1);
+	
+	initError |= STA013_Init();
 	printf("Error: %d\n", initError);
 	
 	if (!initError)
 	{
-		//printf("*Setup Complete*\n\n");
+		printf("*Setup Complete*\n\n");
 	}
 	else
 	{
-		//printf("*Setup Failed*\n\n");
+		printf("*Setup Failed*\n\n");
 	}
 
 	
@@ -98,7 +98,7 @@ uint8_t loop()
 	for(i = 0; i <= 100; i++)
 	{
 		Timing_delay_ms(100);
-		printf("Test: %d\n", i);
+		//printf("Test: %d\n", i);
 	}
 	return 0x00;
 }

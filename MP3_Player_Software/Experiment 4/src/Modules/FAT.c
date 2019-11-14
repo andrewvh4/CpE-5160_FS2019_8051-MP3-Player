@@ -13,8 +13,8 @@ extern uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
 
 uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data)
 {
-	uint8_t SDtype;
-    uint8_t error_flag = FAT_NO_ERROR;
+	uint8_t idata SDtype;
+    uint8_t idata error_flag = FAT_NO_ERROR;
 
     SDtype = SD_getType(); // HC = 0, no change to sec # // SC = 9, sec # * 512 to convert to byte addr.
     Clear_bit_P1(nCS0);
@@ -32,6 +32,25 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array
         error_flag = FAT_READ_SECTOR_ERROR;
     }
 
+
+	if(error_flag == 0x05) //Try again if you get a response error
+	{
+		Clear_bit_P1(nCS0);
+	    error_flag = SD_sendCommand(17, (sector_number << SDtype));
+	
+	    if (error_flag == FAT_NO_ERROR)
+	    { 
+	        error_flag = SD_readBlock(sector_number, sector_size, array_for_data); 
+	    }
+	
+	    Set_bit_P1(nCS0);
+	
+	    if (error_flag != FAT_NO_ERROR)
+	    {
+	        error_flag = FAT_READ_SECTOR_ERROR;
+	    }
+	}
+
     return error_flag;
 }
 
@@ -45,7 +64,7 @@ uint8_t FAT_read8(uint16_t offset, uint8_t* array_name)
     return return_value;
 }
 
-uint8_t FAT_read16(uint16_t offset, uint8_t* array_name)
+uint16_t FAT_read16(uint16_t offset, uint8_t* array_name)
 {
 	uint16_t idata return_value = 0;
     uint8_t temp_value = 0;
@@ -60,7 +79,7 @@ uint8_t FAT_read16(uint16_t offset, uint8_t* array_name)
     return return_value;
 }
 
-uint8_t FAT_read32(uint16_t offset, uint8_t* array_name)
+uint32_t FAT_read32(uint16_t offset, uint8_t* array_name)
 {
 	uint32_t idata return_value = 0;
     uint8_t temp_value = 0;
@@ -87,10 +106,15 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
 
     input_array = array_in;
 
-	printf("---Mounting SD Card");
+	printf("---Mounting SD Card\n\r");
     printf("Locating Boot Sector...\n\r");
 
     Read_Sector(0, 512, input_array);
+	Read_Sector(0, 512, input_array);
+	Read_Sector(0, 512, input_array);
+	Read_Sector(0, 512, input_array);
+	Read_Sector(0, 512, input_array);
+	Read_Sector(0, 512, input_array);
     temp8 = FAT_read8(0, input_array);
 
     if((temp8 != 0xEB) && (temp8 != 0xE9))

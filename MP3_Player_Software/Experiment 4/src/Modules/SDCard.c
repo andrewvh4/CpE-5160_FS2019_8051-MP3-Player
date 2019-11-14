@@ -3,6 +3,7 @@
 #include "../Drivers/SPI.h"
 #include "../Drivers/Timing.h"
 #include "../Main.h"
+#include "../Application/print_bytes.h"
 
 uint8_t SD_Card_Type;
 
@@ -167,6 +168,8 @@ uint8_t SD_Init()
 		}
 		
 	}
+
+
  
 	printf("SD Error:%2.2bX\n",error_status);
 	return error_status; //Return error status
@@ -176,14 +179,14 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 {
 	uint8_t error_flag = NO_ERRORS;
 	uint8_t SPI_value = 0;
-	uint8_t index = 0;
+	uint16_t index = 0;
 	uint8_t error_status = 0;
 	
-	printf("Reading Block %2.2bX\n", block_number);
-	printf("Sending CMD 7\n");
-	SPI_setCSState(LOW);
-	error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
-	
+	printf("Reading Block %08X\n", block_number);
+	//printf("Sending CMD 7\n");
+	//SPI_setCSState(LOW);
+	//error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
+	//printf("CMD 7 sent\n\r");
 	do
    {
       error_flag=SPI_Transfer(0xFF,&SPI_value);
@@ -221,6 +224,7 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 				{
 				error_flag=SPI_Transfer(0xFF,&SPI_value);
 				*(array_out + index)=SPI_value;
+				//printf("%04X\n\r", index);
 				}
 				error_flag=SPI_Transfer(0xFF,&SPI_value); // discard byte 1 of CRC16	
 				error_flag=SPI_Transfer(0xFF,&SPI_value); // discard byte 2 of CRC16
@@ -236,7 +240,10 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 		}
     }
 	
-	SPI_setCSState(HIGH);
+	printf("Error: %2.2bX\n\r", error_status);
+	if(error_status == 0) print_memory(array_out, 512);
+	
+	//SPI_setCSState(HIGH);
 	return error_status; //return error status
 }
 

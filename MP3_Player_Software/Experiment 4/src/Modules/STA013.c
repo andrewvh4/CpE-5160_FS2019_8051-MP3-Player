@@ -117,10 +117,10 @@ uint8_t STA013_Init()
 							timeout--;
 							if(timeout == 0) Port_writePin(RED_LED, LOW);
 					}while((error != STA_NO_ERROR)&&(timeout != 0));
-			printf("Sent to STA013: %2.2bX  %2.2bX \n\r",reg_addr,send[0]);
+			//printf("Sent to STA013: %2.2bX  %2.2bX \n\r",reg_addr,send[0]);
 			reg_addr = STA_cfg_addr[index];
 					error = I2C_Read(0x43,reg_addr,1,1,ret_array);
-					printf("Output from register: %2.2bX  %2.2bX %2.2bX \n\r",reg_addr,ret_array[0],error);
+					//printf("Output from register: %2.2bX  %2.2bX %2.2bX \n\r",reg_addr,ret_array[0],error);
 			}
 				printf("Configuration Complete\n\r");
 		}
