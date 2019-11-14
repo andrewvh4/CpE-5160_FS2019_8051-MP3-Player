@@ -1,5 +1,0 @@
---David--
-	Write and Verify I2C_Read (Steps 2-3)
-	Write and Verify I2C_Write(Steps 4-5)
-	
---Write STA Init--

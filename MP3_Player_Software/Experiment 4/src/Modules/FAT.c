@@ -47,7 +47,7 @@ uint8_t FAT_read8(uint16_t offset, uint8_t* array_name)
 
 uint8_t FAT_read16(uint16_t offset, uint8_t* array_name)
 {
-	uint16_t return_value = 0;
+	uint16_t idata return_value = 0;
     uint8_t temp_value = 0;
 
     offset &= 0x1FF; // 0x1FF = 0d511 (Limit offset 0 - 511)
@@ -62,7 +62,7 @@ uint8_t FAT_read16(uint16_t offset, uint8_t* array_name)
 
 uint8_t FAT_read32(uint16_t offset, uint8_t* array_name)
 {
-	uint32_t return_value = 0;
+	uint32_t idata return_value = 0;
     uint8_t temp_value = 0;
     uint8_t index = 0;
 
@@ -80,13 +80,14 @@ uint8_t FAT_read32(uint16_t offset, uint8_t* array_name)
 
 uint8_t FAT_mountDrive(uint8_t* array_in)
 {
-	uint32_t TotalSectors, DataSectors, NumClusters, MBR_RelativeSectors, FATSize, RootCluster;
-    uint16_t RSVDSectorCount, RootEntryCount, temp16;
+	uint32_t idata TotalSectors, DataSectors, NumClusters, MBR_RelativeSectors, FATSize, RootCluster;
+    uint16_t idata RSVDSectorCount, RootEntryCount, temp16;
     uint8_t NumFAT, temp8;
     uint8_t* input_array;
 
     input_array = array_in;
 
+	printf("---Mounting SD Card");
     printf("Locating Boot Sector...\n\r");
 
     Read_Sector(0, 512, input_array);
@@ -95,8 +96,8 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     if((temp8 != 0xEB) && (temp8 != 0xE9))
     {
       MBR_RelativeSectors = FAT_read32(MBR_RELATIVE_SECTORS, input_array);
-   	  Read_Sector(MBR_RelativeSectors, 512, input_array);
-	  printf("Relative Sectors = %ld\n\r", MBR_RelativeSectors);
+   	  printf("Relative Sectors = %08X\n\r", MBR_RelativeSectors);
+	  Read_Sector(MBR_RelativeSectors, 512, input_array);
 	  temp8 = FAT_read8(0, input_array);
     }
 
@@ -162,7 +163,7 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
 
 uint32_t FAT_getFirstSector(uint32_t cluster_number)
 {
-    uint32_t sector_number;
+    uint32_t idata sector_number;
 
     if(cluster_number == 0) 
     {
@@ -178,8 +179,8 @@ uint32_t FAT_getFirstSector(uint32_t cluster_number)
 
 uint32_t FAT_getNextCluster(uint32_t cluster_number, uint8_t* array)
 {
-    uint32_t sector, return_cluster;
-    uint16_t FATOffset;
+    uint32_t idata sector, return_cluster;
+    uint16_t idata FATOffset;
     uint8_t* input_array;
 
     input_array = array;
