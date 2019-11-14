@@ -6,6 +6,7 @@
 #include "../Main.h"
 #include "../Drivers/UtPorts.h"
 #include "../Drivers/Directory_Functions_globals.h"
+#include "../Application/print_bytes.h"
 
 extern uint32_t idata FirstDataSec_g, StartofFAT_g, FirstRootDirSec_g, RootDirSecs_g;
 extern uint16_t idata BytesPerSec_g;
@@ -27,14 +28,9 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array
 
     Set_bit_P1(nCS0);
 
-    if (error_flag != FAT_NO_ERROR)
+    if (error_flag != FAT_NO_ERROR) //Try again if you get an error
     {
-        error_flag = FAT_READ_SECTOR_ERROR;
-    }
-
-
-	if(error_flag == 0x05) //Try again if you get a response error
-	{
+		printf("Attempting Second Read\n\r");
 		Clear_bit_P1(nCS0);
 	    error_flag = SD_sendCommand(17, (sector_number << SDtype));
 	
@@ -110,17 +106,13 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     printf("Locating Boot Sector...\n\r");
 
     Read_Sector(0, 512, input_array);
-	Read_Sector(0, 512, input_array);
-	Read_Sector(0, 512, input_array);
-	Read_Sector(0, 512, input_array);
-	Read_Sector(0, 512, input_array);
-	Read_Sector(0, 512, input_array);
     temp8 = FAT_read8(0, input_array);
 
     if((temp8 != 0xEB) && (temp8 != 0xE9))
     {
       MBR_RelativeSectors = FAT_read32(MBR_RELATIVE_SECTORS, input_array);
-   	  printf("Relative Sectors = %08X\n\r", MBR_RelativeSectors);
+   	  printf("Relative Sectors = %08lX\n\r", MBR_RelativeSectors);
+	  if(MBR_RelativeSectors == 0) printf("TTTTTTTT\n\r");
 	  Read_Sector(MBR_RelativeSectors, 512, input_array);
 	  temp8 = FAT_read8(0, input_array);
     }

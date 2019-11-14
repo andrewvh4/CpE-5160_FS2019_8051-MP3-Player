@@ -33,7 +33,6 @@ void print_16bytes(uint8_t * array_in)
    putchar(LF);
 }
 
-
 /***********************************************************************
 DESC: Prints an array from memory in Hexadecimal and then ASCII
 INPUT: Pointer to an array, number of bytes to print

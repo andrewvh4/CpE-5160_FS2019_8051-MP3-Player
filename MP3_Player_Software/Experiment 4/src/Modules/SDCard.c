@@ -182,7 +182,7 @@ uint8_t SD_readBlock(uint32_t block_number, uint16_t num_bytes, uint8_t * array_
 	uint16_t index = 0;
 	uint8_t error_status = 0;
 	
-	printf("Reading Block %08X\n", block_number);
+	printf("Reading Block %08lX\n", block_number);
 	//printf("Sending CMD 7\n");
 	//SPI_setCSState(LOW);
 	//error_flag = SD_sendCommand(CMD17, (block_number<<SD_Card_Type));
