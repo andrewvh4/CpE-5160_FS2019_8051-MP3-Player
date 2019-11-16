@@ -14,12 +14,10 @@ extern uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
 
 uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data)
 {
-	uint8_t idata SDtype;
     uint8_t idata error_flag = FAT_NO_ERROR;
 
-    SDtype = SD_getType(); // HC = 0, no change to sec # // SC = 9, sec # * 512 to convert to byte addr.
     Clear_bit_P1(nCS0);
-    error_flag = SD_sendCommand(17, (sector_number << SDtype));
+    error_flag = SD_sendCommand(17, sector_number);
 
     if (error_flag == FAT_NO_ERROR)
     { 
@@ -32,7 +30,7 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array
     {
 		printf("Attempting Second Read\n\r");
 		Clear_bit_P1(nCS0);
-	    error_flag = SD_sendCommand(17, (sector_number << SDtype));
+	    error_flag = SD_sendCommand(17, sector_number);
 	
 	    if (error_flag == FAT_NO_ERROR)
 	    { 
@@ -112,7 +110,6 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     {
       MBR_RelativeSectors = FAT_read32(MBR_RELATIVE_SECTORS, input_array);
    	  printf("Relative Sectors = %08lX\n\r", MBR_RelativeSectors);
-	  if(MBR_RelativeSectors == 0) printf("TTTTTTTT\n\r");
 	  Read_Sector(MBR_RelativeSectors, 512, input_array);
 	  temp8 = FAT_read8(0, input_array);
     }
