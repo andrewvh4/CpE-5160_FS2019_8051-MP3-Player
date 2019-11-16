@@ -17,8 +17,16 @@
 uint8_t xdata buffer_1[512];
 //uint8_t xdata buffer_2[512];
 
+extern uint32_t idata FirstDataSec_g, StartofFAT_g, FirstRootDirSec_g, RootDirSecs_g;
+extern uint16_t idata BytesPerSec_g;
+extern uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
+
+uint16_t entries;
+uint32_t current_directory;
+
 uint8_t setup();
 uint8_t loop();
+void printFile(uint32_t startingCluster);
 
 
 void main()
@@ -64,6 +72,9 @@ uint8_t setup()
 		printf("*Setup Failed*\n\n");
 	}
 
+	printf("---Start of Program---\n\r");
+
+	current_directory = FirstRootDirSec_g;
 	
 	Timing_delay_ms(100);
 	Port_writePin(GREEN_LED, HIGH);
@@ -72,33 +83,72 @@ uint8_t setup()
 
 uint8_t loop()
 {
-	// uint32_t gRootDirectorySectors;
-	// uint32_t gStartFAT;
-	// uint32_t gFirstDataSector;
-	// uint32_t gFirstRootDirectorySector;
-	
-	// uint16_t gBytesPerSector;
-	// uint16_t gBytesPerCluster;
-	
-	// uint8_t gBytesPerSectorShift;
-	// uint8_t gSectorsPerCluster;
-	// uint8_t gFATType;
-	// uint8_t gFATShift;
+	uint8_t temp_character;
+	uint8_t entry_number;
+	uint32_t cluster_number;
 
-	// Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array_for_data);
+	entries = Print_Directory(current_directory, buffer_1);
 
-	// FAT_read8(uint16_t offset, uint8_t* array_name);
-	// FAT_read16(uint16_t offset, uint8_t* array_name);
-	// FAT_read32(uint16_t offset, uint8_t* array_name);
+	printf("Enter a Number\n\r");
 	
-	// FAT_mountDrive(uint8_t* array_in);
-	// FAT_getFirstSector(uint32_t cluster_number);
-	// FAT_getNextCluster(uint32_t cluster_number, uint8_t* array);
-	int i = 0;
-	for(i = 0; i <= 100; i++)
+	temp_character = UART_Receive();
+
+	printf("You Entered: %d\m\r", temp_character);
+	entry_number = temp_character - '0';
+
+	if(entry_number>entries)
 	{
-		Timing_delay_ms(100);
-		//printf("Test: %d\n", i);
+		printf("Invalid Entry Number\n\r");
 	}
-	return 0x00;
+	else
+	{
+		cluster_number = Read_Dir_Entry(FirstRootDirSec_g, entry_number, buffer_1);
+		printf("Cluster Number: %08lX\n\r", cluster_number);
+		if((cluster_number & 0x80000000) == 0x80000000)
+		{
+			printf("An Error Occured\n\r");
+		}
+		else
+		{
+			if((cluster_number & 0x10000000) == 0x10000000) 
+			{
+				printf("You selected a Directory\n\r");
+				current_directory = FAT_getFirstSector(cluster_number & 0x0FFFFFFF);
+			}
+			else
+			{
+				printf("You selected a File\n\r");
+				printFile(cluster_number & 0x0FFFFFFF);
+			}
+		}
+	}
+	return(0);
+}
+
+void printFile(uint32_t startingCluster)
+{
+	uint32_t current_sector;
+	uint32_t current_cluster;
+	uint8_t temp_character;
+
+	current_sector = FAT_getFirstSector(startingCluster);
+	current_cluster = startingCluster;
+
+	do
+	{
+		printf("Sector:%08lX\n\rCluster:%08lX\n\r", current_sector, current_cluster);
+		Read_Sector(current_sector, 512, buffer_1);
+		print_memory(buffer_1, 512);
+	
+		printf("Continue(c)\n\rExit(x)\n\r");
+		
+		do
+		{
+			temp_character = UART_Receive();
+		} while((temp_character!='x')&&(temp_character!='X')&&
+				(temp_character!='c')&&(temp_character!='C'));
+
+		 current_sector ++;
+	} while((temp_character!='x')&&(temp_character!='X'));
+	return;
 }

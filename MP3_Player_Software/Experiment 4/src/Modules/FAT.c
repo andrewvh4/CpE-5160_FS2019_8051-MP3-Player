@@ -28,7 +28,7 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array
 
     if (error_flag != FAT_NO_ERROR) //Try again if you get an error
     {
-		printf("Attempting Second Read\n\r");
+		//printf("Attempting Second Read\n\r");
 		Clear_bit_P1(nCS0);
 	    error_flag = SD_sendCommand(17, sector_number);
 	
@@ -124,6 +124,8 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     BytesPerSecShift_g = 0;
     temp16 = BytesPerSec_g;
 
+	printf("Bytes per Sector: %hX\n\r", BytesPerSec_g);
+
     while(temp16 != 0x01)
     {
         BytesPerSecShift_g++;
@@ -135,18 +137,28 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     NumFAT = FAT_read8(BPB_NUM_FATS, input_array);
     RootEntryCount = FAT_read16(BPB_ROOT_ENTRY_COUNT, input_array);
     TotalSectors = FAT_read16(BPB_TOTAL_SECTORS_16, input_array);
+	
+	printf("Sectors per Cluster: %2.2bX\n\r", SecPerClus_g);
+	printf("Reserved Sector Count: %hX\n\r", RSVDSectorCount);
+	printf("Number of FAT: %2.2bX\n\r", NumFAT);
+	printf("Root Entry Count: %hX\n\r", RootEntryCount);
+	printf("Total Sectors Pre: %lX\n\r", TotalSectors);
 
     if(TotalSectors == 0) 
     {
         TotalSectors = FAT_read32(BPB_TOTAL_SECTORS_32, input_array);
+		printf("Total Sectors: %lX\n\r", TotalSectors);
     }
 
     FATSize = FAT_read16(BPB_FAT_SIZE_16, input_array);
+	printf("FAT Size Pre: %lX\n\r", FATSize);
 
     if(FATSize == 0)
     {
         FATSize = FAT_read32(BPB_FAT_SIZE_32, input_array);
         RootCluster = FAT_read32(BPB_ROOT_CLUSTER, input_array);
+		printf("FAT Size: %lX\n\r", FATSize);
+		printf("Root Cluster: %lX\n\r", RootCluster);
     }
 
     RootDirSecs_g = ((RootEntryCount * 32) + (BytesPerSec_g - 1)) / BytesPerSec_g;
@@ -155,6 +167,11 @@ uint8_t FAT_mountDrive(uint8_t* array_in)
     StartofFAT_g = RSVDSectorCount + MBR_RelativeSectors;
     FirstDataSec_g = StartofFAT_g + (NumFAT * FATSize) + RootDirSecs_g;
 
+	printf("Root Directory Sectors: %lX\n\r", RootDirSecs_g);
+	printf("Data Sectors: %lX\n\r", DataSectors);
+	printf("Number of Clusters: %lX\n\r", NumClusters);
+	printf("Start of FAT: %lX\n\r", StartofFAT_g);
+	printf("First Data Sector: %lX\n\r", FirstDataSec_g);
     if(NumClusters < 65525)
     {
         FATtype_g = FAT16;

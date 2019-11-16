@@ -82,7 +82,7 @@ uint8_t STA013_Init()
 					}
 					if((index&0x03E) == 0) UART_Transmit('.');
 			 }while((reg_addr != 0xff) && (timeout != 0));
-			 printf("First configuration file sent...\n\r");
+			 printf("\n\rFirst configuration file sent...\n\r");
 			 printf("Number of values written: %d \n\r",index>>1);
 			 index = 0;
 			 config_data_p = &CONFIG2; //point to STA013 configuration file

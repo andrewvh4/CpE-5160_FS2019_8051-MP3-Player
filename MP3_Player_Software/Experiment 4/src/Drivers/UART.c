@@ -51,7 +51,7 @@ uint8_t UART_Transmit(uint8_t character)
 uint8_t UART_Receive()
 {
 	uint8_t temp8;
-	//Wait for RI to be ste
+	//Wait for RI to be set
 	while(RI==0);
 
 	//Read the received value from SBUF
