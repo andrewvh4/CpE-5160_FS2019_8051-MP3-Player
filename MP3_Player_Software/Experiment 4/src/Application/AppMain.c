@@ -22,7 +22,7 @@ extern uint16_t idata BytesPerSec_g;
 extern uint8_t idata SecPerClus_g, FATtype_g, BytesPerSecShift_g,FATshift_g;
 
 uint16_t entries;
-uint32_t current_directory;
+uint32_t current_directory_sector;
 
 uint8_t setup();
 uint8_t loop();
@@ -74,7 +74,7 @@ uint8_t setup()
 
 	printf("---Start of Program---\n\r");
 
-	current_directory = FirstRootDirSec_g;
+	current_directory_sector = FirstRootDirSec_g;
 	
 	Timing_delay_ms(100);
 	Port_writePin(GREEN_LED, HIGH);
@@ -87,7 +87,9 @@ uint8_t loop()
 	uint8_t entry_number;
 	uint32_t cluster_number;
 
-	entries = Print_Directory(current_directory, buffer_1);
+	printf("Current Directory Sector:%08lX\n\r", current_directory_sector);
+
+	entries = Print_Directory(current_directory_sector, buffer_1);
 
 	printf("Enter a Number\n\r");
 	
@@ -102,7 +104,7 @@ uint8_t loop()
 	}
 	else
 	{
-		cluster_number = Read_Dir_Entry(FirstRootDirSec_g, entry_number, buffer_1);
+		cluster_number = Read_Dir_Entry(current_directory_sector, entry_number, buffer_1);
 		printf("Cluster Number: %08lX\n\r", cluster_number);
 		if((cluster_number & 0x80000000) == 0x80000000)
 		{
@@ -113,7 +115,7 @@ uint8_t loop()
 			if((cluster_number & 0x10000000) == 0x10000000) 
 			{
 				printf("You selected a Directory\n\r");
-				current_directory = FAT_getFirstSector(cluster_number & 0x0FFFFFFF);
+				current_directory_sector = FAT_getFirstSector(cluster_number & 0x0FFFFFFF);
 			}
 			else
 			{
@@ -130,6 +132,7 @@ void printFile(uint32_t startingCluster)
 	uint32_t current_sector;
 	uint32_t current_cluster;
 	uint8_t temp_character;
+	uint8_t sector_in_cluster = 0;
 
 	current_sector = FAT_getFirstSector(startingCluster);
 	current_cluster = startingCluster;
@@ -147,8 +150,22 @@ void printFile(uint32_t startingCluster)
 			temp_character = UART_Receive();
 		} while((temp_character!='x')&&(temp_character!='X')&&
 				(temp_character!='c')&&(temp_character!='C'));
+		
+		if(sector_in_cluster >= SecPerClus_g-1)
+		{
+			printf("Next Cluster\n\r");
+			current_cluster = FAT_getNextCluster(current_cluster, buffer_1);
+			current_sector = FAT_getFirstSector(current_cluster);
+			sector_in_cluster = 0;
+		}
+		else
+		{
+			current_sector++;
+			sector_in_cluster++;
+		}
+		 
 
-		 current_sector ++;
 	} while((temp_character!='x')&&(temp_character!='X'));
 	return;
 }
+
