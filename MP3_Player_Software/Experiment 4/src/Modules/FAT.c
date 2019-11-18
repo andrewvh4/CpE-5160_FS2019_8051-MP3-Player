@@ -17,8 +17,10 @@ uint8_t Read_Sector(uint32_t sector_number, uint16_t sector_size, uint8_t* array
     uint8_t idata error_flag = FAT_NO_ERROR;
 
     Clear_bit_P1(nCS0);
+	//Send command 17
     error_flag = SD_sendCommand(17, sector_number);
 
+	//Read block if no errors
     if (error_flag == FAT_NO_ERROR)
     { 
         error_flag = SD_readBlock(sector_number, sector_size, array_for_data); 
@@ -201,6 +203,7 @@ uint32_t FAT_getFirstSector(uint32_t cluster_number)
     }
     else
     {
+		//Calculate first sector of cluster
         sector_number = ((cluster_number - 2) * SecPerClus_g) + FirstDataSec_g;
     }
 

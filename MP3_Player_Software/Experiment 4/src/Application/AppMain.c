@@ -50,14 +50,13 @@ uint8_t setup()
 
 	setXRAM(XRAM_SIZE_1024);
 	
+	//initialise SD card
 	initError |= SPI_Init(400000);
 	initError |= SD_Init();
-	
 	for (index = 0; index < 512; index++)
 	{
 		buffer_1[index] = 0xFF;
 	}
-
 	initError |= FAT_mountDrive(buffer_1);
 	
 	initError |= STA013_Init();
@@ -87,38 +86,43 @@ uint8_t loop()
 	uint8_t entry_number;
 	uint32_t cluster_number;
 
+	//Print the current directory
 	printf("Current Directory Sector:%08lX\n\r", current_directory_sector);
-
 	entries = Print_Directory(current_directory_sector, buffer_1);
 
+	//Read in a Character
 	printf("Enter a Number\n\r");
-	
 	temp_character = UART_Receive();
-
 	printf("You Entered: %d\m\r", temp_character);
 	entry_number = temp_character - '0';
 
+	//Check for Invalid Entries
 	if(entry_number>entries)
 	{
 		printf("Invalid Entry Number\n\r");
 	}
 	else
 	{
+		//Read directory entry
 		cluster_number = Read_Dir_Entry(current_directory_sector, entry_number, buffer_1);
 		printf("Cluster Number: %08lX\n\r", cluster_number);
+		//Check for Errors
 		if((cluster_number & 0x80000000) == 0x80000000)
 		{
 			printf("An Error Occured\n\r");
 		}
 		else
 		{
+			//See if entry is a file or directory
 			if((cluster_number & 0x10000000) == 0x10000000) 
 			{
+				//Go to the directory
 				printf("You selected a Directory\n\r");
 				current_directory_sector = FAT_getFirstSector(cluster_number & 0x0FFFFFFF);
 			}
 			else
 			{
+				//Open the file
 				printf("You selected a File\n\r");
 				printFile(cluster_number & 0x0FFFFFFF);
 			}
@@ -134,25 +138,29 @@ void printFile(uint32_t startingCluster)
 	uint8_t temp_character;
 	uint8_t sector_in_cluster = 0;
 
+	//Get starting parameters of file
 	current_sector = FAT_getFirstSector(startingCluster);
 	current_cluster = startingCluster;
 
 	do
 	{
+		//Print the file
 		printf("Sector:%08lX\n\rCluster:%08lX\n\r", current_sector, current_cluster);
 		Read_Sector(current_sector, 512, buffer_1);
 		print_memory(buffer_1, 512);
 	
+		//Get user input
 		printf("Continue(c)\n\rExit(x)\n\r");
-		
 		do
 		{
 			temp_character = UART_Receive();
 		} while((temp_character!='x')&&(temp_character!='X')&&
 				(temp_character!='c')&&(temp_character!='C'));
 		
+		//Go to next sector
 		if(sector_in_cluster >= SecPerClus_g-1)
 		{
+			//Go to next cluster
 			printf("Next Cluster\n\r");
 			current_cluster = FAT_getNextCluster(current_cluster, buffer_1);
 			current_sector = FAT_getFirstSector(current_cluster);
@@ -160,6 +168,7 @@ void printFile(uint32_t startingCluster)
 		}
 		else
 		{
+			//increment Sector
 			current_sector++;
 			sector_in_cluster++;
 		}
