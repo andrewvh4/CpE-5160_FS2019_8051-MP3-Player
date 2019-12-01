@@ -10,3 +10,7 @@ void Button_updateStates()
 {
 	//Check and update the states of the four buttons
 }
+
+uint8_t Button_allOff()
+{
+}
