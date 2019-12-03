@@ -23,4 +23,6 @@ void sEOS_ISR();
 #define sEOS_NUMBER_OF_ACTIONS 3
 #define sEOS_LOOP_INTERVAL_ms (sEOS_INTERVAL_ms*sEOS_NUMBER_OF_ACTIONS)
 
+uint8_t gPlayerState = 0;
+
 #endif
