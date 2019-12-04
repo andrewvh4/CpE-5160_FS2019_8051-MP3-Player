@@ -1,4 +1,5 @@
 #include "OS.h"
+#include "OSFunctions.h"
 #include "Main.h"
 
 void sEOS_Init()
@@ -13,9 +14,6 @@ void sEOS_Init()
 	
 	RCAP2H = PRELOAD / 256;
 	RCAP2L = PRELOAD % 256;
-
-	printf("PreloadH:%2.2bX\n\r", PRELOAD/256);
-	printf("PreloadL:%2.2bX\n\r", PRELOAD%256);
 
 	TF2 = 0; // Clear Overflow Flag.
 
@@ -38,9 +36,21 @@ void sEOS_ISR() interrupt 5 using 1
 	counter ++;
 	
 	// Perform EOS Tasks
-	if(counter >= 100)
+	switch(counter)
 	{
-		counter = 0;
-		printf("100\n\r");
+		case 1:
+			Button_ReadAll();
+			break;
+		case 2:
+			App_UpdateState();
+			break;
+		case 3:
+			App_PerformActions();
+			break;
+		case 4:
+			Display_Update();
+		default:
+			counter = 0;
+			break;
 	}
 }

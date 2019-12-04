@@ -20,7 +20,6 @@ typedef enum
 {
    NOT_PRESSED,
    PRESSED,
-   HELD,
    DEBOUNCE_P,
    DEBOUNCE_R
 }switch_state_t;

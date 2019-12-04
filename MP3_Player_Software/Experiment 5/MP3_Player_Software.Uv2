@@ -5,22 +5,12 @@ Target (Target 1), 0x0000 // Tools: 'MCS-51'
 
 Group (Source Group 1)
 
-File 1,1,<.\src\Application\AppMain.c><AppMain.c>
-File 1,1,<.\src\Application\print_bytes.c><print_bytes.c>
-File 1,1,<.\src\Drivers\Memory.c><Memory.c>
-File 1,1,<.\src\Drivers\memory_test.c><memory_test.c>
-File 1,1,<.\src\Drivers\Port.c><Port.c>
-File 1,1,<.\src\Drivers\SPI.c><SPI.c>
-File 1,1,<.\src\Drivers\Timing.c><Timing.c>
-File 1,1,<.\src\Drivers\UART.c><UART.c>
-File 1,1,<.\src\Modules\LCD.c><LCD.c>
-File 1,1,<.\src\Modules\SDCard.c><SDCard.c>
-File 1,1,<.\src\Drivers\I2C.c><I2C.c>
-File 1,1,<.\src\Modules\STA013.c><STA013.c>
-File 1,2,<.\src\Modules\config.asm><config.asm>
-File 1,1,<.\src\Drivers\UtPorts.c><UtPorts.c>
-File 1,1,<.\src\Modules\FAT.c><FAT.c>
-File 1,1,<.\src\Drivers\Directory_Functions_globals.c><Directory_Functions_globals.c>
+File 1,1,<.\AppMain.c><AppMain.c>
+File 1,1,<.\Buttons.c><Buttons.c>
+File 1,1,<.\OS.c><OS.c>
+File 1,1,<.\Port.c><Port.c>
+File 1,1,<.\UART.c><UART.c>
+File 1,1,<.\OSFunctions.c><OSFunctions.c>
 
 
 Options 1,0,0  // Target 'Target 1'
