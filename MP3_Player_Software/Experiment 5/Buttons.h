@@ -16,32 +16,33 @@
 
 #include "Main.h"
 
-typedef enum 
+typedef enum
 {
    NOT_PRESSED,
    PRESSED,
    HELD,
    DEBOUNCE_P,
-   DEBOUNCE_R,
-} switch_state_t;
+   DEBOUNCE_R
+}switch_state_t;
 
-struct buttonParams
+typedef struct
 {
-   uint8_t buttonID;
+  	uint8_t ID;
 	uint8_t inputMask;
-   uint16_t debounceTime;
+  	uint16_t debounceTime;
 	switch_state_t state;	
-}
+} buttonParams;
 
-buttonParams buttons[4];
+extern buttonParams buttons[4];
 
 void Button_initParams();
 
 // Returns true if all buttons are off
 // Returns false if at least one button is on
-bool Button_allOff();
+uint8_t Button_allOff();
 
-void Button_Read(button& aButton);
+void Button_Read(uint8_t ID);
+void Button_ReadAll();
 
 #define DEBOUNCE_TIME_ms 100
 

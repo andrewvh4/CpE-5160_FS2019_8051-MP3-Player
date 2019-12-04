@@ -1,4 +1,4 @@
-#include Main.h"
+#include "Main.h"
 #include "Port.h"
 #include <stdio.h>
 #include "UART.h"
@@ -29,6 +29,10 @@ uint8_t LED_speed = 15;
 uint8_t timeCounter = 0;
 uint8_t delay_state = 0;
 
+uint8_t setup();
+void flashLR();
+void flashRL();
+void delayAdj();
 
 void main()
 {
@@ -38,11 +42,15 @@ void main()
 
 uint8_t setup()
 {
+	uint8_t initError;
+
 
 	Port_writePin(GREEN_LED, LOW);
 	
 	Port_writeBus(PORT_1, 0xFF, 0xFF);
 	initError |= UART_Init_9600();
+
+	sEOS_Init();
 	
 	if (!initError)
 	{
@@ -52,8 +60,7 @@ uint8_t setup()
 	{
 		printf("*Setup Failed*\n\n");
 	}
-	
-	Timing_delay_ms(100);
+
 	Port_writePin(GREEN_LED, HIGH);
 	return(0);
 }
@@ -66,33 +73,33 @@ void App_UpdateState()
 		case STATE_OFF_P:
 			if(Button_allOff()) current_state = STATE_OFF;
 			LED_State = 0;
-			LED_Diaplay = 0x00;
+			LED_Display = 0x00;
 			delay_state = DELAY_STATE_WAIT_P;
 			break;
 		case STATE_OFF:
-			if(button[0].state == PRESSED) current_state = STATE_FLASH_LR_P;
-			else if(button[1].state == PRESSED) current_state = STATE_DELAY_ADJ_P;
-			else if(button[2].state == PRESSED) current_state = STATE_DELAY_ADJ_P;
-			else if(button[3].state == PRESSED) current_state = STATE_FLASH_RL_P;
+			if(buttons[0].state == PRESSED) current_state = STATE_FLASH_LR_P;
+			else if(buttons[1].state == PRESSED) current_state = STATE_DELAY_ADJ_P;
+			else if(buttons[2].state == PRESSED) current_state = STATE_DELAY_ADJ_P;
+			else if(buttons[3].state == PRESSED) current_state = STATE_FLASH_RL_P;
 			break;
 		case STATE_FLASH_LR_P:
 			if(Button_allOff()) current_state = STATE_FLASH_LR;
 			break;
 		case STATE_FLASH_LR:
-			if(button[0].state == PRESSED) current_state = STATE_OFF_P;
+			if(buttons[0].state == PRESSED) current_state = STATE_OFF_P;
 			break;
 		case STATE_FLASH_RL_P:
 			if(Button_allOff()) current_state = STATE_FLASH_RL;
 			break;
 		case STATE_FLASH_RL:
-			if(button[3].state == PRESSED) current_state = STATE_OFF_P;
+			if(buttons[3].state == PRESSED) current_state = STATE_OFF_P;
 			break;
 		case STATE_DELAY_ADJ_P:
 			if(Button_allOff()) current_state = STATE_DELAY_ADJ;
 			break;
 		case STATE_DELAY_ADJ:
-			if(button[0].state == PRESSED) current_state = STATE_OFF_P;
-			else if(button[4].state == PRESSED) current_state = STATE_OFF_P;
+			if(buttons[0].state == PRESSED) current_state = STATE_OFF_P;
+			else if(buttons[4].state == PRESSED) current_state = STATE_OFF_P;
 			break;
 	}
 }
@@ -103,7 +110,7 @@ void App_PerformActions()
 	{
 		case STATE_OFF_P:
 		case STATE_OFF:
-			if(button[0].state == PRESSED) current_state = STATE_FLASH_LR_P;
+			if(buttons[0].state == PRESSED) current_state = STATE_FLASH_LR_P;
 			break;
 		case STATE_FLASH_LR_P:
 		case STATE_FLASH_LR:
@@ -158,7 +165,7 @@ void delayAdj()
 			if(Button_allOff()) delay_state = DELAY_STATE_WAIT;
 			break;
 		case DELAY_STATE_WAIT:
-			if(button[1].state == PRESSED) //Increment 
+			if(buttons[1].state == PRESSED) //Increment 
 			{
 				delay_state = DELAY_STATE_WAIT_P;
 				if(LED_speed < 15)
@@ -168,7 +175,7 @@ void delayAdj()
 					LED_Display = LED_speed;
 				}
 			}
-			else if(button[2].state == PRESSED)  //Decrement
+			else if(buttons[2].state == PRESSED)  //Decrement
 			{
 				delay_state = DELAY_STATE_WAIT_P;
 				if(LED_speed > 0)
