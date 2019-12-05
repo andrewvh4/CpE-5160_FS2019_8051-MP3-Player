@@ -16,7 +16,7 @@
 
 #include "Main.h"
 
-typedef enum
+typedef enum //Contains various button states
 {
    NOT_PRESSED,
    PRESSED,
@@ -24,7 +24,7 @@ typedef enum
    DEBOUNCE_R
 }switch_state_t;
 
-typedef struct
+typedef struct //Contains all parameters used for determining button state with debounce
 {
   	uint8_t ID;
 	uint8_t inputMask;
@@ -34,15 +34,15 @@ typedef struct
 
 extern buttonParams buttons[4];
 
-void Button_initParams();
+void Button_initParams(); //Initializes all four button globals with default values
 
 // Returns true if all buttons are off
 // Returns false if at least one button is on
-uint8_t Button_allOff();
+uint8_t Button_allOff(); 
 
-void Button_Read(uint8_t ID);
-void Button_ReadAll();
+void Button_Read(uint8_t ID); //Reads and updates the state of a button
+void Button_ReadAll(); //Reads and updates the state of all the buttons
 
-#define DEBOUNCE_TIME_ms 100
+#define DEBOUNCE_TIME_ms 100 //100ms Debounce
 
 #endif

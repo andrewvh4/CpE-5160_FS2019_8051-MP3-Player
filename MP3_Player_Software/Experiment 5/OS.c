@@ -47,7 +47,7 @@ void sEOS_ISR() interrupt 5 using 1
 		case 3:
 			App_PerformActions();
 			break;
-		case 4:
+		case 4: //After case 4 reset the shedule counter
 			Display_Update();
 		default:
 			counter = 0;

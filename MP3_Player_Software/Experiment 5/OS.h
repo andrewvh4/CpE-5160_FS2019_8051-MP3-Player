@@ -16,8 +16,8 @@
 #include "Main.h"
 #include "Buttons.h"
 
-void sEOS_Init();
-void sEOS_ISR();
+void sEOS_Init(); //Initializes sEOS in Timer 2
+void sEOS_ISR();  //ISR for timer interrupt 2
 
 #define sEOS_INTERVAL_ms 10
 #define sEOS_NUMBER_OF_ACTIONS 4

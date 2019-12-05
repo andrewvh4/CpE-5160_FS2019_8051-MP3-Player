@@ -10,7 +10,7 @@ uint8_t setup();
 void main()
 {
 	setup();
-	while(1);
+	while(1); //while 1 is interrupted by sEOS timer interrupt
 }
 
 uint8_t setup()
@@ -21,11 +21,11 @@ uint8_t setup()
 	Port_writePin(GREEN_LED, LOW);
 	
 	Port_writeBus(PORT_1, 0xFF, 0xFF);
-	initError |= UART_Init_9600();
+	initError |= UART_Init_9600(); //Setup Serial
 
-	Button_initParams();
+	Button_initParams();//Initialize button globals
 
-	sEOS_Init();
+	sEOS_Init();//Initialize and start sEOS on Timer 2
 	
 	if (!initError)
 	{
