@@ -5,22 +5,22 @@ Target (Target 1), 0x0000 // Tools: 'MCS-51'
 
 Group (Source Group 1)
 
-File 1,1,<.\src\Application\AppMain.c><AppMain.c>
-File 1,1,<.\src\Application\print_bytes.c><print_bytes.c>
-File 1,1,<.\src\Drivers\Memory.c><Memory.c>
-File 1,1,<.\src\Drivers\memory_test.c><memory_test.c>
-File 1,1,<.\src\Drivers\Port.c><Port.c>
-File 1,1,<.\src\Drivers\SPI.c><SPI.c>
-File 1,1,<.\src\Drivers\Timing.c><Timing.c>
-File 1,1,<.\src\Drivers\UART.c><UART.c>
-File 1,1,<.\src\Modules\LCD.c><LCD.c>
-File 1,1,<.\src\Modules\SDCard.c><SDCard.c>
-File 1,1,<.\src\Drivers\I2C.c><I2C.c>
-File 1,1,<.\src\Modules\STA013.c><STA013.c>
-File 1,2,<.\src\Modules\config.asm><config.asm>
-File 1,1,<.\src\Drivers\UtPorts.c><UtPorts.c>
-File 1,1,<.\src\Modules\FAT.c><FAT.c>
-File 1,1,<.\src\Drivers\Directory_Functions_globals.c><Directory_Functions_globals.c>
+File 1,1,<.\hardware_delay_1ms_T0.c><hardware_delay_1ms_T0.c>
+File 1,1,<.\I2C.c><I2C.c>
+File 1,1,<.\LCD_routines.c><LCD_routines.c>
+File 1,1,<.\Long_Serial_In.c><Long_Serial_In.c>
+File 1,1,<.\Outputs.c><Outputs.c>
+File 1,1,<.\Play_Song.c><Play_Song.c>
+File 1,1,<.\print_bytes.c><print_bytes.c>
+File 1,1,<.\Read_Sector.c><Read_Sector.c>
+File 1,1,<.\SDCard.c><SDCard.c>
+File 1,1,<.\SPI.c><SPI.c>
+File 1,1,<.\STA013_config.c><STA013_config.c>
+File 1,1,<.\UART.c><UART.c>
+File 1,2,<.\config.asm><config.asm>
+File 1,1,<.\Directory_Functions.c><Directory_Functions.c>
+File 1,1,<.\File_System.c><File_System.c>
+File 1,1,<.\File_System_g_Solution_2018.c><File_System_g_Solution_2018.c>
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -40,8 +40,8 @@ Options 1,0,0  // Target 'Target 1'
  EnvReg (ÿAtmel\)
  OrgReg (ÿAtmel\)
  TgStat=0
- OutDir (..\)
- OutName (MP3_Player_Software)
+ OutDir (.\)
+ OutName (File_System_Solution_2018)
  GenApp=1
  GenLib=0
  GenHex=1

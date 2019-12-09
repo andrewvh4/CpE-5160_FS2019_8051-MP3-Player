@@ -28,8 +28,7 @@
 //------------------------------------------------------------------
 
 // Must include the appropriate microcontroller header file here
-#include "Drivers/AT89C51RC2.h"
-#include <stdio.h>
+#include "AT89C51RC2.h"
 
 // Oscillator / resonator frequency (in Hz) e.g. (11059200UL)
 #define OSC_FREQ (18432000UL)
@@ -39,37 +38,21 @@
 //  6 - Various Infineon and Philips devices, etc.
 //  4 - Dallas 320, 520 etc.
 //  1 - Dallas 420, etc.
-
-#define OSC_PER_INST (12)
-
-#define SW1 P2_0
-#define SW2 P2_1
-#define SW3 P2_2
-#define SW4 P2_3
-
-#define RED_LED P2_4
-#define YELLOW_LED P2_5
-#define AMBER_LED P2_6
-#define GREEN_LED P2_7
+#define OSC_PER_INST (6)
 
 //------------------------------------------------------------------
 // SHOULD NOT NEED TO EDIT THE SECTIONS BELOW
 //------------------------------------------------------------------
 
-// Typedefs (see Chap 5) These types match with stdint.h  
+// Typedefs (see Chap 5)  
 typedef unsigned char uint8_t;
 typedef unsigned int  uint16_t;
 typedef unsigned long uint32_t;
-typedef char int8_t;
-typedef int  int16_t;
-typedef long int32_t;
 
 // Interrupts (see Chap 7)  
 #define Timer_0_Overflow 1
 #define Timer_1_Overflow 3
 #define Timer_2_Overflow 5
-
-#define SPI_CLOCKRATE 400000
 
 #endif
 

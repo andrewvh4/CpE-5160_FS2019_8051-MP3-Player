@@ -1,16 +1,22 @@
 #include "../main.h"
+#include "Port.h"
 #include "SPI.h"
-#include "Uart.h"
 
-uint8_t SPI_Init(uint32_t clock_rate)
+
+/***********************************************************************
+DESC:    Sets up the SPI to master mode with the clock as close
+         to the input parameter as possible.
+         clock=32-bit 
+RETURNS: Error Flag
+CAUTION: Sets the CPHA to 0 and CPOL to 0
+         Disables SS and sets master mode 
+************************************************************************/
+
+uint8_t SPI_Master_Init(uint32_t clock_rate)
 {
-	uint8_t divider; 
-	uint8_t return_value = 0;
-	
-	printf("---SPI Init\n");
-	divider = (uint8_t)((OSC_FREQ * 6) / (OSC_PER_INST * clock_rate)); //For some reason this equation returns 46.08 when hand-calculated
-	
-	//Not enough memory to run this????!!!
+  uint8_t divider,return_val;
+  return_val=init_okay;
+  divider=(uint8_t)(((OSC_FREQ/OSC_PER_INST)*6)/clock_rate);
   if(divider<=2)
   {
      SPCON=0x70;
@@ -41,50 +47,49 @@ uint8_t SPI_Init(uint32_t clock_rate)
   }
   else  // if the SPI clock rate is too slow, a divider cannot be found
   {
-    return_value = SPI_ERROR_CLOCKRATE; 
+    return_val=illegal_clockrate;
   }
-	
-	//SPCON = SPCON | (CPOL << 3) | (CPHA << 2);	
-	//SPSTA = SPSTA | 0x80;
-	printf("SPI Error:%2.2bX\n",return_value);
-	return return_value;
+  return return_val;
 }
 
-uint8_t SPI_Transfer(uint8_t send_value, uint8_t *received_value)
+/***********************************************************************
+DESC:    Sends one byte using the SPI port and returns the received byte
+          
+RETURNS: SPI Error Flags | received byte
+         or a timeout error
+CAUTION: Waits for the SPI transfer to be complete
+************************************************************************/
+
+
+uint8_t SPI_Transfer(uint8_t data_input, uint8_t * data_output)
 {
-	uint16_t timeout = 0; 
-	uint8_t status = 0;
-	uint8_t error_flag = 0;
-	
-  SPDAT = send_value;
-	
-	do 
-	{ 
-		status = SPSTA; 
-		timeout++; 
-	} while (((status & 0xF0) == 0x00) && (timeout != 0));
-
-	if (timeout == 0) 
-	{    
-		// timeout error
-		error_flag = SPI_ERROR_TIMEOUT;
-		*received_value = 0xFF;
-	}
-	else if((status & 0x70) != 0)
-	{
-		error_flag = SPI_ERROR;
-		*received_value = 0xFF;
-	}
-	else
-	{
-		error_flag = SPI_NO_ERROR;
-		*received_value = SPDAT;
-	}
-	return error_flag;
+   uint8_t test, timeout;
+   timeout=0;
+   SPDAT=data_input;
+   do
+   {
+      test=SPSTA;
+	  timeout++;
+   }while(((test&0xF0)==0)&&(timeout!=0));
+   if(timeout!=0)
+   {
+     if((test&0x70)==0)  // no errors
+     {
+         *data_output=SPDAT;
+         timeout=no_errors;
+     }
+     else
+     {
+         *data_output=0xff;
+         timeout=SPI_ERROR;
+     }
+   }
+   else
+   {
+     *data_output=0xff;
+     timeout=TIMEOUT_ERROR;
+   }
+   return timeout;
 }
+ 
 
-uint8_t SPI_setCSState(uint8_t state)
-{
-	CS = (state==HIGH)?1:0;
-	return(0);
-}

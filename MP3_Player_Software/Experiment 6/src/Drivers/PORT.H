@@ -4,96 +4,88 @@
 
   ------------------------------------------------------------------
 
-   Port Header - Exp#1 UART & LCD Module
-   
-   Programmer(s): Roger Younger 
-   
-   Date: 9/8/16
+   Port Header (see Chap 5) for the project DINOSAUR (Chap 8)
 
-   Description: Defines the port pins for the basic 8051 circuit
--------------------------------------------------------------------*/
+   COPYRIGHT
+   ---------
+
+   This code is associated with the book:
+
+   EMBEDDED C by Michael J. Pont 
+   [Pearson Education, 2002: ISBN: 0-201-79523-X].
+
+   This code is copyright (c) 2001 by Michael J. Pont.
+ 
+   See book for copyright details and other information.
+
+-*------------------------------------------------------------------*/
 
 #ifndef _PORT_H
 #define _PORT_H
 
-#include "../Main.h"
-#include "AT89C51RC2.h"
-
-
-uint8_t Port_writeBus(uint8_t bus, uint8_t bits, uint8_t bitMask);
-uint8_t Port_writePin(uint8_t pin, uint8_t value);
-
-uint8_t Port_readBus(uint8_t bus);
-uint8_t Port_readPin(uint8_t pin);
-
-#define HIGH 1
-#define LOW 0
-
-#define nCS0 1<<4
-
-#define LCD_D0 P0_0
-#define LCD_D1 P0_1
-#define LCD_D2 P0_2
-#define LCD_D3 P0_3
-#define LCD_D4 P0_4
-#define LCD_D5 P0_5
-#define LCD_D6 P0_6
-#define LCD_D7 P0_7
-
-#define LCD_RS P3_5 //We wired the pins differently from the hardware manual
-#define LCD_EN P3_6 //This is the correct pin definition
-
-#define per_TxD P3_0
-#define per_RxD P3_1
-
-#define STA013_RESET P3_3
-#define TRIGGER P3_4
-
-#define BYTE 8
-
+// ------ Dinosaur.C ----------------------------------------------
+// Ports 1 and 2 used for demo...
 // Port 0
-#define PORT_0 0
-#define P0_0 0x00
-#define P0_1 0x01
-#define P0_2 0x02
-#define P0_3 0x03
-#define P0_4 0x04
-#define P0_5 0x05
-#define P0_6 0x06
-#define P0_7 0x07
+
+sfr LCD_Data_Port = 0x80;   // Port 0 
+sbit P0_0 = P0^0;
+sbit P0_1 = P0^1;
+sbit P0_2 = P0^2;
+sbit P0_3 = P0^3;
+sbit P0_4 = P0^4;
+sbit P0_5 = P0^5;
+sbit P0_6 = P0^6;
+sbit P0_7 = P0^7;
 
 // Port 1
-#define PORT_1 1
-#define P1_0 0x10
-#define P1_1 0x11
-#define P1_2 0x12
-#define P1_3 0x13
-#define P1_4 0x14
-#define P1_5 0x15
-#define P1_6 0x16
-#define P1_7 0x17
+sbit SDA = P1^0;
+sbit SCL = P1^1;
+sbit DATA_REQ = P1^2;
+sbit BIT_EN = P1^3;
+sbit nCS0 = P1^4;
+sbit per_MISO = P1^5;
+sbit per_SCLK = P1^6;
+sbit per_MOSI = P1^7;
+
+#define BIT_EN_bit 1<<3
+
+#define ON (0)
+#define OFF (1)
+
+#define nCS0_bit 1<<4
 
 // Port 2
-#define PORT_2 2
-#define P2_0 0x20
-#define P2_1 0x21
-#define P2_2 0x22
-#define P2_3 0x23
-#define P2_4 0x24
-#define P2_5 0x25
-#define P2_6 0x26
-#define P2_7 0x27
+sbit SW1 = P2^0;
+sbit SW2 = P2^1;
+sbit SW3 = P2^2;
+sbit SW4 = P2^3;
+sbit REDLED = P2^4;
+sbit GREENLED = P2^5;
+sbit YELLOWLED = P2^6;
+sbit AMBERLED = P2^7;
+
+#define Red_LED 1<<4
+#define Yellow_LED 1<<5
+#define Amber_LED 1<<6
+#define Green_LED 1<<7
+
+sfr sw_port = 0xA0;
+sfr LED_port = 0xA0;
 
 // Port 3
-#define PORT_3 3
-#define P3_0 0x30
-#define P3_1 0x31
-#define P3_2 0x32
-#define P3_3 0x33
-#define P3_4 0x34
-#define P3_5 0x35
-#define P3_6 0x36
-#define P3_7 0x37
+sbit per_TxD = P3^0;
+sbit per_RxD = P3^1;
+sbit P3_2 = P3^2;
+sbit STA013_RESET = P3^3;
+sbit Trigger = P3^4;
+sbit P3_5 = P3^5;
+sbit RS = P3^6;
+sbit E = P3^7;
+
+#define STA013_RESET_bit 1<<3
+#define Trigger_bit 1<<4
+#define RS_bit 1<<6
+#define E_bit 1<<7
 
 #endif
 
