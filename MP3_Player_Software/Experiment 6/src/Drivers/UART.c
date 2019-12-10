@@ -10,7 +10,7 @@ INPUT: Nothing
 RETURNS: Nothing
 CAUTION: Uses Baudrate Generator instead of a standard timer
 ************************************************************************/
-void uart_init(uint16_t BAUD_RATE)
+void UART_init(uint16_t BAUD_RATE)
 {
   
   // configure UART

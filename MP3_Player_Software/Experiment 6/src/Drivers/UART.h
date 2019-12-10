@@ -1,7 +1,7 @@
 #ifndef _UART_H
 #define _UART_H
 
-#include "../main.h"
+#include "../Main.h"
 
 //------- Public Constant definitions --------------------------------
 // UART settings
@@ -29,7 +29,7 @@
 
 
 // ------ Public function prototypes -------------------------------
-void uart_init(uint16_t BAUD_RATE);
+void UART_init(uint16_t BAUD_RATE);
 uint8_t UART_Transmit(uint8_t send_value);
 uint8_t UART_Receive(void);
 

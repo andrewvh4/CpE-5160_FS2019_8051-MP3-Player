@@ -18,8 +18,8 @@ void Play_Song(uint32_t Start_Cluster)
    uint8_t buffer1, buffer2, temp8;
    uint32_t idata sector, sector_offset, cluster;
 	
-   printf("\r\nStarting Cluster = %lu\n\r",Start_Cluster);
-	 printf("\r\nSecPerClus_g = %2.2bX\n\r", SecPerClus_g);
+   printf("Starting Cluster = %lu\n\r",Start_Cluster);
+	 printf("SecPerClus_g = %2.2bX\n\r", SecPerClus_g);
 
 	 cluster=Start_Cluster;
    sector=First_Sector(Start_Cluster);
@@ -42,22 +42,23 @@ void Play_Song(uint32_t Start_Cluster)
    sector_offset++;
    Set_P2_bit(Amber_LED);  //AMBERLED=OFF;
 	 
-   do
-   {      
-     do
-     {
+   //Start superloop to play song
+   do //while(cluster != 0x0FFFFFFF);//Plays until the end of file marker is detected.   
+   {   
+     do //while(buffer1==1); //While buffer 1 is in use
+     { 
         if(DATA_REQ==0)
-        {
+        { //Execute SPI transfer
           Clear_P2_bit(Green_LED);   //GREENLED=ON;
           Set_P1_bit(BIT_EN_bit);  //BIT_EN=1;
           SPI_Transfer(buf1[index1], &temp8);
           Clear_P1_bit(BIT_EN_bit);  //BIT_EN=0;
 					Set_P2_bit(Green_LED);  //GREENLED=OFF;
 					index1++;
-           if(index1>511)
+           if(index1>511) //If buffer 1 is all sent
            {
-              if(index2>511)
-              {
+              if(index2>511) //If buffer 2 is still empty
+              { //Read next sector into buffer 2
 								if(sector_offset == SecPerClus_g)
 								{
 									cluster = Find_Next_Clus(cluster, buf2);
@@ -74,14 +75,15 @@ void Play_Song(uint32_t Start_Cluster)
                 Set_P2_bit(Amber_LED);  //AMBERLED=OFF;
 								
               }
+              //Go to buffer 2
               buffer1=0;
               buffer2=1;
-						}
+					}
        }
        else
        {
-          if(index2>511)
-          {
+          if(index2>511) //If not sending data to STA
+          {//Read next sector into buffer 2
 						if(sector_offset == SecPerClus_g)
 								{
 									cluster = Find_Next_Clus(cluster, buf2);
@@ -99,7 +101,7 @@ void Play_Song(uint32_t Start_Cluster)
           }
           else
           {
-              if(index1>511)
+              if(index1>511) //Check if Buffer 1 is all sent
               {
                   buffer1=0;
                   buffer2=1;
@@ -107,20 +109,20 @@ void Play_Song(uint32_t Start_Cluster)
           }
       }
    }while(buffer1==1);
-   do
+   do //while(buffer2==1); //While useing Buffer 2
    {
-      if(DATA_REQ==0)
-      {
+      if(DATA_REQ==0) 
+      { //Send SPI data
           Clear_P2_bit(Red_LED);   //REDLED=ON;
           Set_P1_bit(BIT_EN_bit);  //BIT_EN=1;
           SPI_Transfer(buf2[index2], &temp8);
           Clear_P1_bit(BIT_EN_bit);  //BIT_EN=0;
           Set_P2_bit(Red_LED);  //REDLED=OFF;
           index2++;
-          if(index2>511)
+          if(index2>511) //When buffer 2 is all sent
           {
-              if(index1>511)
-              {
+              if(index1>511) //Make sure buffer 1 is filled
+              { //Load Buffer 1
                 if(sector_offset == SecPerClus_g)
 								{
 									cluster = Find_Next_Clus(cluster, buf1);
@@ -137,15 +139,16 @@ void Play_Song(uint32_t Start_Cluster)
 								
                 Set_P2_bit(Yellow_LED);  //YELLOWLED=OFF;
               }
+              //Go to using Buffer 1
               buffer2=0;
               buffer1=1;
          
            }
         }
-        else
+        else //When data is not requested
         {
            if(index1>511)
-           {	
+           {	//Read next sector into buffer 1
 						 if(sector_offset == SecPerClus_g)
 								{
 									cluster = Find_Next_Clus(cluster, buf1);
@@ -162,7 +165,7 @@ void Play_Song(uint32_t Start_Cluster)
 							Set_P2_bit(Yellow_LED);  //YELLOWLED=OFF;
            }
            else
-           {
+           {//Read next sector into buffer 1
                if(index2>511)
                {
                   buffer2=0;

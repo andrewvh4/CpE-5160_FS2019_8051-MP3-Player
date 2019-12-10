@@ -235,7 +235,7 @@ uint8_t Open_File(uint32_t Cluster_num, uint8_t xdata * array_in)
    do
    {
       if(SecOffset==0) Sector=((Cluster_num-2)*SecPerClus_g)+FirstDataSec_g;
-      printf("Cluster#: %9lu,  Sector#: %9lu,  SecOffset: %lu\n",Cluster_num,(Sector+SecOffset),SecOffset);
+      printf("Cluster#: %9lu\n\rSector#: %9lu\n\rSecOffset: %lu\n\r",Cluster_num,(Sector+SecOffset),SecOffset);
       Read_Sector((Sector+SecOffset), BytesPerSec_g, values);
       print_memory(512,values);
       SecOffset++;
@@ -249,7 +249,7 @@ uint8_t Open_File(uint32_t Cluster_num, uint8_t xdata * array_in)
       {
         temp8=getchar();
       }while((temp8!=0x20)&&(temp8!='X')&&(temp8!='P')&&(temp8=='x')&&(temp8=='p'));
-	  if((temp8=='P')||(temp8=='p'))
+	   if((temp8=='P')||(temp8=='p'))
       {
          Play_Song(Cluster_num);
       }

@@ -13,18 +13,8 @@
 #include "../Drivers/Outputs.h"
 #include "Play_Song.h"
 
-
-
 uint8_t xdata buf1[512];
 uint8_t xdata buf2[512];
-
-uint8_t code SD_Card_string[]="SD Card...";
-uint8_t code High_Cap_string[]="HC";
-uint8_t code Standard_Cap_string[]="SC";
-uint8_t code Drive_string[]="Drive...";
-uint8_t code Root_string[]="Root Found     ";
-uint8_t code SDSC[]="Std. Capacity";
-uint8_t code SDHC[]="High Capacity";
 
 extern uint32_t idata FirstRootDirSec_g;
 
@@ -54,7 +44,7 @@ main()
    {
       CKCON0=0x00;  // set standard clock mode
    } 
-   uart_init(9600);
+   UART_init(9600);
    printf("---LCD Init\n\r");
    LCD_Init();
    error_flag=SPI_Master_Init(400000UL);
@@ -63,7 +53,7 @@ main()
       Clear_P2_bit(Red_LED);
       while(1);
    }
-   LCD_Print(line1,10,SD_Card_string);
+   LCD_Print(line1,10,"SD Card...");
    printf("---SD Card Init\n\r");
    error_flag=SD_card_init();
    if(error_flag!=no_errors)
@@ -75,11 +65,11 @@ main()
    error_flag=Return_SD_Card_Type();
    if(error_flag==Standard_Capacity)
    {
-      LCD_Print(no_addr_change,2,Standard_Cap_string);
+      LCD_Print(no_addr_change,2,"SC");
    }
    else
    {
-      LCD_Print(no_addr_change,2,High_Cap_string);
+      LCD_Print(no_addr_change,2,"HC");
    }
    error_flag=SPI_Master_Init(20000000UL); //Set SPI to run aster after init
    if(error_flag!=no_errors)
@@ -93,14 +83,14 @@ main()
       buf2[i]=0xff;
    }
    printf("---Mounting Drive\n\r");
-   LCD_Print(line2,0,Drive_string);
+   LCD_Print(line2,0,"Drive...");
    error_flag=Mount_Drive(buf1);
    if(error_flag!=no_errors)
    {
       Clear_P2_bit(Red_LED);
       while(1);
    }
-   LCD_Print(no_addr_change,4,Root_string);
+   LCD_Print(no_addr_change,4,"Root Found     ");
    Current_directory=FirstRootDirSec_g;
    
    
@@ -117,10 +107,10 @@ main()
 	   if(entry_num<=num_entries)
 	   {
 	      Entry_clus=Read_Dir_Entry(Current_directory, entry_num, buf1);
-		  if(Entry_clus&directory_bit)
+		  if(Entry_clus & directory_bit)
 		  {
-		     Entry_clus&=0x0FFFFFFF;
-             Current_directory=First_Sector(Entry_clus);
+		      Entry_clus & =0x0FFFFFFF;
+            Current_directory=First_Sector(Entry_clus);
 		  }
  	      else
 		  {
