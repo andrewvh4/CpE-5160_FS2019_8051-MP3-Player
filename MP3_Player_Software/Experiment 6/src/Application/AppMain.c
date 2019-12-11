@@ -109,7 +109,7 @@ main()
 	      Entry_clus=Read_Dir_Entry(Current_directory, entry_num, buf1);
 		  if(Entry_clus & directory_bit)
 		  {
-		      Entry_clus & =0x0FFFFFFF;
+		      Entry_clus &= 0x0FFFFFFF;
             Current_directory=First_Sector(Entry_clus);
 		  }
  	      else

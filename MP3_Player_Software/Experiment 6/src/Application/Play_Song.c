@@ -1,4 +1,3 @@
-//Experiment 6, CpE 5160, Shaun McManus, Timothy Bain
 #include <stdio.h>
 #include "../Main.h"
 #include "../Drivers/Port.h"
